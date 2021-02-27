@@ -1,2 +1,1 @@
-# FerenciTamas_BevezetesABiostatisztikaba
-Ferenci Tamás: Bevezetés a biostatisztikába (jegyzet).
+[Ferenci Tamás: Bevezetés a biostatisztikába (jegyzet).](https://tamas-ferenci.github.io/FerenciTamas_BevezetesABiostatisztikaba/)

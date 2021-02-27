@@ -1,0 +1,17 @@
+--- 
+title: "Bevezetés a biostatisztikába"
+author: "Ferenci Tamás"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+link-citations: yes
+github-repo: tamas-ferenci/FerenciTamas_BevezetesABiostatisztikaba
+description: "Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba."
+url: https://tamas-ferenci.github.io/FerenciTamas_BevezetesABiostatisztikaba/
+cover-image: bevbiostatcover.png
+---
+
+# Előszó
+
+Előszó.
