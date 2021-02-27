@@ -1,7 +1,7 @@
 --- 
 title: "Bevezetés a biostatisztikába"
-author: "Ferenci Tamás"
-date: "`r Sys.Date()`"
+author: Ferenci Tamás, tamas.ferenci@medstat.hu
+date: '`r format(Sys.time(), "%Y\\. %B %e\\.")`'
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
