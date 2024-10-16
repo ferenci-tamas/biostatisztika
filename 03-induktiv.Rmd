@@ -148,7 +148,8 @@ Itt is hasznos mindezeket egy szimulációval szemléltetni (\@ref(fig:cisim). �
 
 ```{r cisim, fig.cap="Konfidenciaintervallumok szemléltetése szimulációval."}
 SimData <- data.frame( idx = 1:100, CI = t( replicate( 100, TeachingDemos::z.test( rnorm( 30, 70, 10 ), stdev = 10 )$conf.int ) ) )
-Hmisc::Dotplot( idx ~ Hmisc::Cbind( NA, CI.1, CI.2 ), data = SimData, abline = list( v = 70, col = "red", lwd = 2 ), ylab = "" )
+ggplot(SimData, aes(xmin = CI.1, xmax = CI.2, y = idx)) + geom_linerange() +
+  geom_vline(xintercept = 70, color = "red") + labs(y = "")
 ```
 
 

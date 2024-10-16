@@ -15,3 +15,9 @@ cover-image: bevbiostatcover.png
 # Előszó
 
 Előszó.
+
+A használt könyvtárak:
+
+```{r}
+library(ggplot2)
+```
