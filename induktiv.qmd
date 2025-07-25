@@ -6,6 +6,7 @@
 library(ggplot2)
 theme_set(theme_bw())
 data(birthwt, package = "MASS")
+set.seed(1)
 ```
 
 Ebben az alfejezetben röviden, az alapkoncepciókra fókuszálva bemutatom a statisztika induktív (következtető) ágát. Már volt róla szó, hogy az induktív statisztika jellemzője, hogy *tekintettel van* a mintavételi helyzetre, azaz arra, hogy mi csak egy részét ismerjük azon sokaságnak, melyre a kérdésünk irányult: épp azzal foglalkozik, hogy hogyan lehet pusztán a mintában lévő információ alapján mégis a sokaságról nyilatkozni. Innen a módszer neve: indukció, annyi mint következtetés, tudniillik következtetés a mintából a sokaságra.

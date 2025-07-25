@@ -6,6 +6,7 @@
 library(ggplot2)
 theme_set(theme_bw())
 data(birthwt, package = "MASS")
+set.seed(1)
 ```
 
 Ebben az fejezetben a statisztika *deskriptív* (leíró) ágával fogunk foglalkozni. Már utaltam rá, hogy deskriptív statisztikáról akkor beszélünk, amikor kizárólag a mintában lévő információt igyekszünk valamilyen módon megragadni (és nem törődünk azzal, hogy a minta maga is csak a valóság egy "szelete", szebben megfogalmazva: figyelmen kívül hagyjuk a mintavételi helyzetet).
