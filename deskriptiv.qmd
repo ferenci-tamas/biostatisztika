@@ -94,7 +94,7 @@ Vegyük észre, hogy ebben a speciális esetben az információtömörítés iga
 
 A gyakorisági soron kívül egy mutatószámnak van még értelme ennél a mérési skálánál: a **módusznak**. A módusz (jele: $\mathrm{Mo}$) nem más, mint a leggyakoribb^[Érdemes az angol mode, vagy a német die Mode szavakra gondolni: a "legdivatosabb" érték.] kimenet (tehát az a kimenet, melyhez tartozó gyakoriság a legnagyobb az adatbázisban). Nagyon formalizálva ezt írhatnánk:
 
-$$\mathrm{Mo}=\mathop{\mathrm{arg\,max}}_i f_i$$.
+$$\mathrm{Mo}=\mathop{\mathrm{arg\,max}}_i f_i.$$
 
 A példánkban tehát a rassz módusza a kaukázusi.
 
@@ -159,7 +159,7 @@ Amikor azt mondtam, hogy leghétköznapibb, akkor nem csak azt értettem alatta,
 
 A legismertebb középérték a **(számtani) átlag**, jele $\overline{x}$. Definíciószerűen nem más, mint az a szám, amivel helyettesítve minden megfigyelési egység értékét, az ún. értékösszeg, tehát a változó megfigyeléseinek összege változatlan maradna, vagyis, amire igaz, hogy $\sum_{i=1}^n \overline{x} = n \cdot \overline{x} = \sum_{i=1}^n x_i$. Ebből már adódik, hogy az átlag:
 
-$$\overline{x}=\frac{\sum_{i=1}^n x_i}{n}$$.
+$$\overline{x}=\frac{\sum_{i=1}^n x_i}{n}.$$
 
 Úgy is mondhatnánk: ha egyenletesen szétosztanánk az értékösszeget minden megfigyelés között, akkor ennyi jutna mindenkire.
 
@@ -171,7 +171,7 @@ A születési tömegek átlaga `r mean(birthwt$bwt)` gramm. Meglehetősen erőlt
 
 Az átlagnak két további nevezetes tulajdonsága említést érdemel. Az egyik, hogy a megfigyelések tőle vett eltéréseinek az összege zérus; ez könnyen belátható:
 
-$$\sum_{i=1}^n \left(x_i - \overline{x}\right) = \sum_{i=1}^n x_i - \sum_{i=1}^n \overline{x} = n\overline{x} - n\overline{x} = 0$$.
+$$\sum_{i=1}^n \left(x_i - \overline{x}\right) = \sum_{i=1}^n x_i - \sum_{i=1}^n \overline{x} = n\overline{x} - n\overline{x} = 0.$$
 
 A másik fontos tulajdonsága, hogy az összes szám közül ez az, amire igaz, hogy a megfigyelések tőle vett eltérés*négyzeteinek* az összege minimális, tehát a $\sum_{i=1}^n \left(x_i - c\right)^2$ kifejezés akkor minimális^[A bizonyításhoz deriváljuk a kifejezést $c$ szerint: $-2\sum_{i=1}^n x_i + 2nc$, ezt tegyük egyenlővé nullával és oldjuk meg $c$-re: $c = \frac{1}{n}\sum_{i=1}^n x_i$, ami valóban az átlag. A második derivált $2n$, ami pozitív, bizonyítván, hogy ez valóban szélsőértékhely és minimum.], ha $c = \overline{x}$. Fontos megjegyezni: a négyzetre emelés eltünteti az előjelet, vagyis az eltérésnégyzet, szemben az előbbi előjeles eltéréssel, egyfajta távolság^[Ha valaki szeretné: $L_2$ távolság.] -- ilyen értelemben ez a megállapításunk azt mondja, hogy az átlag van a legközelebb a pontokhoz, ha ugyanannyira számít minden ponthoz a közelség! Ez egyfajta alátámasztását adja az átlag középérték jellegének. (Az összefüggés egyértelmű, ez a minimum-tulajdonság nem csak igaz az átlagra, de az átlag az egyetlen szám, amire igaz, tehát elvileg akár így is bevezethettük volna az átlagot, az értékösszeg egyenletes szétosztása helyett.)
 
@@ -227,11 +227,11 @@ A születési tömegek mintaminimuma `r min(birthwt$bwt)` gramm, mintamaximuma `
 
 Az egyik alapvető mutatója a szóródásnak a **szóránégyzet** (vagy **variancia**), jele általában $s_x^2$. A szórásnégyzet tulajdonképpen a legkézenfekvőbb jellemzője a szóródásnak, hiszen nem más, mint a átlagtól vett átlagos eltérés. Az egyetlen amire vigyázni kell, hogy az eltérés alatt mit értünk: ha egyszerűen a megfigyelés és az átlag különbségét vennénk, az nem lenne jó, mert a pozitív és a negatív eltérések csökkentenék (sőt, belátható, hogy kioltanák) egymás hatását. Ezért inkább négyzetre emeljük ezt a különbséget, hogy megszabaduljunk az előjeltől, hogy a $+1$ és a $-1$ eltérés hatása ugyanolyan legyen, és ezzel már jók vagyunk:
 
-$$s_x^2=\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}$$.
+$$s_x^2=\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}.$$
 
 A szórásnégyzet problémája, hogy a mértékegysége nem ugyanaz, mint az eredeti változóé (a négyzetremelés miatt). Ha szeretnénk a szóródást ugyanazon a skálán jellemezni, akkor egy gyökvonással visszatérhetünk; ezt a mutatót hívjuk **szórásnak**, jele $s_x$:
 
-$$s_x=\sqrt{s_x^2} = \sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}}$$.
+$$s_x=\sqrt{s_x^2} = \sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}}.$$
 
 (A kettő neve nem keverendő: a "szóródás" a jellemző, a "szórás" egy lehetséges mutatószáma ennek a jellemzőnek.)
 
@@ -239,7 +239,7 @@ Deskriptív esetben néha inkább mintavarianciát, illetve mintaszórást monda
 
 A fent definiált mutatót szokás precízen *korrigálatlan* mintavarianciának, illetve mintaszórásnak nevezni, ezzel szemben a *korrigált* mutatóban nem $n$-nel, hanem $n-1$-gyel osztunk le. Például a korrigált mintaszórás, jele $s_x^{\ast}$:
 
-$$s_x^{\ast}=\sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n-1}}$$.
+$$s_x^{\ast}=\sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n-1}}.$$
 
 A különbségük oka csak a következtető statisztikában válik világossá^[A korrigálatlan mintavariancia, első ránézésre talán meglepő módon, *nem* torzítatlan becslője a sokasági varianciának, ezzel szemben a korrigált igen. A mintaszórásnál sajnos nem ilyen egyszerű a helyzet, ott a korrigált mutató is torzított (igaz, arra nem is létezik becslő, ami általában torzítatlan lenne). E kérdésekkel a következtető statisztikánál fogunk foglalkozni részletesen.].
 
@@ -247,7 +247,7 @@ A születési tömegek korrigált mintaszórása `r sd(birthwt$bwt)` gramm, teh�
 
 A szórás hátránya, hogy -- az átlaghoz hasonlóan -- nem robusztus^[Konkrétabban beszélve, például erre is igaz, hogy ha csak egyetlen egy megfigyelésre is $x_i \rightarrow \infty$, akkor $s_x \rightarrow \infty$, *függetlenül* a mintanagyságtól.] mutató. (Egyrészt azért nem, mert az átlagtól vett eltérések nézi, ami eleve nem robusztus középmutató, másrészt ezeket átlagolja, ami ugyebár nem robusztus, ráadásul a négyzetreemelés még ki is emeli a különbségeket.) Egyik gyakran alkalmazott robusztus alternatíva az **interkvartilis terjedelem** (jele $IQR$), ami a felső és az alsó kvartilis különbsége:
 
-$$IQR=Q_3-Q_1$$.
+$$IQR=Q_3-Q_1.$$
 
  Mondhatjuk azt is, hogy az IQR az adatok középső 50%-ának szélessége.
 
@@ -257,7 +257,7 @@ A születési tömegek interkvartilis terjedelme `r IQR(birthwt$bwt)` gramm, teh
 
 Egy másik lehetőség a szórás "megjavítása", olyan módon, hogy kiküszöböljük a nem-robusztusság fent említett forrásait: az eltéréseknek nem a négyzetét, hanem az abszolút értékét vesszük, az eltéréseket nem az átlagtól hanem a mediántól vesszük, végül pedig nem is átlagoljuk őket, hanem a mediánjukat képezzük. Az így kapott mutató neve **medián abszolút eltérés**, jele $MAD$, tehát
 
-$$MAD=\mathrm{Me}\left(\left|x_i-\mathrm{Me}\left(x\right)\right|\right)$$.
+$$MAD=\mathrm{Me}\left(\left|x_i-\mathrm{Me}\left(x\right)\right|\right).$$
 
 (A szakirodalom itt nem teljesen egyértelmű: néha $MAD$-nak nevezik azt a mutatót is, ahol csak az első javítást csinálják meg, tehát abszolútértéket vesznek, de azokat továbbra is csak átlagolják, és az eltéréseket is az átlagtól veszik.)
 
@@ -515,7 +515,7 @@ A kapcsolat fogalmát mennyiségi változókra is ugyanazon gondolatot követve 
 
 Két mennyiségi változó fent definiált kapcsolatát klasszikusan a **kovarianciával** szokás lemérni, jele $\mathrm{cov}\left(x,y\right)$. Ennek definíciója:
 
-$$\mathrm{cov}\left(x,y\right)=\frac{\sum_{i=1}^n \left[\left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)\right]}{n}$$.
+$$\mathrm{cov}\left(x,y\right)=\frac{\sum_{i=1}^n \left[\left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)\right]}{n}.$$
 
 A számítás logikája vegytisztán tükrözi a definíciót: az $\left(x_i-\overline{x}\right)$ tükrözi az egyik, az $\left(y_i-\overline{y}\right)$ a másik változó szerint azt, hogy az adott megfigyelési egység átlag alatti vagy átlag feletti. Vegyük észre, hogy a kettő szorzata pedig *pontosan akkor* lesz pozitív, ha vagy mindkét változó szerint átlag feletti a megfigyelési egység, vagy mindkét változó szerint átlag alatti -- azaz ha az adott megfigyelési egység a pozitív kapcsolatot erősíti meg! Ha a szorzat negatív, akkor az adott megfigyelési egység a negatív kapcsolatot erősíti.
 
@@ -525,7 +525,7 @@ A szummázás ezeket a hatásokat fogja összeadni megfigyelési egységről meg
 
 Hogy mi a kovariancia problémája, az azonnal kiderül, ha közöljük az anyai és az újszülött testtömeg közti kovarianciát: `r cov(birthwt$bwt, birthwt$lwt)`. Ami kétségtelenül kiolvasható ebből, hogy az anyai és az újszülött testtömeg között van kapcsolat, mégpedig pozitív irányú (nagyobb anyai tömeg -- nagyobb újszülött tömeg, és fordítva), hiszen az előjel pozitív. Amiről viszont lényegében semmit nem tudunk meg, az az erősség! Annál is inkább, mert a kovariancia mértékegység-függő: más értéket kapunk, ha az újszülött testtömegét nem grammban, hanem kilogrammban rögzítjük. Tekintetbe véve, hogy az információ ettől még ugyanaz marad, ez nyilván nem szerencsés. A probléma lényegében az, hogy honnan tudhatnánk, hogy a `r cov(birthwt$bwt, birthwt$lwt)` sok vagy kevés...? Ebben segít minket az a matematikai észrevétel, hogy mindenképp fennáll az $-s_x s_y \leq \mathrm{cov}\left(x,y\right) \leq s_x s_y$ összefüggés, tehát a kovariancia abszolút értéke nem lehet nagyobb mint a két változó szórásának szorzata. Így máris van mihez viszonyítani a kovariancia nagyságát! Ez elvezet minket a következő mutatóhoz, a neve **korreláció**, jelben $\mathrm{corr}\left(x,y\right)$:
 
-$$\mathrm{corr}\left(x,y\right)=\frac{\mathrm{cov}\left(x,y\right)}{s_x s_y}$$.
+$$\mathrm{corr}\left(x,y\right)=\frac{\mathrm{cov}\left(x,y\right)}{s_x s_y}.$$
 
 Ez az előjel értelmezésén semmit nem változtat, hiszen a kovariancia előjelét meghagyja (a nevezőben szórások szerepelnek, így mindkettő szükségképp pozitív), viszont az abszolút értéket értelmezhetővé teszi, hiszen a korrelációra már az teljesül, hogy $-1 \leq \mathrm{corr}\left(x,y\right) \leq 1$. A korreláció tehát minél közelebb van $\pm 1$-hez, annál erősebb a két változó közötti kapcsolat.
 
