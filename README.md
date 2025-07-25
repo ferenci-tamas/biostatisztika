@@ -1,1 +1,5 @@
-[Ferenci Tamás: Bevezetés a biostatisztikába (jegyzet).](https://tamas-ferenci.github.io/FerenciTamas_BevezetesABiostatisztikaba/)
+# Ferenci Tamás: Bevezetés a biostatisztikába
+
+Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.
+
+Elérhetőség: [Ferenci Tamás: Bevezetés a biostatisztikába](https://ferenci-tamas.github.io/biostatisztika/).

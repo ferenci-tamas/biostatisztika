@@ -1,0 +1,9 @@
+# Előszó {.unnumbered}
+
+Előszó.
+
+A használt könyvtárak:
+
+```{r}
+library(ggplot2)
+```

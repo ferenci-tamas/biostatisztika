@@ -1,80 +1,41 @@
 <!DOCTYPE html>
-<html lang="" xml:lang="">
-<head>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu-HU" xml:lang="hu-HU"><head>
 
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>4 . fejezet Induktív statisztika | Bevezetés a biostatisztikába</title>
-  <meta name="description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba." />
-  <meta name="generator" content="bookdown 0.41 and GitBook 2.6.7" />
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
 
-  <meta property="og:title" content="4 . fejezet Induktív statisztika | Bevezetés a biostatisztikába" />
-  <meta property="og:type" content="book" />
-  <meta property="og:image" content="https://tamas-ferenci.github.io/FerenciTamas_BevezetesABiostatisztikaba/bevbiostatcover.png" />
-  <meta property="og:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba." />
-  <meta name="github-repo" content="tamas-ferenci/FerenciTamas_BevezetesABiostatisztikaba" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-  <meta name="twitter:card" content="summary" />
-  <meta name="twitter:title" content="4 . fejezet Induktív statisztika | Bevezetés a biostatisztikába" />
-  
-  <meta name="twitter:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba." />
-  <meta name="twitter:image" content="https://tamas-ferenci.github.io/FerenciTamas_BevezetesABiostatisztikaba/bevbiostatcover.png" />
+<meta name="description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
 
-<meta name="author" content="Ferenci Tamás, tamas.ferenci@medstat.hu" />
-
-
-
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="apple-mobile-web-app-capable" content="yes" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-  
-  
-<link rel="prev" href="deskriptiv.html"/>
-
-<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
-<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
-<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
-
-
-
-
-
-
-
-
-<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
-<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
-<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-19799395-2"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-19799395-2');
-</script>
-
-
-<style type="text/css">
+<title>3&nbsp; Induktív statisztika – Bevezetés a biostatisztikába</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
   { counter-reset: source-line 0; }
@@ -88,465 +49,953 @@ pre.numberSource code > span > a:first-child::before
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
     padding: 0 4px; width: 4em;
-    color: #aaaaaa;
   }
-pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
 div.sourceCode
   {   }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code span.at { color: #7d9029; } /* Attribute */
-code span.bn { color: #40a070; } /* BaseN */
-code span.bu { color: #008000; } /* BuiltIn */
-code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code span.ch { color: #4070a0; } /* Char */
-code span.cn { color: #880000; } /* Constant */
-code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code span.dt { color: #902000; } /* DataType */
-code span.dv { color: #40a070; } /* DecVal */
-code span.er { color: #ff0000; font-weight: bold; } /* Error */
-code span.ex { } /* Extension */
-code span.fl { color: #40a070; } /* Float */
-code span.fu { color: #06287e; } /* Function */
-code span.im { color: #008000; font-weight: bold; } /* Import */
-code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code span.op { color: #666666; } /* Operator */
-code span.ot { color: #007020; } /* Other */
-code span.pp { color: #bc7a00; } /* Preprocessor */
-code span.sc { color: #4070a0; } /* SpecialChar */
-code span.ss { color: #bb6688; } /* SpecialString */
-code span.st { color: #4070a0; } /* String */
-code span.va { color: #19177c; } /* Variable */
-code span.vs { color: #4070a0; } /* VerbatimString */
-code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
-<style type="text/css">
-  
-  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-</style>
 
-<link rel="stylesheet" href="style.css" type="text/css" />
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./deskriptiv.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nincs találat",
+    "search-matching-documents-text": "találat",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "További találatok elrejtése",
+    "search-more-match-text": "további találat ebben a dokumentumban",
+    "search-more-matches-text": "további találat ebben a dokumentumban",
+    "search-clear-button-title": "Törlés",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Mégse",
+    "search-submit-button-title": "Keresés",
+    "search-label": "Keresés"
+  }
+}</script>
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<meta property="og:title" content="3&nbsp; Induktív statisztika – Bevezetés a biostatisztikába">
+<meta property="og:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
+<meta property="og:image" content="https://ferenci-tamas.github.io/biostatisztika/induktiv_files/figure-html/fig-sampsim-1.png">
+<meta property="og:site_name" content="Bevezetés a biostatisztikába">
+<meta property="og:image:height" content="960">
+<meta property="og:image:width" content="1344">
+<meta name="twitter:title" content="3&nbsp; Induktív statisztika – Bevezetés a biostatisztikába">
+<meta name="twitter:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
+<meta name="twitter:image" content="https://ferenci-tamas.github.io/biostatisztika/induktiv_files/figure-html/fig-sampsim-1.png">
+<meta name="twitter:image-height" content="960">
+<meta name="twitter:image-width" content="1344">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body>
+<body class="nav-sidebar floating quarto-light">
 
-
-
-  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
-
-    <div class="book-summary">
-      <nav role="navigation">
-
-<ul class="summary">
-<li><a href="./">Ferenci Tamás<br>Bevezetés a biostatisztikába</a></li>
-
-<li class="divider"></li>
-<li class="chapter" data-level="1" data-path="03-induktiv.html"><a href="#el%C5%91sz%C3%B3"><i class="fa fa-check"></i><b>1</b> Előszó</a></li>
-<li class="chapter" data-level="2" data-path="a-statisztika-alapjai.html"><a href="a-statisztika-alapjai.html"><i class="fa fa-check"></i><b>2</b> A statisztika alapjai</a>
-<ul>
-<li class="chapter" data-level="2.1" data-path="03-induktiv.html"><a href="#a-statisztika-alapfogalmai-%C3%A9s-%C3%A1gai"><i class="fa fa-check"></i><b>2.1</b> A statisztika alapfogalmai és ágai</a></li>
-<li class="chapter" data-level="2.2" data-path="a-statisztika-alapjai.html"><a href="a-statisztika-alapjai.html#alapokvaltozok"><i class="fa fa-check"></i><b>2.2</b> Változók és mérési skálák</a></li>
-<li class="chapter" data-level="2.3" data-path="a-statisztika-alapjai.html"><a href="a-statisztika-alapjai.html#alapokvelhatarolas"><i class="fa fa-check"></i><b>2.3</b> A biostatisztika kapcsolódó tudományai és elhatárolása</a></li>
-<li class="chapter" data-level="2.4" data-path="a-statisztika-alapjai.html"><a href="a-statisztika-alapjai.html#alapokszamtech"><i class="fa fa-check"></i><b>2.4</b> A biostatisztika számítástechnikai háttere</a></li>
-<li class="chapter" data-level="2.5" data-path="a-statisztika-alapjai.html"><a href="a-statisztika-alapjai.html#alapokfutopelda"><i class="fa fa-check"></i><b>2.5</b> Futó példa</a></li>
-</ul></li>
-<li class="chapter" data-level="3" data-path="deskriptiv.html"><a href="deskriptiv.html"><i class="fa fa-check"></i><b>3</b> Deskriptív statisztika</a>
-<ul>
-<li class="chapter" data-level="3.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivaltalaban"><i class="fa fa-check"></i><b>3.1</b> A deskriptív statisztikáról általában</a></li>
-<li class="chapter" data-level="3.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivcsoportositas"><i class="fa fa-check"></i><b>3.2</b> A deskriptív statisztika módszereinek csoportosításáról</a>
-<ul>
-<li class="chapter" data-level="3.2.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivcsoportositasgrafanal"><i class="fa fa-check"></i><b>3.2.1</b> Grafikus és analitikus módszerek</a></li>
-<li class="chapter" data-level="3.2.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivcsoportositasegytobbvalt"><i class="fa fa-check"></i><b>3.2.2</b> Egy- és többváltozós módszerek</a></li>
-<li class="chapter" data-level="3.2.3" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivcsoportositasmeresiskala"><i class="fa fa-check"></i><b>3.2.3</b> A vizsgált változó(k) mérési skálája</a></li>
-</ul></li>
-<li class="chapter" data-level="3.3" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivminegyvalt"><i class="fa fa-check"></i><b>3.3</b> Minőségi változó egyváltozós elemzése</a>
-<ul>
-<li class="chapter" data-level="3.3.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmonegyvaltanalitikus"><i class="fa fa-check"></i><b>3.3.1</b> Analitikus eszközök</a></li>
-<li class="chapter" data-level="3.3.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivminegyvaltgrafikus"><i class="fa fa-check"></i><b>3.3.2</b> Grafikus eszközök</a></li>
-</ul></li>
-<li class="chapter" data-level="3.4" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyegyvalt"><i class="fa fa-check"></i><b>3.4</b> Mennyiségi változó egyváltozós elemzése</a>
-<ul>
-<li class="chapter" data-level="3.4.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyegyvaltanalitikus"><i class="fa fa-check"></i><b>3.4.1</b> Analitikus eszközök</a></li>
-<li class="chapter" data-level="3.4.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyegyvaltgrafikus"><i class="fa fa-check"></i><b>3.4.2</b> Grafikus eszközök</a></li>
-</ul></li>
-<li class="chapter" data-level="3.5" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivminketvalt"><i class="fa fa-check"></i><b>3.5</b> Minőségi változók kétváltozós elemzése</a>
-<ul>
-<li class="chapter" data-level="3.5.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivminketvaltanalitikus"><i class="fa fa-check"></i><b>3.5.1</b> Analitikus eszközök</a></li>
-<li class="chapter" data-level="3.5.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivminketvaltgrafikus"><i class="fa fa-check"></i><b>3.5.2</b> Grafikus eszközök</a></li>
-</ul></li>
-<li class="chapter" data-level="3.6" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyketvalt"><i class="fa fa-check"></i><b>3.6</b> Mennyiségi változók kétváltozós elemzése</a>
-<ul>
-<li class="chapter" data-level="3.6.1" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyketvaltanalitikus"><i class="fa fa-check"></i><b>3.6.1</b> Analitikus eszközök</a></li>
-<li class="chapter" data-level="3.6.2" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivmennyketvaltvaltgrafikus"><i class="fa fa-check"></i><b>3.6.2</b> Grafikus eszközök</a></li>
-</ul></li>
-<li class="chapter" data-level="3.7" data-path="deskriptiv.html"><a href="deskriptiv.html#deskriptivtovabbitobbvalt"><i class="fa fa-check"></i><b>3.7</b> További többváltozós elemzések</a></li>
-</ul></li>
-<li class="chapter" data-level="4" data-path="induktiv.html"><a href="induktiv.html"><i class="fa fa-check"></i><b>4</b> Induktív statisztika</a>
-<ul>
-<li class="chapter" data-level="4.1" data-path="induktiv.html"><a href="induktiv.html#induktivmintavetelihelyzet"><i class="fa fa-check"></i><b>4.1</b> A mintavételi helyzet és következményei</a></li>
-<li class="chapter" data-level="4.2" data-path="induktiv.html"><a href="induktiv.html#induktivbecsleselmelet"><i class="fa fa-check"></i><b>4.2</b> Becsléselmélet</a></li>
-<li class="chapter" data-level="4.3" data-path="induktiv.html"><a href="induktiv.html#induktivhipotezisvizsgalat"><i class="fa fa-check"></i><b>4.3</b> Hipotézisvizsgálat</a></li>
-</ul></li>
-<li class="divider"></li>
-<li><a href="http://www.medstat.hu/" target="blank">http://www.medstat.hu/</a></li>
-
-</ul>
-
-      </nav>
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./induktiv.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Induktív statisztika</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Keresés" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
     </div>
-
-    <div class="book-body">
-      <div class="body-inner">
-        <div class="book-header" role="navigation">
-          <h1>
-            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Bevezetés a biostatisztikába</a>
-          </h1>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bevezetés a biostatisztikába</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/ferenci-tamas/biostatisztika" title="Forráskód" class="quarto-navigation-tool px-1" aria-label="Forráskód"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Letöltés" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Letöltés"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./ferenci-tamas-biostatisztika.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Letöltés PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./ferenci-tamas-biostatisztika.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Letöltés ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Megosztás" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Megosztás"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Keresés"></div>
         </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Előszó</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bevezetes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A statisztika alapjai</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deskriptiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Deskriptív statisztika</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./induktiv.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Induktív statisztika</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tartalomjegyzék</h2>
+   
+  <ul>
+  <li><a href="#sec-mintaveteli-helyzet" id="toc-sec-mintaveteli-helyzet" class="nav-link active" data-scroll-target="#sec-mintaveteli-helyzet"><span class="header-section-number">3.1</span> A mintavételi helyzet és következményei</a></li>
+  <li><a href="#sec-becsleselmelet" id="toc-sec-becsleselmelet" class="nav-link" data-scroll-target="#sec-becsleselmelet"><span class="header-section-number">3.2</span> Becsléselmélet</a></li>
+  <li><a href="#sec-hipotezisvizsgalat" id="toc-sec-hipotezisvizsgalat" class="nav-link" data-scroll-target="#sec-hipotezisvizsgalat"><span class="header-section-number">3.3</span> Hipotézisvizsgálat</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ferenci-tamas/biostatisztika/edit/main/induktiv.qmd" class="toc-action"><i class="bi bi-github"></i>Az oldal szerkesztése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/blob/main/induktiv.qmd" class="toc-action"><i class="bi empty"></i>Forráskód megtekintése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/issues/new" class="toc-action"><i class="bi empty"></i>Észrevétel jelzése</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
 
-        <div class="page-wrapper" tabindex="-1" role="main">
-          <div class="page-inner">
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="sec-induktiv" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Induktív statisztika</span></span></h1>
+</div>
 
-            <section class="normal" id="section-">
-<div id="induktiv" class="section level1 hasAnchor" number="4">
-<h1><span class="header-section-number">4 . fejezet</span> Induktív statisztika<a href="induktiv.html#induktiv" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Ebben az alfejezetben röviden, az alapkoncepciókra fókuszálva bemutatjuk a statisztika induktív ágát. Már volt róla szó, hogy az induktív statisztika jellemzője, hogy <em>tekintettel van</em> a mintavételi helyzetre (azaz arra, hogy mi csak egy részét ismerjük azon sokaságnak, melyre a kérdésünk irányult): azzal foglalkozik, hogy hogyan lehet pusztán a mintában lévő információ alapján mégis a sokaságról nyilatkozni. Innen a módszer neve: indukció a.m. következtetés, tudniillik következtetés a mintából a sokaságra.</p>
-<p>Elsőként röviden megismételjük, és pár fontos részlettel kibővítjük a <strong>mintavételi helyzettel</strong> kapcsolatos ismereteinket; ezt követően nagyon tömören, az alapelvekre szorítkozva bemutatjuk az induktív statisztika két nagy területét: a becsléselméletet és a hipotézisvizsgálatot. A <strong>becsléselmélet</strong> azzal foglalkozik, hogy egy sokaságot jellemző paramétert, például a sokaság átlagát pusztán a minta alapján ,,megtippeljünk’’ (valamilyen szempontok szerint a lehető legjobban). A <strong>hipotézisvizsgálat</strong> ennek bizonyos értelemben az ikertestvére: célja, hogy a sokaság valamely jellemzőjére tett állítások – például a sokaság átlaga egy adott szám – helyességét ,,megtippeljük’’ pusztán a minta alapján.</p>
-<!-- Ahogy említettük is, ez az alfejezet lesz fejezetünk egyetlen olyan része, mely komolyabb matematikai alapokra (nevezeten a valószínűségszámítás elemi ismeretére) támaszkodik. Elemi valószínűségszámítási eredményeket tehát most előzetes felvezetés nélkül is fogunk használni. -->
-<div id="induktivmintavetelihelyzet" class="section level2 hasAnchor" number="4.1">
-<h2><span class="header-section-number">4.1</span> A mintavételi helyzet és következményei<a href="induktiv.html#induktivmintavetelihelyzet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>Ahogy már megbeszéltük, mintavételi helyzetről akkor beszélünk, ha a <strong>sokaságnak</strong> (amire, definíció szerint, kutatási kérdésünk vonatkozik), csak egy részét tudjuk megfigyelni. Ezt a megfigyelt részt nevezzük <strong>mintának</strong>. Szintén volt róla szó, hogy a mintavételi helyzet jelentősége a biostatisztikában hatalmas: nem csak azért, mert egy sor gyakorlati esetben bár a sokaság elvileg teljeskörűen megfigyelhető lenne, de erre gyakorlati okok (költség, időigény stb.) miatt nincs mód, hanem azért is, mert biostatisztikában tipikusak az olyan kérdések, melyek fiktív, végtelen sokaságra vonatkoznak (például: ,,Egy új vérnyomáscsökkentő gyógyszer-jelölt valóban csökkenti a vérnyomást?’’). Ilyen esetekben bármennyi megfigyelést is végzünk, az szükségképp minta lesz.</p>
-<p>Adódik tehát a feladat, hogy annak ellenére nyilatkozzunk a sokaságról, hogy mi csak egy részét ismerjük. Nagyon sokan ezen a ponton valószínűleg azt gondolják, hogy ez lehetetlen feladat – valóban, példának okáért, ha 1000 elemből csak 999-et ismerünk, akkor <em>elvileg</em> bármennyi lehet a sokaság (mind az 1000 elem) átlaga, akármik is voltak a minta elemei.</p>
-<p>Az a megállapítás azonban, hogy ,,semmit nem tudunk mondani’’ a sokaságról, szerencsére túlzás. A helyes megfogalmazás az, hogy <em>biztosat</em> nem tudunk mondani a sokaságról de valószínűségi kijelentéseket továbbra is tudunk tenni! Ha ugyanis megfelelően történt a mintavétel (erre még visszatérünk), akkor már a minta is elárult valamit a sokaságról, tudni fogunk valamit azokról a valószínűségi törvényszerűségekről, melyek az ismeretlen elemek viselkedését (is) áthatják. Ez pedig lehetővé fogja tenni, hogy ugyan csak sztochasztikus értelemben, de azokról is nyilatkozzunk.</p>
-<p>Az tehát nem igaz, hogy semmit nem tudunk mondani a sokaságról, de azzal valóban együtt kell élnünk, hogy az induktív statisztikában – szemben a deskriptívvel – már csak <em>bizonytalansággal terhelt</em> állításokat tudunk tenni. Szerencsére azonban arra is képesek leszünk, hogy e bizonytalanság mértékét magát is becsüljük (persze ismét csak: bizonytalansággal terhelten).</p>
-<p>Nyilvánvaló, hogy bármilyen induktív statisztikai feladatot is kell megoldanunk, ahhoz csak a mintában lévő információt tudjuk felhasználni (ez épp a minta definíciója). Márpedig ha csak a sokaság egy részét (a mintát) ismerjük, akkor <em>bármilyen</em>, mintából számolt jellemző két dologtól fog függeni:</p>
-<ol style="list-style-type: decimal">
-<li>a jellemző sokaságbeli értékétől,</li>
-<li>attól, hogy konkrétan hogy választottuk ki a mintát.</li>
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Ebben az alfejezetben röviden, az alapkoncepciókra fókuszálva bemutatom a statisztika induktív (következtető) ágát. Már volt róla szó, hogy az induktív statisztika jellemzője, hogy <em>tekintettel van</em> a mintavételi helyzetre, azaz arra, hogy mi csak egy részét ismerjük azon sokaságnak, melyre a kérdésünk irányult: épp azzal foglalkozik, hogy hogyan lehet pusztán a mintában lévő információ alapján mégis a sokaságról nyilatkozni. Innen a módszer neve: indukció, annyi mint következtetés, tudniillik következtetés a mintából a sokaságra.</p>
+<p>Elsőként röviden megismételjük, és pár fontos részlettel kibővítjük a <strong>mintavételi helyzettel</strong> kapcsolatos ismereteinket (<a href="#sec-mintaveteli-helyzet" class="quarto-xref"><span>3.1</span></a>. pont); ezt követően nagyon tömören, az alapelvekre szorítkozva bemutatom az induktív statisztika két nagy területét: a becsléselméletet és a hipotézisvizsgálatot. A <strong>becsléselmélet</strong> (<a href="#sec-becsleselmelet" class="quarto-xref"><span>3.2</span></a>. pont) azzal foglalkozik, hogy egy sokaságot jellemző paramétert, például a sokaság várható érték pusztán a minta alapján „megtippeljünk” (valamilyen szempontok szerint a lehető legjobban). A <strong>hipotézisvizsgálat</strong> (<a href="#sec-hipotezisvizsgalat" class="quarto-xref"><span>3.3</span></a>. pont) ennek bizonyos értelemben az ikertestvére: célja, hogy a sokaság valamely jellemzőjére tett állítás – például a sokaság várható értéke egy adott szám – helyességét „megtippeljük” pusztán a minta alapján.</p>
+<section id="sec-mintaveteli-helyzet" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="sec-mintaveteli-helyzet"><span class="header-section-number">3.1</span> A mintavételi helyzet és következményei</h2>
+<p>Ahogy már volt róla szó, mintavételi helyzetről akkor beszélünk, ha a <strong>sokaságnak</strong> (definíció szerint: a halmazra, amire a kutatási kérdésünk vonatkozik), csak egy részét tudjuk megfigyelni. Ezt a megfigyelt részt nevezzük <strong>mintának</strong>. Szintén volt róla szó, hogy a mintavételi helyzet jelentősége a biostatisztikában hatalmas: nem csak azért, mert egy sor esetben még ha a sokaság elvileg teljeskörűen megfigyelhető is lenne, erre gyakorlati okok (költség, időigény stb.) miatt nincs mód, hanem azért is, mert biostatisztikában tipikusak az olyan kérdések, melyek fiktív, végtelen sokaságra vonatkoznak (például: „Egy új vérnyomáscsökkentő gyógyszer-jelölt valóban csökkenti a vérnyomást?”). Ilyen esetekben bármennyi megfigyelést is végzünk, az szükségképp minta lesz, azaz szükségképp mintavételi helyzettel lesz dolgunk.</p>
+<p>Adódik tehát a feladat: annak ellenére nyilatkozzunk a sokaságról, hogy mi csak egy részét ismerjük. Nagyon sokan ezen a ponton valószínűleg azt gondolnák, hogy ez lehetetlen feladat – valóban, ha mondjuk 1000 elemből csak 100-at ismerünk, akkor <em>elvileg</em> bármennyi lehet a sokaság (azaz mind az 1000 elem) átlaga, akármik is voltak a minta elemei… akkor meg mégis hogyan tudnánk ezt megmondani?! Sehogy, nyilván. Sőt, voltaképp ha 999-et ismerünk, és csak 1-et nem, már <em>akkor is</em> ugyanez a helyzet. Tehát, ha mintavételes helyzet van, akkor nem tudjuk megmondani, hogy mi a sokaság átlaga.</p>
+<p>Szerencsére ennél azért kicsivel jobb a helyzet. Az igaz, hogy <em>biztosan</em> nem tudjuk megmondani a sokaság átlagát, ez tény – de az nem igaz, hogy <em>semmit</em> nem tudunk róla mondani! Valamit fogunk tudni mondani, ha ugyanis megfelelően történt a mintavétel, akkor már a minta is elárult <em>valamit</em> a sokaságról. Mi az, hogy „valamit”? Ha a mintavétel teljesen véletlenszerű volt, akkor az épp azt jelenti, hogy a kivett elemek eloszlása ugyanolyan, mint a ki nem vett elemeké! Ez a tartalma annak a kifejezésnek, hogy „valamit” tudni: nem tudjuk biztosan az értékeiket, de az sem igaz, hogy nem tudunk semmit, mert tudjuk az eloszlásukat. Ez, tehát az eloszlás ismerete jelenti a középutat a között, hogy nem tudunk róla semmit, meg hogy tudjuk mennyi az értéke. Sztochasztikus ismeretekkel rendelkezünk.</p>
+<p>Ennek van egy nagyon fontos következménye: tudunk észszerű becslést tenni. Kritikusan fontos, hogy ebben a mondatban mit értünk az alatt, hogy „észszerű”, úgyhogy ezt azonnal pontosítom: azt, hogy bizonytalansággal terhelt, <em>de úgy</em>, hogy a bizonytalanság mértéke maga is jellemezhető! Itt álljunk meg egy kicsit és emésszük meg jobban ezt a mondatot, mert az egész következtető statisztikának ez a lényege. Illusztráló példaként képzeljük el, hogy a barátunk gondol egy valós számot, és a feladat az, hogy eltaláljuk mit gondolt. Három eset lehetséges:</p>
+<ul>
+<li>Megmondja, hogy mi a gondolt szám. Ez a „biztosan tudjuk” esete; statisztika alkalmazására nincs szükség.</li>
+<li>Nem mond semmit a világon a gondolt számról. Ez a „nem tudunk róla semmit” esete; statisztika alkalmazására megint csak nincs szükség (vagy inkább úgy mondom: nincs rá lehetőség). Éppenséggel tippelhetünk valamit – mondjuk 42 vagy <span class="math inline">\(-\log\pi\)</span> – de ezek mögé nem rakható semmilyen észszerű okfejtés, hogy miért azt tippeltük, semelyik tipp sem lesz „jobb”, mint bármelyik másik, <em>és</em> semelyik tippnél nem fogunk tudni semmit mondani a tipp várható hibájáról.</li>
+<li>Elárulja, hogy a gondolt szám standard normális eloszlású. Ez a következtető statisztika esete! A fent emlegetett középút a „biztosan tudjuk” és a „nem tudunk róla semmit” között, amikor sztochasztikus információnk van. Vegyük észre, hogy ekkor <em>két</em> nagyon fontos dolog is lehetővé válik. <em>Az egyik</em>, hogy immár lehet észszerűen tippelni: minden matematikai levezetés nélkül is érezhető, hogy a 0 jobb tipp mint a 100 (noha elvileg kaphatunk 100 körüli értéket is standard normális eloszlásból, tehát az se lenne kizárt). Mi az, hogy „jobb”? Ahhoz, hogy ilyet mondjunk, kell a jóságnak valamilyen mérőszáma, itt lehet a definíció az, hogy ami a hibát minimalizálja – amely definíció azért fog működni, mert így már lesz információnk a hibáról! Megfelelő matematikai apparátussal lehet precízen definiálni, hogy mekkora a várható hiba ha 0-t tippelünk, és mekkora, ha 100-at. És ezzel elértünk a <em>másik</em> fontos dologhoz: ahhoz, hogy ez esetben, miután adtunk egy tippet, annak a várható hibázását magát is meg tudjuk<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> mondani! Mindkét dolog nagyon fontos, úgyhogy megismétlem: immár tudunk racionálisan tippelni <em>és</em> a tippünk várható hibázást tudjuk jellemezni.</li>
+</ul>
+<p>A fenti, meglehetősen filozofikus felvezetés után nézzük meg kicsit közelebbről ezt a hibázást. Vegyük a véges sokaság esetét; ezt általában is ajánlom, ha valaki most kezd ismerkedni a témával, egész egyszerűen azért, mert jól elképzelhető. Szó szerint is: képzeljünk magunk elé egy urnát, mint a lottóhúzásnál, benne golyókkal. A golyókban számok vannak, úgy, hogy azokat nem látjuk – tényleg mint a lottóhúzásnál. Ez a sokaság! Ezután megkeverjük jól az urnát, és kiveszünk néhány golyót – ez a mintavétel. A kihúzott golyókat kinyitjuk, és megnézzük mik benne a számok – ez a minta. A valós biostatisztikai helyzetek általában nem ilyenek (már volt róla szó, hogy általában fiktív, végtelen sokaságunk van), de szerintem mégis fontos és hasznos, pláne elsőként, ez a példa, mert segít, hogy ezt tényleg fizikai valójában magunk elé tudjuk képzelni.</p>
+<p>Legyen mondjuk 100 golyónk az urnában, amiből 10-et húzunk ki – ekkor a 100 száz szám (ismeretlen) átlaga a keresett sokasági jellemző, és a 10 ismert szám a mintánk.</p>
+<p>Bármit is számolunk ki a mintából, hogy becsüljük a 100 száz szám átlagát, az eredmény két dologtól fog függeni:</p>
+<ol type="1">
+<li>a 100 golyó átlagától, tehát az ismeretlen sokasági jellemzőtől, és</li>
+<li>attól, hogy pont melyik mintát húztuk ki, tehát éppen melyik 10 szám került (a véletlen szeszélye folytán) a kezünkbe.</li>
 </ol>
-<p>Példának okáért, egy minta átlagát két dolog fogja befolyásolni: a sokaság átlaga (ha ez nagyobb, akkor várhatóan egy minta átlaga is nagyobb lesz) és az, hogy konkrétan melyik elemeket választottuk ki a sokaságból (adott sokasági átlag mellett is választhatunk – tökéletesen véletlen mintavétel mellett is! – pont kisebb, és pont nagyobb elemeket is).</p>
-<p>Mi értelemszerűen csak az elsőre vagyunk kíváncsiak, de sajnos a második hatása elvileg is kiküszöbölhetetlen. Bármilyen módszert is találunk ki arra, hogy a mintából hogyan következtessünk a sokaságra, teljesen biztos, hogy annak a végeredménye <em>mintáról-mintára változni</em> fog, azaz függeni fog attól, hogy konkrétan ,,hogyan nyúltunk bele a sokaságba’’, konkrétan milyen mintát vettünk. Ezt a jelenséget hívjuk <strong>mintavételi ingadozásnak</strong>. A szerencse épp az lesz, hogy ez a mintavételi ingadozás követni fog bizonyos (valószínűségi) törvényszerűségeket, így bár a fenti miatt elkerülhetetlenül hibázhatunk a következtetésnél, de annak természetéről fogunk tudni nyilatkozni.</p>
-<p>Amit nagyon fontos megérteni, hogy az előbb említett ,,hibázás’’ alatt nem arra kell gondolni, hogy valamilyen értelemben rosszul vesszük a mintát. Ha egy 1000 fős sokaságból veszünk egy 30 fős mintát a sokasági átlag becslésére, akkor előfordulhat, mégpedig a <em>legtökéletesebben véletlen</em> mintavétel mellett is, hogy épp a 30 legkönnyebb embert választjuk ki a sokaságból. Természetesen, ha rosszul veszünk mintát (például akár tudattalan módon is, de a soványabb embereket szólítjuk meg a kérdőívvel, hogy ne hozzuk zavarba a megkérdezetteket), akkor elképzelhető, hogy ennek megnő a valószínűsége, de akkor sem nulla ha tökéletesen véletlen a mintavétel.</p>
-<p>Csak épp – és itt jön a lényeg – extrém kicsi! Ha tényleg tökéletesen véletlen a mintavétel, azaz minden sokasági alanynak azonos esélye van a mintába kerülésre, akkor annak a valószínűsége, hogy pont a 30 legsoványabbat választjuk ki épp <span class="math inline">\(1/\binom{30}{1000}\approx 4\cdot 10^{-56}\)</span>%. Így értendő az, hogy a hiba valószínűségszámítási úton, ,,sztochasztikusan’’ limitálható: nem tudjuk kizárni, hogy ilyen – hatalmas méretű – torzítás keletkezzen a mintából következtetés hatására de meg tudjuk mondani, hogy ennek mennyi a – szerencsére igen kicsi – valószínűsége. Az ilyen okokból fakadó hibázást nevezzük <strong>mintavételi hibának</strong>.</p>
-<p>Nem csak olyan hiba van azonban, ami az – elkerülhetetlen – mintavételi ingadozásból adódik. Véthetünk hibát alullefedéssel és túllefedéssel (azaz a minta pontatlan körülírásával), véthetünk definíciós hibát a kérdéseknél, hibát az adatkódolás során, a végpont megválasztásánál stb. stb., de ami még fontosabb, hogy véthetünk hibát a minta kijelölésével (amennyiben a minta valójában nem reprezentatív a sokaságra nézve, lásd az előbbi példát a személyes megkérdezéses testtömeg-vizsgálatról), vagy épp megfigyeléses vizsgálat esetén a confounding-gal. Ezeket – tisztán statisztikai úton nem olyan könnyen kézben tartható – hibákat nevezzük egységesen <strong>nem-mintavételi hibáknak</strong>.</p>
-<!-- Különösen óvatosnak kell lennünk akkor, ha ún. *kényelmi mintával* dolgozunk, azaz a sokaságból az alapján választjuk ki a mintát, hogy ,,mi esik a kezünk ügyébe''. Például a kérdésünk a magyar cukorbetegekre vonatkozik, ám ebből a sokaságból nem úgy veszünk mintát, hogy kisorsolunk (véletlenszám-generátorral) az ország összes cukorbetege közül annyit, amekkora mintára szükségünk van, hanem vesszük az orvos együttműködő partnerünk múlt heti betegforgalmát. Nyilvánvaló, hogy ez utóbbi mennyivel kényelmesebb (sőt, sokszor sajnos csak az ilyen és ehhez hasonló megoldások járhatóak), de ilyenkor mindig tudatában kell lennünk annak, hogy a sokaságra történő következtetést ekkor már nem csak a mintavételi hiba fogja nehezíteni, hanem az a kérdés is, hogy vajon a minta mennyire reprezentatív a sokaságra nézve. Például, ha az orvos partner kórháza Budapesten van, akkor nagyon is elképzelhető, hogy az ott kezelt betegek szocioökonómiai státusza szisztematikusan eltér a falusi lakosságétól (márpedig ez egy sor paramétert befolyásol), sőt, adott esetben akár az sem mindegy, hogy Budán vagy Pesten van a kórház. -->
+<p>Ez utóbbi a fontos most számunkra. A jobb megértés végett képzeljük el azt, hogy nem csak egyszer húzunk: kihúzzuk a számokat, felírjuk, csakhogy utána visszadobjuk őket, átkeverjük az urnát és újra húzunk. Aztán újra, aztán újra, aztán újra, ahányszor csak szeretnék. Ez most itt egy kulcsfontosságú ötlet, ami még sokszor elő fog jönni később: a valóságban csak egyetlen húzásunk és egyetlen mintánk van, de hogy ennek a viselkedését és tulajdonságait jobban megértsük, <em>képzeletben</em> eljátsszuk, hogy mi történik, ha újra meg újra mintát vennénk! A valóságban ilyen nem lesz, hiszen csak egyetlen mintánk van, de ezek az ismeretek segíteni fognak abban, hogy jobban értsük, hogy annál az egy mintánál mire számíthatunk.</p>
+<p>Képzeljük magunk elé ezt a helyzetet! Mit fogunk látni? Az első fontos megállapítás, hogy <em>hiába</em> is van lerögzítve a sokaság (vannak mindig ugyanazok a golyók az urnában), <em>hiába</em> is teljesen véletlen a mintavétel (mindig jól átkeverjük az urnát), <em>mégis</em> minden húzásnál más számokat kapunk. Néha kicsit kisebbeket, néha kicsit nagyobbakat. Miközben a valódi átlag mindig ugyanaz, fix, egy adott, rögzített érték (csak mi nem tudjuk, hogy mennyi). A konklúzió ebből nagyon egyszerű: lehetetlen, hogy a feladatot hiba nélkül oldjuk meg. Akármit is számolunk ki a mintából, az nem tudja mindig a jó értéket adni, lehetetlen, hogy akkor is a jó értéket szolgáltassa, ha véletlenül a 10 legkisebb számot húzzuk ki, meg akkor is, ha a 10 legnagyobbat.</p>
+<p>Bármilyen módszert is találunk ki arra, hogy a mintából hogyan következtessünk a sokaságra, teljesen biztos, hogy annak a végeredménye <em>mintáról-mintára változni</em> fog, azaz függeni fog attól, hogy konkrétan „hogyan nyúltunk bele a sokaságba”, konkrétan milyen mintát vettünk. Ezt a jelenséget hívjuk <strong>mintavételi ingadozásnak</strong>. A szerencse épp az lesz, amit fent megtárgyaltunk, hogy ez a mintavételi ingadozás követni fog bizonyos (valószínűségi) törvényszerűségeket, így bár a fenti miatt elkerülhetetlenül hibázhatunk a következtetésnél, de ennek a hibázásnak a természetéről fogunk tudni nyilatkozni.</p>
+<p>Amit nagyon fontos megérteni, hogy az előbb említett „hibázás” alatt nem arra kell gondolni, hogy valamilyen értelemben rosszul vesszük a mintát: a <em>legtökéletesebben véletlen</em> mintavétel mellett is előfordulhat, hogy a 10 legkisebb vagy 10 legnagyobb értéket vesszük. A <em>legtökéletesebb véletlen</em> mintavétel mellett is néha kisebb számokat húzunk, néha nagyobbakat. Ez az, amit az előbb úgy hívtam, hogy a „véletlen szeszélye”; egy elkerülhetetlen jelenség.</p>
+<!-- Természetesen, ha rosszul veszünk mintát (például akár tudattalan módon is, de a soványabb embereket szólítjuk meg a kérdőívvel, hogy ne hozzuk zavarba a megkérdezetteket), akkor elképzelhető, hogy ennek megnő a valószínűsége, de akkor sem nulla ha tökéletesen véletlen a mintavétel. -->
+<p>A mintavételi ingadozásból fakadó hibát hívjuk <strong>mintavételi hibának</strong>. A fenti okfejtés azt mondja, hogy a mintavételi hiba elkerülhetetlen ugyan, de a mértékéről fogunk tudni nyilatkozni.</p>
+<!-- Csak épp -- és itt jön a lényeg -- extrém kicsi! Ha tényleg tökéletesen véletlen a mintavétel, azaz minden sokasági alanynak azonos esélye van a mintába kerülésre, akkor annak a valószínűsége, hogy pont a 30 legsoványabbat választjuk ki épp $1/\binom{30}{1000}\approx 4\cdot 10^{-56}$\%. Így értendő az, hogy a hiba valószínűségszámítási úton, "sztochasztikusan" limitálható: nem tudjuk kizárni, hogy ilyen -- hatalmas méretű -- torzítás keletkezzen a mintából következtetés hatására\dots{} de meg tudjuk mondani, hogy ennek mennyi a -- szerencsére igen kicsi -- valószínűsége. Az ilyen okokból fakadó hibázást nevezzük **mintavételi hibának**. -->
+<p>Egy orvosi vizsgálatnak azonban nem csak olyan hibája lehet, ami az – elkerülhetetlen – mintavételi ingadozásból adódik. Minden más hibaforrást összefoglaló néven <strong>nem-mintavételi hibának</strong> nevezünk. Talán a legfontosabb: megfigyeléses vizsgálatoknál a confounding. De ide tartozik az is, ha nem véletlenszerűen választjuk a mintát, sok egyéb hiba mellett.</p>
+<!-- Véthetünk hibát alullefedéssel és túllefedéssel (azaz a minta pontatlan körülírásával), véthetünk definíciós hibát a kérdéseknél, hibát az adatkódolás során, a végpont megválasztásánál stb. stb., de ami még fontosabb, hogy véthetünk hibát a minta kijelölésével (amennyiben a minta valójában nem reprezentatív a sokaságra nézve, lásd az előbbi példát a személyes megkérdezéses testtömeg-vizsgálatról), vagy épp megfigyeléses vizsgálat esetén a confounding-gal. Ezeket -- tisztán statisztikai úton nem olyan könnyen kézben tartható -- hibákat nevezzük egységesen **nem-mintavételi hibáknak**. -->
+<!-- Különösen óvatosnak kell lennünk akkor, ha ún. *kényelmi mintával* dolgozunk, azaz a sokaságból az alapján választjuk ki a mintát, hogy "mi esik a kezünk ügyébe". Például a kérdésünk a magyar cukorbetegekre vonatkozik, ám ebből a sokaságból nem úgy veszünk mintát, hogy kisorsolunk (véletlenszám-generátorral) az ország összes cukorbetege közül annyit, amekkora mintára szükségünk van, hanem vesszük az orvos együttműködő partnerünk múlt heti betegforgalmát. Nyilvánvaló, hogy ez utóbbi mennyivel kényelmesebb (sőt, sokszor sajnos csak az ilyen és ehhez hasonló megoldások járhatóak), de ilyenkor mindig tudatában kell lennünk annak, hogy a sokaságra történő következtetést ekkor már nem csak a mintavételi hiba fogja nehezíteni, hanem az a kérdés is, hogy vajon a minta mennyire reprezentatív a sokaságra nézve. Például, ha az orvos partner kórháza Budapesten van, akkor nagyon is elképzelhető, hogy az ott kezelt betegek szocioökonómiai státusza szisztematikusan eltér a falusi lakosságétól (márpedig ez egy sor paramétert befolyásol), sőt, adott esetben akár az sem mindegy, hogy Budán vagy Pesten van a kórház. -->
+</section>
+<section id="sec-becsleselmelet" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="sec-becsleselmelet"><span class="header-section-number">3.2</span> Becsléselmélet</h2>
+<p>A becsléselmélet az induktív statisztika egyik fő ága, feladata valamilyen sokasági jellemző értékének minta alapján történő számszerű meghatározása. A „becslés” szó használata azért indokolt, mert az előbb kifejtettekből adódik, hogy mintavételi helyzetben valójában nem tudjuk „meghatározni” a jellemző értékét (olyan értelemben, hogy „megmondjuk biztosan”), csak valószínűségi jellegű, potenciálisan hibával terhelt kijelentések tételére van mód, azzal, hogy a hibázás mértékét magát is fogjuk tudni jellemezni. Ettől válik a becsléselmélet tudománnyá.</p>
+<p>A becsülni kívánt sokasági jellemzőt általánosságban <span class="math inline">\(\theta\)</span>-val jelöljük, ha nem kívánjuk konkrétan megmondani, hogy micsoda, mert általában beszélünk becsléselméletről. Ez lehet a sokaság átlaga, szórása, valamilyen tulajdonsággal rendelkező elemeinek az aránya stb. Két pontosítást, illetve kommentárt a fenti definíció általánosságáról tennem kell:</p>
+<ol type="1">
+<li>A becslési feladat egyik megközelítése az, amikor a sokaság eloszlására feltételezünk valamit, és ezáltal a feladat ezen eloszlás – egy vagy több – paramétérének megbecslésére redukálódik. Például feltételezzük, hogy a sokaság eloszlása normális, és így a feladat két szám (a várható érték és a szórás) megbecslése, hiszen ha azokat ismerjük, akkor már tudunk mindent az eloszlásról. Ezt hívjuk <strong>paraméteres becslésnek</strong>. Elképzelhető olyan feladat is azonban, ahol nem ez a helyzet, nem arról van szó, hogy a sokaság eloszláscsaládját feltételezzük, és a becslés paraméterre irányul; kérdezhetjük például azt, hogy mi maga az eloszlás, mondjuk „becsüljük meg a sűrűségfüggvényét” formában. Ilyenkor beszélünk <strong>nemparaméteres becslésről</strong>.</li>
+<li>A <span class="math inline">\(\theta\)</span> jelölés arra utal, hogy egyetlen számot kell becsülnünk, ez az egydimenziós paraméterbecslés. Ez a feladat például ha feltételezzük, hogy a sokasági eloszlás Bernoulli és a cél a <span class="math inline">\(p\)</span> paraméter becslése, de az is idetartozik, ha normális háttéreloszlást feltételezünk, de úgy, hogy a szórás adott, ismert érték. Az is egydimenziós becslés, ha külön-külön megbecsüljük a várható értéket és a szórást a normális eloszlásos példa esetén, azonban annak is van értelme, hogy ezeket egyszerre, egyidejűleg becsüljük. Ez ugyanaz a feladat, csak a becsülendő objektum nem egy szám (<span class="math inline">\(\theta\)</span>), hanem egy vektor (<span class="math inline">\(\underline{\theta}\)</span>). Ezt hívjük többdimenzós becslésnek.</li>
+</ol>
+<p>A továbbiakban elsőként az egydimenziós paraméteres becslésekkel fogunk foglalkozni.</p>
+<p>Maradjunk most annál a példánál, ha a feladat a sokaság átlagának/várható értékének<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> megbecslése. Ekkor egy teljesen természetes gondolat, hogy ezt a jellemzőt a minta átlagával igyekezzünk megbecsülni.</p>
+<p>Ez a naiv „tipp” is mutatja már, hogy mit értünk precízen becslés alatt: egy olyan függvényt (neve <strong>becslőfüggvényt</strong> vagy egyszerűen <strong>becslő</strong>), melynek bemenetül a minta elemeit kell megadni, eredményként pedig kidobja a becslést az ismeretlen sokasági jellemzőre. Egy <span class="math inline">\(\theta\)</span> sokasági jellemző becslőfüggvénye tehát egy</p>
+<p><span class="math display">\[\widehat{\theta}\left(x_1,x_2,\ldots,x_n\right)\]</span></p>
+<p>függvény. (A becsült értéket a statisztikában általában is kalappal jelöljük.) A fenti jelölés a korrekt, hiszen a becslőfüggvény a mintaelemek függvénye, de néha ezt <span class="math inline">\(\widehat{\theta}_n\)</span> formában rövidítjük, ha pusztán annyit kívánunk jelezni, hogy hány elemű mintából becslünk, vagy <span class="math inline">\(\widehat{\theta}\)</span> formában, ha még ezt sem.</p>
+<p>Az előbbi példánk azt jelenti, hogy ha a becsülni kívánt jellemző a sokasági várható érték (<span class="math inline">\(\theta=\mu\)</span>), akkor reményeink szerint arra jó becslő lesz az</p>
+<p><span class="math display">\[\widehat{\theta}\left(x_1,x_2,\ldots,x_n\right)=\frac{\sum_{i=1}^n x_i}{n}=\overline{x}\]</span></p>
+<p>függvény. Ahogy már korábban is volt róla szó, ennek értéke két dologtól fog függeni: a <span class="math inline">\(\mu\)</span> értékétől (a valódi sokasági jellemzőtől), és attól, hogy konkrétan milyen mintát vettünk – a véletlen szeszélyétől; ezt hívtuk mintavételi ingadozásnak. Eddig úgy fogalmaztunk, hogy a mintaelemek ingadoznak, de mivel a becslőfüggvényt a mintaelemekből számoljuk ki, így természetesen a becslőfüggvénnyel becsült érték is mintáról-mintára ingadozni fog. Gondoljunk a képzeletbeli újra-mintavételezésre: ha kihúzzuk a 10 számot, felírjuk <em>az átlagukat</em>, visszadobjuk, megkeverjük, újra húzunk, újra átlagolunk, újra visszadobunk, újra keverünk, újra húzunk, újra átlagolunk stb., akkor minden egyes alkalommal más és más átlagot fogunk kapni, <em>hiába</em> ugyanaz a sokaság és <em>hiába</em> volt teljesen véletlenszerű minden mintavétel. (Ez természetesen nem csak az átlagra igaz: bármi mást számolnánk ki a mintaelemekből, az is ugyanúgy fog viselkedni.) Ez a mintavételi ingadozás, immár a becslőfüggvényre vonatkozóan.</p>
+<p>Ha mármost a fenti eljárást sokszor megcsináljuk, és a végén megnézzük a felírt – ingadozó – mintaátlagokat, akkor azoknak lesz egy eloszlása<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Ezt hívjuk <strong>mintavételi eloszlásnak</strong>.</p>
+<p>Érdemes ezt egy szimulációval is megnézni! Vegyünk egy adott, rögzített a sokaságból, melyet itt eloszlásával adtunk meg (<span class="math inline">\(\mathcal{N}\left(30,70\right)\)</span>), teljesen véletlenszerű módon 10 darab 30 elemű mintát, majd mindegyiknek számoljuk ki az átlagát:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] 69.09121 70.80325 71.05184 69.50381 71.53705 69.88624 68.87081 70.14842
+ [9] 67.80646 71.24820</code></pre>
 </div>
-<div id="induktivbecsleselmelet" class="section level2 hasAnchor" number="4.2">
-<h2><span class="header-section-number">4.2</span> Becsléselmélet<a href="induktiv.html#induktivbecsleselmelet" class="anchor-section" aria-label="Anchor link to header"></a></h2>
-<p>A becsléselmélet az induktív statisztika egyik fő ága, feladata valamilyen sokasági jellemző értékének minta alapján történő megbecslése. A ,,becslés’’ szó használata azért indokolt, mert az előbb kifejtettekből világos, hogy mintavételi helyzetben csak valószínűségi jellegű kijelentések tételére van mód.</p>
-<p>A sokasági jellemzőt teljesen általánosan<a href="#fn11" class="footnote-ref" id="fnref11"><sup>11</sup></a> értjük (ha nem specifikáljuk közelebbről, akkor általában <span class="math inline">\(\theta\)</span>-val jelöljük), bármilyen, a sokaság ismeretében számszerűen meghatározható értéket jelenthet (például a sokaság átlagát, szórását, valamilyen tulajdonsággal rendelkező elemeinek az arányát stb.). Egy tipikus példa a sokaság átlagának/várható értékének becslése<a href="#fn12" class="footnote-ref" id="fnref12"><sup>12</sup></a>. Egy teljesen természetes gondolat, hogy ezt a jellemzőt a minta átlagával igyekezzünk megbecsülni.</p>
-<p>Ez a naiv ,,tipp’’ is mutatja már, hogy mit értünk precízen becslés alatt: egy olyan függvényt (neve <strong>becslőfüggvényt</strong> vagy egyszerűen <strong>becslő</strong>), melynek bemenetül a minta elemeit kell megadni, eredményként pedig kidobja a becslést az ismeretlen sokasági jellemzőre. Egy <span class="math inline">\(\theta\)</span> sokasági jellemző becslőfüggvénye tehát egy
-<span class="math display">\[
-    \widehat{\theta} = f\left(x_1,x_2,\ldots,x_n\right)
-\]</span>
-függvény. (A becsült értéket a statisztikában általában is kalappal jelöljük.) Az előbbi naiv példánk azt jelenti, hogy ha a becsülni kívánt jellemző a sokasági várható érték (<span class="math inline">\(\theta=\mu\)</span>), akkor reményeink szerint arra jó becslő lesz az
-<span class="math display">\[
-    f\left(x_1,x_2,\ldots,x_n\right)=\frac{\sum_{i=1}^n x_i}{n}=\overline{x}
-\]</span>
-függvény. Ahogy már korábban is megállapítottuk, ennek értéke két dologtól fog függeni: a <span class="math inline">\(\mu\)</span> értékétől (a valódi sokasági jellemzőtől), és attól, hogy konkrétan milyen mintát vettünk. Ez utóbbi hatás miatt természetesen a becslőfüggvény eredménye minden egyes mintán más és más lesz, mintáról-mintára ingadozik. Visszatérve az egyszerű példánkra az 1000 elemű, véges sokaságból történő átlagbecslésre: kaphatjuk, mintavételtől függően, a legkönnyebb 30 ember átlagát is becslésként, és a legnehezebb 30 átlagát is. (És természetesen egy sor értéket a kettő között.) De, amint már ott is megállapítottuk, ezen extrémumok valószínűsége kisebb, a közbülső (és ilyen módon a valósághoz közelebb álló) értékeké pedig – szerencsére – nagyobb. Más szóval arra jutottunk, hogy a becslőfüggvény értékeinek is van egy eloszlása: meg lehet adni, hogy adott tartományba eső becslést mekkora valószínűséggel adnak. Ezt nevezzük <strong>mintavételi eloszlásnak</strong>.</p>
-<p>Érdemes ezt egy szimulációval is megnézni! Vegyünk ugyanabból a sokaságból, melyet itt eloszlásával adtunk meg (<span class="math inline">\(\mathcal{N}\left(30,70\right)\)</span>), 10 darab 30 elemű mintát, majd mindegyiknek számoljuk ki az átlagát:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="induktiv.html#cb30-1" tabindex="-1"></a><span class="fu">replicate</span>( <span class="dv">10</span>, <span class="fu">mean</span>( <span class="fu">rnorm</span>( <span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span> ) ) )</span></code></pre></div>
-<pre><code>##  [1] 68.15772 69.99507 70.61736 68.56484 66.69521 72.13443 69.86652 72.24791
-##  [9] 71.83016 66.54268</code></pre>
-<p>Látszik, hogy – noha a sokaság állandó, és így a várható értéke is állandó, fixen 10 – a minták átlaga, tehát a sokaság várható értékének mintából <em>becsült</em> értéke ingadozik.</p>
-<p>Elég sok ilyen szimulációt végezve, ez az ingadozás jól feltérképezhető (<a href="induktiv.html#fig:sampsim">4.1</a>. ábra).</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="induktiv.html#cb32-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>( <span class="dv">100000</span>, <span class="fu">mean</span>( <span class="fu">rnorm</span>( <span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span> ) ) )</span>
-<span id="cb32-2"><a href="induktiv.html#cb32-2" tabindex="-1"></a><span class="fu">mean</span>( res )</span></code></pre></div>
-<pre><code>## [1] 70.00478</code></pre>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="induktiv.html#cb34-1" tabindex="-1"></a><span class="fu">hist</span>( res, <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Mintaátlag&quot;</span> )</span>
-<span id="cb34-2"><a href="induktiv.html#cb34-2" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span> )</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:sampsim"></span>
-<img src="FerenciTamas_BevezetesABiostatisztikaba_files/figure-html/sampsim-1.png" alt="A mintaátlag mintavételi eloszlásának meghatározása szimulációval, normális háttéreloszlás mellett." width="672" />
-<p class="caption">
-Ábra 4.1: A mintaátlag mintavételi eloszlásának meghatározása szimulációval, normális háttéreloszlás mellett.
-</p>
 </div>
-<p>Ilyen módon további fontos kérdések is vizsgálhatóak, például megnézhetjük, hogy a becsült érték ingadozása hogyan függ a mintanagyságtól (<a href="induktiv.html#fig:sampsimn">4.2</a>. ábra).</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="induktiv.html#cb35-1" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>( <span class="dv">100000</span>, <span class="fu">mean</span>( <span class="fu">rnorm</span>( <span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span> ) ) )</span>
-<span id="cb35-2"><a href="induktiv.html#cb35-2" tabindex="-1"></a><span class="fu">plot</span>( <span class="fu">density</span>( res ), <span class="at">ylim =</span> <span class="fu">c</span>( <span class="dv">0</span>, <span class="fl">0.7</span> ), <span class="at">main =</span> <span class="st">&quot;&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;&quot;</span>, <span class="at">xlab =</span> <span class="st">&quot;Mintaátlag&quot;</span> )</span>
-<span id="cb35-3"><a href="induktiv.html#cb35-3" tabindex="-1"></a>res50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>( <span class="dv">100000</span>, <span class="fu">mean</span>( <span class="fu">rnorm</span>( <span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">10</span> ) ) )</span>
-<span id="cb35-4"><a href="induktiv.html#cb35-4" tabindex="-1"></a><span class="fu">lines</span>( <span class="fu">density</span>( res50 ), <span class="at">col =</span> <span class="st">&quot;blue&quot;</span> )</span>
-<span id="cb35-5"><a href="induktiv.html#cb35-5" tabindex="-1"></a>res300 <span class="ot">&lt;-</span> <span class="fu">replicate</span>( <span class="dv">100000</span>, <span class="fu">mean</span>( <span class="fu">rnorm</span>( <span class="dv">300</span>, <span class="dv">70</span>, <span class="dv">10</span> ) ) )</span>
-<span id="cb35-6"><a href="induktiv.html#cb35-6" tabindex="-1"></a><span class="fu">lines</span>( <span class="fu">density</span>( res300 ), <span class="at">col =</span> <span class="st">&quot;orange&quot;</span> )</span>
-<span id="cb35-7"><a href="induktiv.html#cb35-7" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">&quot;red&quot;</span>, <span class="at">lwd =</span> <span class="dv">2</span> )</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:sampsimn"></span>
-<img src="FerenciTamas_BevezetesABiostatisztikaba_files/figure-html/sampsimn-1.png" alt="A mintavételi eloszlás függése a mintanagyságtól." width="672" />
-<p class="caption">
-Ábra 4.2: A mintavételi eloszlás függése a mintanagyságtól.
-</p>
+<p>Látszik, hogy – noha a sokaság állandó, és így a várható értéke, tehát a becsülendő jellemző is állandó, fixen 10 – a minták átlaga, tehát a sokaság várható értékének mintából <em>becsült</em> értéke ingadozik.</p>
+<p>Elég sok ilyen szimulációt végezve, ez az ingadozás jól feltérképezhető, ez lesz az emlegetett mintavételi eloszlás (<a href="#fig-sampsim" class="quarto-xref"><span>3.1</span></a>. ábra).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(res)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 70.00309</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res, <span class="at">main =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Mintaátlag"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sampsim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sampsim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="induktiv_files/figure-html/fig-sampsim-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sampsim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Ábra&nbsp;3.1: A mintaátlag mintavételi eloszlásának meghatározása szimulációval, normális háttéreloszlás mellett.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ilyen módon további fontos kérdések is vizsgálhatóak, például megnézhetjük, hogy a becsült érték ingadozása hogyan függ a mintanagyságtól (<a href="#fig-sampsimn" class="quarto-xref"><span>3.2</span></a>. ábra).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(res), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">main =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Mintaátlag"</span>)</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>res50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(res50), <span class="at">col =</span> <span class="st">"blue"</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>res300 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(res300), <span class="at">col =</span> <span class="st">"orange"</span>)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-sampsimn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-sampsimn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="induktiv_files/figure-html/fig-sampsimn-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-sampsimn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Ábra&nbsp;3.2: A mintavételi eloszlás függése a mintanagyságtól.
+</figcaption>
+</figure>
+</div>
+</div>
 </div>
 <p>Az ilyen vizsgálatok (szokták ezt Monte Carlo szimulációnak is nevezni) könnyen kivitelezhetőek, és megfelelő számítási kapacitás mellett bonyolult problémák kezelésére is alkalmas. Hátránya viszont, hogy nem kapunk analitikus eredményt (tehát a mintavételi eloszlást nem kapjuk meg matematikai képlettel felírt függvényként); ebben az egyszerű példában ez sem jelent problémát, nemsokára vissza is fogunk rá térni.</p>
-<p>Felmerül a kérdés, hogy mit értünk precízen ,,jó’’ becslőfüggvény alatt. A gyakorlatban három tulajdonság különösen fontos:</p>
-<ol style="list-style-type: decimal">
-<li>Elfogadjuk, hogy a becslőfüggvény által szolgáltatott becslés mintáról-mintára ingadozik, de legalább az teljesüljön, hogy az ingadozás centrumában a valódi (sokasági) jellemző legyen, olyan értelemben, hogy <em>átlagosan</em> jó legyen a becsült érték. Precízen: egy becslőfüggvényt torzítatlannak mondunk, ha a mintavételi eloszlásának a várható értéke a valódi (sokasági) jellemző. E tulajdonság neve: <strong>torzítatlanság</strong>. A fenti szimulációk azt sugallják, hogy az előbbi példában a mintaátlag torzítatlan becslője a sokasági várható értéknek (ezt persze még bizonyítani kellene).</li>
-<li>Ennek az ingadozásnak a mértéke lehetőleg minél kisebb legyen, e tulajdonság neve: <strong>hatásosság</strong>. A hatásosságot a mintavételi eloszlás szórásával mérhetjük, egy becslőfüggvényt hatásosnak mondunk, ha torzítatlan, és a torzítatlan becslők körében minimális szórású. A fenti szimulációk azt sugallják, hogy a mintanagyság növelésével egyre hatásosabbá válik a mintaátlag mint becslőfüggvény.
-<!-- 3. Végezetül, kissé leegyszerűsítve fogalmazva, egy becslőfüggvényt **konzisztensnek** mondunk, ha a mintanagyság növekedtével nullába tart a minta --></li>
+<p>Az előbb lényegében hasraütésszerűen válaszottuk a mintaátlagot mint a sokasági várható érték becslőfüggvényét. (Maximum annyit mondtam, hogy „kézenfekvő”.) De miért pont a mintaátlagot használjuk becslőfüggvényként? Elvégre nagyon sok más választással is élhetnénk…!</p>
+<p>A helyzet nagyon egyszerű: a legjobb becslőfüggvényt kell választani. Igen ám, de mit értünk az alatt, hogy egy becslőfüggvény „jó”…? A gyakorlatban a következő tulajdonságok különösen fontosak:</p>
+<ol type="1">
+<li>Elfogadjuk, hogy a becslőfüggvény által szolgáltatott becslés mintáról-mintára ingadozik (mást nem is tehetünk…), de legalább az teljesüljön, hogy a becslés <em>a jó érték körül</em> ingadozik. Ez volt a konyhanyelvi megfogalmazás, a precíz az, hogy <em>átlagosan</em> jó legyen a becsült érték: egy becslőfüggvényt <strong>torzítatlannak</strong> mondunk, ha a mintavételi eloszlásának a várható értéke a valódi (sokasági) jellemző. Formálisan: a <span class="math inline">\(\widehat{\theta}\)</span> becslőfüggvény torzítatlan, ha <span class="math inline">\(\mathbb{E}\widehat{\theta} = \theta\)</span> minden <span class="math inline">\(\theta\)</span>-ra. (A „minden <span class="math inline">\(\theta\)</span>-ra” kitétel fontos: a <span class="math inline">\(\widehat{\theta}=123\)</span> várható értéke prímán a valódi érték, ha véletlenül <span class="math inline">\(\theta=123\)</span>, de azonnal elromlik, ha <span class="math inline">\(\theta\)</span> bármi más. Látható tehát, hogy a definíciónak csak akkor van értelme, ha megköveteljük, hogy működjön <em>bármi legyen is</em> a <span class="math inline">\(\theta\)</span> értéke.) Egy becslőfüggvény torzításának, jele <span class="math inline">\(Bs\left(\widehat{\theta}\right)\)</span> nevezzük a mintavételi eloszlásának várható értéke és a valódi érték közötti különbséget: <span class="math inline">\(Bs\left(\widehat{\theta}\right)=\mathbb{E}\widehat{\theta} - \theta\)</span>. (A torzítatlan becslő tehát az, aminek a torzítása nulla.) A fenti szimulációk azt sugallják, hogy az előbbi példában a mintaátlag torzítatlan becslője a sokasági várható értéknek (ezt persze még bizonyítani kellene matematikailag is, hiszen egy ilyen szimuláció soha nem tud szó szerint bizonyítani).</li>
+<li>Egy becslő <strong>aszimptotikusan torzítatlan</strong>, ha a torzítása 0-ba tart, midőn a mintanagyság tart a végtelenbe: <span class="math inline">\(\lim_{n \rightarrow\infty} Bs\left(\widehat{\theta}_n\right) = 0\)</span>. (Itt kitettem egy <span class="math inline">\(n\)</span> alsó indexet a becslőhöz, hogy jelezzem: az értéke függ a mintanagyságtól.) Következésképp minden torzítatlan becslő egyúttal aszimptotikusan is torzítatlan, de lehet olyan becslő – és van is – ami véges mintán torzított ugyan, de a torzítása nullába tart; ez lesz aszimptotikusan torzítatlan.</li>
+<li>A torzítatlan becslők a jó érték körül ingadoznak (most konyhanyelvileg szólva), ilyenkor a következő logikus elvárásunk, hogy ez az ingadozás minél kisebb legyen. E tulajdonság neve: <strong>hatásosság</strong>. A hatásosságot a mintavételi eloszlás szórásával (röviden mintavételi szórással) mérhetjük: két torzítatlan becslőfüggvény közül azt mondjuk hatásosabbnak, amelyiknek kisebb a mintavételi szórása. Ha egyszerűen hatásosnak nevezünk egy becslőfüggvényt, az alatt pedig azt értjük, hogy torzítatlan, és a torzítatlan becslők körében minimális szórású<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. A mintavételi szórásra mintából adott becslést standard hibának szokás nevezni.</li>
+<li>Végezetül, kissé leegyszerűsítve fogalmazva, egy becslőfüggvényt <strong>konzisztensnek</strong> mondunk, ha a mintanagyság növekedtével nullába tart a mintavételi szórása (a mintavételi eloszlás összemegy egy tüskévé) <em>és</em> az a tüske jó helyen van. Tehát: a becslőfüggvény (legalább aszimptotikusan) torzítatlan és nullába tart a mintavételi szórása; ami lényegében azt jelenti, hogy a becslőfüggvény tart<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> a valódi értékhez. Ne keverjük ezt össze a torzítatlansággal, vagy aszimptotikus torzítatlansággal: az csak annyit követel meg, hogy a <em>várható értéke</em> tartson a valódi értékhez; a konzisztencia azt mondja, hogy az eloszlás <em>egésze</em> tartson hozzá (tehát kiköti a nullába tartó szórást is). Érdemes végiggondolni: milyen lehet az a becslő, ami torzítatlan, de mégsem konzisztens…?</li>
 </ol>
-<p>Azzal a kérdéssel, hogy hogyan lehet egy becslőfüggvényt ,,kitalálni’’ (tehát, ha megadnak egy paramétert, akkor mutatni egy rá vonatkozó, és persze lehetőleg minél jobb statisztikai tulajdonságokkal bíró becslőfüggvényt) nem foglalkozunk részletesebben, csak megemlítjük, hogy erre vonatkozóan jól bejáratott módszerek, ún. becslési elvek léteznek. (A legnevezetesebb közülük a maximum likelihood-elv, továbbá a plug-in becslés, a legkisebb négyzetek elve, a momentumok módszere és a Bayes-becslés.)</p>
-<p>Nézzünk minderre egy példát! Tekintsünk egy (eloszlásával adott) sokaságot, mely <span class="math inline">\(X\sim\mathcal{N}\left(\mu,\sigma_0^2\right)\)</span> eloszlást követ. (Tehát tetszőleges számú mintát vehetünk belőle; minden egyes ilyen mintaelem egy ilyen eloszlásból származó, egymástól független szám lesz.) Azt állítjuk (és ezt hamarosan szabatosabban is be fogjuk bizonyítani), hogy ekkor a belőle vett <span class="math inline">\(n\)</span> elemű minták átlaga, azaz a <span class="math inline">\(\mu\)</span> sokasági várható érték (mint sokasági jellemző) fenti becslőfüggvénye <span class="math inline">\(\overline{x}\sim\mathcal{N}\left(\mu,\sigma_0^2/n\right)\)</span> eloszlást fog követni. (Tehát most feltételeztük, hogy azt <em>a priori</em> tudjuk, hogy normális eloszlású a sokaság, sőt, <span class="math inline">\(\sigma_0\)</span>-t is ismertnek vesszük, azaz csak a <span class="math inline">\(\mu\)</span> a kérdés.) Jegyezzük meg, hogy a sokasági jellemző, amit becsülni szeretnénk, itt a <span class="math inline">\(\mu\)</span> maga; az tehát nem követ semmilyen eloszlást, egy – konstans – szám! (Csak mi nem ismerjük.) A következőkben ezt az állítást fogjuk matematikai úton, valószínűségszámítási eszközökkel bebizonyítani, mégpedig a legegyszerűbb esetre, a fent vázolt független és azonos eloszlású mintavételre.</p>
-<p>Legyen az <span class="math inline">\(n\)</span> elemű mintánk <span class="math inline">\(X_1,X_2,\ldots,X_n\sim\mathcal{N}\left(\mu,\sigma_0^2\right)\)</span> függetlenül (mivel a mintavétel azonos eloszlású is, így mindegyik ugyanolyan eloszlást követ, ezért volt azt elég egyszer leírni). Figyeljük meg, hogy itt nagy betűket írtunk: ezek nem konkrét (realizálódott) értékek, hanem maguk is valószínűségi változók. (Most ugyanis statisztikai analízisét adjuk a helyzetnek: úgy képzeljük, hogy még nem vettünk mintát, hanem épp ellenkezőleg, azt vizsgáljuk, hogy ,,mi minden történhet’’ amikor majd mintát veszünk.) Ezzel a becslőfüggvényünk:
-<span class="math display">\[
-    \overline{X}=\frac{\sum_{i=1}^n X_i}{n}.
-\]</span></p>
-<p>Valószínűségszámításból tudjuk, hogy
-1. Normális eloszlású valószínűségi változók összege normális (szépen megfogalmazva: a normális eloszláscsalád zárt a konvolúcióra).
-2. A várható érték lineáris, így egy összeg várható értéke a várható értékek összege.
-3. Ha ráadásul korrelálatlan (de csak ez esetben!), akkor a szórásnégyzetek – nem a szórások! – is összeadódnak.
-Ebből a háromból már következik, hogy
-<span class="math display">\[
-    \sum_{i=1}^n X_i\sim\mathcal{N}\left(n\mu,n\sigma_0^2\right).
-\]</span>
-Szintén valószínűségszámításból tudjuk, hogy <span class="math inline">\(\mathbb{E}\left(aX\right)=a \cdot \mathbb{E}X\)</span> és <span class="math inline">\(\mathbb{D}^2\left(aX\right)=a^2 \cdot \mathbb{D}^2 X\)</span>, ezekből pedig már következik, hogy
-<span class="math display">\[
-    \overline{X}=\frac{\sum_{i=1}^n X_i}{n} \sim \mathcal{N}\left(\mu,\sigma_0^2/n\right),
-\]</span>
-ahogy azt eredetileg állítottuk is.</p>
-<p>Ezzel igazoltuk, hogy ilyen körülmények mellett a mintaátlag torzítatlan becslője a sokasági átlagnak, sőt, kiszámoltuk a mintavételi szórását is. (Be lehetne látni kicsit komolyabb matematikai statisztikai eszközökkel, hogy ez ráadásul e körülmények között hatásos becslő is, tehát ennél kisebb mintavételi szórás el sem érhető a torzítatlan becslők körében.)</p>
-<p>Ez tehát azt jelenti, hogy a 2944.5873016 gramm nem csak a születési tömegek átlaga (ahogy azt az előbb mondtuk), hanem egyúttal a ,,vizsgálat beválogatási feltételeinek megfelelő újszülöttek’’ (fiktív, végtelen!) sokaságának várható értékének becslője is! Nem csak azt mondhatjuk, hogy 2944.5873016 gramm a mintaátlag (biztosan), hanem azt is, hogy ez a legjobb tippünk arra, hogy mennyi a sokaság várható értéke. Vegyük észre, hogy minket valójában ez utóbbi érdekel! Tehát bár a számérték itt pont ugyanaz lett (ez nincs mindig így!), az igazán érdekes eredmény az utóbbi megfogalmazás (hiszen minket nem <em>konkrétan</em> ez a 189 újszülött érdekel, hanem <em>általában</em> az ilyen újszülöttek jellemzőinek viselkedése).</p>
-<p>Mind ez idáig azonban csak olyan becslőfüggvényekről beszéltünk, melyek egyetlen értéket, ,,a’’ legjobb becslést adják vissza eredményként. Az ilyen becslést hívjuk <strong>pontbecslésnek</strong>. (Hiszen az eredménye egyetlen pont a számegyenesen.) Ez olyan szempontból azonban nem szerencsés, hogy az eredmény semmit nem mond az abban lévő bizonytalanságról – noha, legalábbis becsülni, azt is tudnánk!</p>
-<p>Azt a becslési módszert, ami ezen túllép és explicite megjeleníti a becslésben lévő bizonytalanságot is, <strong>intervallumbecslésnek</strong> nevezzük. Az intervallumbecslés központi eszköze az <strong>konfidenciaintervallum</strong> (CI): ez egy olyan intervallum, melyre igaz, hogy a hogy ha sokszor megismételnék a mintavételt, és mindegyik mintából megszerkesztenénk a CI-t, akkor ezen CI-k várhatóan adott, nagy hányada (például 95%-a) tartalmazná az igazi (sokasági) értéket. Ez esetben ezt az intervallumot 95% megbízhatóság melletti konfidenciaintervallumnak nevezzük. A 95%, mint paraméter neve <strong>megbízhatósági szint</strong>, általában <span class="math inline">\(1-\alpha\)</span>-nak nevezzük (tehát <span class="math inline">\(\alpha=0,\!05\)</span> mellett beszélünk 95%-os megbízhatóságról). Első ránézésre kicsit furcsa lehet ez a jelölés, de majd a hipotézisvizsgálatnál is látni fogjuk, hogy <span class="math inline">\(\alpha\)</span>-val valamilyen hibázás jellegű mennyiséget szeretnénk jelölni, nem jóságot.</p>
-<p>Az induktív statisztikában tehát elfogadjuk (kénytelenek vagyunk elfogadni), hogy a becslésünk eredménye mintáról mintára változik, és így nem tudhatjuk biztosan, hogy <em>adott mintából</em> számolt becslés hogyan viszonyul a valódi (sokasági) értékhez – a konfidenciaintervallum azonban épp azt próbálja megragadni, hogy – adott minta alapján! – mire tippelhetünk, ,,vélhetően’’ hol lehet a valódi sokasági érték (adott, nagy megbízhatósággal). Ez természetesen már nem egyetlen szám, hanem egy tól-ig intervallum lesz a jellemzőre vonatkozóan. Hogy mit jelent a ,,vélhetően’’ és a ,,megbízhatóság’’, az pontosításra szorul, erre tárgyalásunk legvégén fogunk visszatérni.</p>
-<p>Adott megbízhatósági szint mellett minél szűkebb a CI, annál kisebb a bizonytalanság a becslésünkben. Természetesen adott becslés mellett a CI szélességét a megbízhatósági szint fogja meghatározni: kis megbízhatóság mellett szűk intervallumot is mondhatunk, de ha nagy megbízhatóságra van szükségünk, akkor csak széles limiteket tudunk szabni. Itt tehát kompromisszumot kell kötnünk: az se jó, ha nagy biztonsággal tudjuk, hogy nem igazán tudjuk, hogy hol van az igazi érték, és az se, ha nagyon kis biztonsággal tudjuk, hogy igen pontosan hol van A 95% egy tipikus, gyakorlatban igen sokszor használt kompromisszum ez ügyben.</p>
-<p>Nézzünk erre is egy számszerű példát! Folytatva előző példánkat, tudjuk, hogy <span class="math inline">\(\overline{X} \sim \mathcal{N}\left(\mu,\sigma_0^2/n\right)\)</span>. Ebből következik, hogy
-<span class="math display">\[
-    \frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}\sim\mathcal{N}\left(0,1\right),
-\]</span>
-azaz
-<span class="math display">\[
-    \mathbb{P}\left(-z&lt;\frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}&lt;z\right)=\Phi\left(z\right)-\Phi\left(-z\right)=\Phi\left(z\right)-\left[1-\Phi\left(z\right)\right]=2\Phi\left(z\right)-1.
-\]</span>
-Ha ezt a valószínűséget <span class="math inline">\(\left(1-\alpha\right)\)</span>-nak választjuk (a megbízhatósági szint fenti értelme miatt), akkor kapjuk, hogy <span class="math inline">\(\Phi\left(z\right)=1-\frac{\alpha}{2}\)</span> azaz <span class="math inline">\(z=\Phi^{-1}\left(1-\frac{\alpha}{2}\right)\)</span>. Erre a mennyiségre bevezetve a <span class="math inline">\(z_{1-\frac{\alpha}{2}}\)</span> jelölést, rögtön látható, hogy a <span class="math inline">\(\left[\mu-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}},\mu+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right]\)</span> tartományba <span class="math inline">\(1-\alpha\)</span> valószínűséggel esik <span class="math inline">\(\overline{X}\)</span>. Ezt nevezhetnénk ,,deduktív statisztikának’’, hiszen itt a sokaságot tekintettük ismertnek, és ez alapján következtettünk a minta viselkedésére.</p>
-<p>Átrendezve ,,kapjuk’’ a minket érdeklő az induktív statisztikát:
-<span class="math display">\[
-    \mathbb{P}\left(-z_{1-\frac{\alpha}{2}}&lt;\frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}&lt;z_{1-\frac{\alpha}{2}}\right)=1-\alpha \Rightarrow \mathbb{P}\left(\overline{X}-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}&lt;\mu&lt;\overline{X}+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right)=1-\alpha.
-\]</span>
-Ekkor a konfidenciaintervallum immár egy konkrét mintára a fenti alapján:
-<span class="math display">\[
-    \left[\overline{x}-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}},\overline{x}+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right].
-\]</span>
-Tipikusan <span class="math inline">\(\alpha=0,\!05\)</span>, amint mondtuk, ekkor <span class="math inline">\(1-\alpha=95\)</span>%-os konfidenciaintervallumról beszélünk.</p>
-<p><em>Nagyon fontos</em> megfigyelni, hogy csak mintavétel <em>előtt</em> vannak valószínűségi változók (,,nagy betűk’<q>), <em>utána</em> már nem (,,kis betűk</q><q>) – ezért használtuk a megbízhatóság szót a valószínűség helyett. Mintavétel <em>után</em> ugyanis már nem tehetünk olyan kijelentést, hogy a megkonstruált CI 95%-os ,,valószínűséggel</q>’ tartalmazza a valódi, sokasági paramétert, hiszen ha már egy realizálódott minta van a kezünkben, akkor elvileg akárhol lehet a valódi érték, erről semmi közelebbit nem tudunk mondani. Valószínűséget csak a (szükségképp képzeletbeli) ,,ismételt mintavételi’’ értelemben tudunk behozni a feladatba, ezért használjuk megkülönböztetésül a megbízhatóság szót. Így kell érteni, hogy a konfidenciaintervallum jellemzi, hogy ,,hol lehet’’ a valódi (sokasági) paraméter.</p>
+<p>A torzítatlanság és a hatásosság <em>véges mintás</em> tulajdonságok: csak akkor állnak fenn, ha <em>minden</em> <span class="math inline">\(n\)</span>-re fennállnak. (Hiszen a definíció nem mondott semmit <span class="math inline">\(n\)</span>-ről, tehát csak akkor működik, ha minden <span class="math inline">\(n\)</span>-re igaz.) Az aszimptotikus torzítatlanság és a konzisztencia <em>aszimptotikus</em> tulajdonságok, hiszen <span class="math inline">\(\lim_{n \rightarrow\infty}\)</span>-re követelnek meg valamit. A statisztikai zsargon az előbbit néha kismintás, az utóbbit néha nagymintás tulajdonságnak nevezi. (Érthető, hogy honnan jönnek az elnevezések, de azért különösen az előbbi nem tökéletesen szerencsés: a kismintás természetesen nem azt jelenti, hogy kis mintára működik, hanem azt, hogy kis mintára <em>is</em> működik.)</p>
+<p>Azzal a kérdéssel, hogy hogyan lehet egy becslőfüggvényt „kitalálni” (tehát, ha megadnak egy paramétert, akkor mutatni egy rá vonatkozó, és persze lehetőleg minél jobb statisztikai tulajdonságokkal bíró becslőfüggvényt) nem foglalkozunk részletesebben, csak megemlítem, hogy erre vonatkozóan jól bejáratott módszerek, ún. becslési elvek léteznek. (A legnevezetesebb közülük a maximum likelihood-elv, továbbá a plug-in becslés, a legkisebb négyzetek elve, a momentumok módszere és a Bayes-becslés.)</p>
+<p>Nézzünk minderre egy példát! Tekintsünk egy (eloszlásával adott) sokaságot, mely <span class="math inline">\(X\sim\mathcal{N}\left(\mu,\sigma_0^2\right)\)</span> eloszlást követ. (Tehát tetszőleges számú mintát vehetünk belőle; minden egyes ilyen mintaelem egy ilyen eloszlásból származó, egymástól független szám lesz.) A <span class="math inline">\(0\)</span> index a <span class="math inline">\(\sigma_0^2\)</span>-ben arra utal, hogy ez nem becsülendő jellemző, az értékét ismertnek vesszük. Azt állítom (és ezt hamarosan szabatosabban is be fogjuk bizonyítani), hogy ekkor a belőle vett <span class="math inline">\(n\)</span> elemű minták átlaga, azaz a <span class="math inline">\(\mu\)</span> sokasági várható érték (mint sokasági jellemző) fenti becslőfüggvénye <span class="math inline">\(\overline{x}\sim\mathcal{N}\left(\mu,\sigma_0^2/n\right)\)</span> eloszlást fog követni. (Tehát most feltételeztük, hogy azt <em>a priori</em> tudjuk, hogy normális eloszlású a sokaság, sőt, mivel <span class="math inline">\(\sigma_0\)</span>-t is ismertnek vettük, azaz csak a <span class="math inline">\(\mu\)</span> a kérdés.) Jegyezzük meg, hogy a sokasági jellemző, amit becsülni szeretnénk, itt a <span class="math inline">\(\mu\)</span> maga; az tehát nem követ semmilyen eloszlást, egy – konstans – szám! Csak mi nem ismerjük. A következőkben ezt az állítást fogjuk matematikai úton, valószínűségszámítási eszközökkel bebizonyítani, mégpedig a legegyszerűbb esetre, a fent vázolt független és azonos eloszlású mintavételre.</p>
+<p>Legyen az <span class="math inline">\(n\)</span> elemű mintánk <span class="math inline">\(X_1,X_2,\ldots,X_n\sim\mathcal{N}\left(\mu,\sigma_0^2\right)\)</span> függetlenül (mivel a mintavétel azonos eloszlású is, így mindegyik ugyanolyan eloszlást követ, ezért volt azt elég egyszer leírni). Figyeljük meg, hogy itt nagy betűket írtam: ezek nem konkrét (realizálódott) értékek, hanem maguk is valószínűségi változók. (Most ugyanis statisztikai analízisét adjuk a helyzetnek: úgy képzeljük, hogy még nem vettünk mintát, hanem épp ellenkezőleg, azt vizsgáljuk, hogy „mi minden történhet” amikor majd mintát veszünk.) Ezzel a becslőfüggvényünk:</p>
+<p><span class="math display">\[\overline{X}=\frac{\sum_{i=1}^n X_i}{n}.\]</span></p>
+<p>Valószínűségszámításból tudjuk, hogy</p>
+<ol type="1">
+<li>Normális eloszlású valószínűségi változók összege normális (szépen megfogalmazva: a normális eloszláscsalád zárt a konvolúcióra).</li>
+<li>A várható érték lineáris, így egy összeg várható értéke a várható értékek összege.</li>
+<li>Ha ráadásul korrelálatlan (de csak ez esetben!), akkor a szórásnégyzetek – nem a szórások! – is összeadódnak.</li>
+</ol>
+<p>Ebből a háromból már következik, hogy</p>
+<p><span class="math display">\[\sum_{i=1}^n X_i\sim\mathcal{N}\left(n\mu,n\sigma_0^2\right).\]</span></p>
+<p>Szintén valószínűségszámításból tudjuk, hogy <span class="math inline">\(\mathbb{E}\left(aX\right)=a \cdot \mathbb{E}X\)</span> és <span class="math inline">\(\mathbb{D}^2\left(aX\right)=a^2 \cdot \mathbb{D}^2 X\)</span>, ezekből pedig már következik, hogy</p>
+<p><span class="math display">\[\overline{X}=\frac{\sum_{i=1}^n X_i}{n} \sim \mathcal{N}\left(\mu,\sigma_0^2/n\right),\]</span></p>
+<p>ahogy azt eredetileg állítottam is.</p>
+<p>Ezzel igazoltuk, hogy ilyen körülmények mellett a mintaátlag torzítatlan becslője a sokasági átlagnak, sőt, kiszámoltuk a mintavételi szórását is. (Be lehetne látni kicsit komolyabb matematikai statisztikai eszközökkel, hogy ez ráadásul e körülmények között hatásos becslő is, tehát ennél kisebb mintavételi szórás el sem érhető a torzítatlan becslő segítségével.)</p>
+<p>Ez tehát azt jelenti, hogy a 2944.5873016 gramm nem csak a születési tömegek átlaga (amint a deskriptív statisztikai résznél szerepel), hanem egyúttal a „vizsgálat beválogatási feltételeinek megfelelő újszülöttek” (fiktív, végtelen!) sokaságának várható értékének becslője is! Nem csak azt mondhatjuk, hogy 2944.5873016 gramm a mintaátlag (biztosan), hanem azt is, hogy ez a legjobb tippünk arra, hogy mennyi a sokaság várható értéke. Vegyük észre, hogy minket valójában ez utóbbi érdekel! Tehát bár a számérték itt pont ugyanaz lett (ez nincs mindig így!), az igazán érdekes eredmény az utóbbi megfogalmazás (hiszen minket nem <em>konkrétan</em> ez a 189 újszülött érdekel, hanem <em>általában</em> az ilyen újszülöttek jellemzőinek viselkedése).</p>
+<p>Mind ez idáig azonban csak olyan becslőfüggvényekről beszéltünk, melyek egyetlen értéket, „a” legjobb becslést adják vissza eredményként. Az ilyen becslést hívjuk <strong>pontbecslésnek</strong>. (Hiszen az eredménye egyetlen pont a számegyenesen.) Ez azonban még nem teljesíti a kitűzött céljainkat: eredetileg azt mondtam, sőt, ez volt a pláne, hogy a becslés bizonytalanságát magát is tudjuk jellemezni – csakhogy a pontbecslést ezt a célt nem valósítja meg!</p>
+<p>A megoldás nyomai azért már az eddigiekben is felbukkantak: a fenti levezetésből kiderült, hogy az átlag ingadozásának a mértéke <span class="math inline">\(\sigma_0^2/n\)</span>. Ez már feltétlenül információ, csak az is fontos lenne, hogy ezt jól megragadható formában adjuk meg.</p>
+<p>Azt a becslési módszert, ami ezt a célt igyekszik megvalósítani, megragadva és megjelenítve a becslésben lévő bizonytalanságot is, <strong>intervallumbecslésnek</strong> nevezzük. Az intervallumbecslés központi eszköze az <strong>konfidenciaintervallum</strong> (CI): ez egy olyan intervallum, melyre igaz, hogy a hogy ha sokszor megismételnék a mintavételt, és mindegyik mintából megszerkesztenénk a CI-t, akkor ezen CI-k várhatóan adott, nagy hányada (például 95%-a) tartalmazná az igazi (sokasági) értéket. Ez esetben ezt az intervallumot 95% megbízhatóság melletti konfidenciaintervallumnak nevezzük. A 95%, mint paraméter neve <strong>megbízhatósági szint</strong>, általában <span class="math inline">\(1-\alpha\)</span>-nak nevezzük (tehát <span class="math inline">\(\alpha=0,\!05\)</span> mellett beszélünk 95%-os megbízhatóságról). Első ránézésre kicsit furcsa lehet ez a jelölés, de majd a hipotézisvizsgálatnál is látni fogjuk, hogy <span class="math inline">\(\alpha\)</span>-val valamilyen hibázás jellegű mennyiséget szeretnénk jelölni, nem jóságot.</p>
+<p>Az induktív statisztikában tehát elfogadjuk (kénytelenek vagyunk elfogadni), hogy a becslésünk eredménye mintáról mintára változik, és így nem tudhatjuk biztosan, hogy <em>adott mintából</em> számolt becslés hogyan viszonyul a valódi (sokasági) értékhez – a konfidenciaintervallum azonban épp azt próbálja megragadni, hogy – adott minta alapján! – mire tippelhetünk, „vélhetően” hol lehet a valódi sokasági érték (adott, nagy megbízhatósággal). Ez természetesen már nem egyetlen szám, hanem egy tól-ig intervallum lesz a jellemzőre vonatkozóan. Hogy mit jelent a „vélhetően” és a „megbízhatóság”, az pontosításra szorul, erre tárgyalásunk legvégén fogok visszatérni.</p>
+<p>Adott megbízhatósági szint mellett minél szűkebb a CI, annál kisebb a bizonytalanság a becslésünkben. Természetesen adott becslés mellett a CI szélességét a megbízhatósági szint fogja meghatározni: kis megbízhatóság mellett szűk intervallumot is mondhatunk, de ha nagy megbízhatóságra van szükségünk, akkor csak széles limiteket tudunk szabni. Itt tehát kompromisszumot kell kötnünk: az se jó, ha nagy biztonsággal tudjuk, hogy nem igazán tudjuk, hogy hol van az igazi érték, és az se, ha nagyon kis biztonsággal tudjuk, hogy igen pontosan hol van… A 95% egy tipikus, gyakorlatban igen sokszor használt kompromisszum ez ügyben.</p>
+<p>Nézzünk erre is egy számszerű példát! Folytatva előző példánkat, tudjuk, hogy <span class="math inline">\(\overline{X} \sim \mathcal{N}\left(\mu,\sigma_0^2/n\right)\)</span>. Ebből következik, hogy</p>
+<p><span class="math display">\[\frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}\sim\mathcal{N}\left(0,1\right),\]</span></p>
+<p>azaz</p>
+<p><span class="math display">\[\mathbb{P}\left(-z&lt;\frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}&lt;z\right)=\Phi\left(z\right)-\Phi\left(-z\right)=\Phi\left(z\right)-\left[1-\Phi\left(z\right)\right]=2\Phi\left(z\right)-1.\]</span></p>
+<p>Ha ezt a valószínűséget <span class="math inline">\(\left(1-\alpha\right)\)</span>-nak választjuk (a megbízhatósági szint fenti értelme miatt), akkor kapjuk, hogy <span class="math inline">\(\Phi\left(z\right)=1-\frac{\alpha}{2}\)</span> azaz <span class="math inline">\(z=\Phi^{-1}\left(1-\frac{\alpha}{2}\right)\)</span>. Erre a mennyiségre bevezetve a <span class="math inline">\(z_{1-\frac{\alpha}{2}}\)</span> jelölést, rögtön látható, hogy a <span class="math inline">\(\left[\mu-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}},\mu+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right]\)</span> tartományba <span class="math inline">\(1-\alpha\)</span> valószínűséggel esik <span class="math inline">\(\overline{X}\)</span>. Ezt nevezhetnénk „deduktív statisztikának”, hiszen itt a sokaságot tekintettük ismertnek, és ez alapján következtettünk a minta viselkedésére.</p>
+<p>Átrendezve „kapjuk” a minket érdeklő az induktív statisztikát:</p>
+<p><span class="math display">\[\mathbb{P}\left(-z_{1-\frac{\alpha}{2}}&lt;\frac{\overline{X}-\mu}{\sigma_0/\sqrt{n}}&lt;z_{1-\frac{\alpha}{2}}\right)=1-\alpha \Rightarrow \mathbb{P}\left(\overline{X}-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}&lt;\mu&lt;\overline{X}+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right)=1-\alpha.\]</span></p>
+<p>Ekkor a konfidenciaintervallum immár egy konkrét mintára a fenti alapján:</p>
+<p><span class="math display">\[\left[\overline{x}-z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}},\overline{x}+z_{1-\frac{\alpha}{2}}\frac{\sigma_0}{\sqrt{n}}\right].\]</span></p>
+<p>Tipikusan <span class="math inline">\(\alpha=0,\!05\)</span>, amint mondtuk, ekkor <span class="math inline">\(1-\alpha=95\)</span>%-os konfidenciaintervallumról beszélünk.</p>
+<p><em>Nagyon fontos</em> megfigyelni, hogy csak mintavétel <em>előtt</em> vannak valószínűségi változók („nagy betűk”), <em>utána</em> már nem („kis betűk”) – ezért használtuk a megbízhatóság szót a valószínűség helyett. Mintavétel <em>után</em> ugyanis már nem tehetünk olyan kijelentést, hogy a megkonstruált CI 95%-os „valószínűséggel” tartalmazza a valódi, sokasági paramétert, hiszen ha már egy realizálódott minta van a kezünkben, akkor elvileg akárhol lehet a valódi érték, erről semmi közelebbit nem tudunk mondani. Valószínűséget csak a (szükségképp képzeletbeli) „ismételt mintavételi” értelemben tudunk behozni a feladatba, ezért használjuk megkülönböztetésül a megbízhatóság szót. Így kell érteni, hogy a konfidenciaintervallum jellemzi, hogy „hol lehet” a valódi (sokasági) paraméter.</p>
 <p>A születési tömegek 95%-os konfidenciaintervalluma [2840,0–3049,2] gramm. (Megjegyezzük, hogy ez a fentitől kissé eltérő módszerrel készült, ami tekintettel van arra is, hogy itt most – szemben a fenti példával – nem ismerjük <em>a priori</em> a sokaság szórását.) Ez azt jelenti, hogy a <em>legjobb</em> tippünk a születési tömeg sokasági várható értékére a 2944.5873016 gramm, de azt is tudjuk ezen felül mondani, hogy bár ez csak bizonytalan tipp (hiszen a becsült érték mintáról-mintára ingadozik), de 95%-os <em>megbízhatósággal</em> azért kijelenthető, hogy nem kisebb a keresett, ismeretlen sokasági várható érték mint 2840,0 gramm és nem nagyobb mint 3049,2 gramm. (Amit úgy értünk, hogy azt becsüljük, hogy ha a sokaságból 100 mintát vennénk, és mindegyikből ugyanígy megkonstruálnánk a konfidenciaintervallumokat, akkor várhatóan 95 esetben tartalmazná a CI a valódi, sokasági értéket.) Érdemes megfigyelni, hogy a konfidenciaintervallum két végpontja szimmetrikus a pontbecslésre; ez a várható érték becslésére jellemző, de más paramétereknél nem feltétlenül van így.</p>
-<p>Itt is hasznos mindezeket egy szimulációval szemléltetni (<a href="induktiv.html#fig:cisim">4.3</a>. ábra).</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="induktiv.html#cb36-1" tabindex="-1"></a>SimData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>( <span class="at">idx =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>, <span class="at">CI =</span> <span class="fu">t</span>( <span class="fu">replicate</span>( <span class="dv">100</span>, TeachingDemos<span class="sc">::</span><span class="fu">z.test</span>( <span class="fu">rnorm</span>( <span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span> ), <span class="at">stdev =</span> <span class="dv">10</span> )<span class="sc">$</span>conf.int ) ) )</span>
-<span id="cb36-2"><a href="induktiv.html#cb36-2" tabindex="-1"></a><span class="fu">ggplot</span>(SimData, <span class="fu">aes</span>(<span class="at">xmin =</span> CI<span class="fl">.1</span>, <span class="at">xmax =</span> CI<span class="fl">.2</span>, <span class="at">y =</span> idx)) <span class="sc">+</span> <span class="fu">geom_linerange</span>() <span class="sc">+</span></span>
-<span id="cb36-3"><a href="induktiv.html#cb36-3" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">70</span>, <span class="at">color =</span> <span class="st">&quot;red&quot;</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">&quot;&quot;</span>)</span></code></pre></div>
-<div class="figure"><span style="display:block;" id="fig:cisim"></span>
-<img src="FerenciTamas_BevezetesABiostatisztikaba_files/figure-html/cisim-1.png" alt="Konfidenciaintervallumok szemléltetése szimulációval." width="672" />
-<p class="caption">
-Ábra 4.3: Konfidenciaintervallumok szemléltetése szimulációval.
-</p>
+<p>Itt is hasznos mindezeket egy szimulációval szemléltetni (<a href="#fig-cisim" class="quarto-xref"><span>3.3</span></a>. ábra).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SimData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">idx =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">CI =</span> <span class="fu">t</span>(<span class="fu">replicate</span>(</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span>, TeachingDemos<span class="sc">::</span><span class="fu">z.test</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>),</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>                               <span class="at">stdev =</span> <span class="dv">10</span>)<span class="sc">$</span>conf.int)))</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SimData, <span class="fu">aes</span>(<span class="at">xmin =</span> CI<span class="fl">.1</span>, <span class="at">xmax =</span> CI<span class="fl">.2</span>, <span class="at">y =</span> idx)) <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>() <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">70</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div id="fig-cisim" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cisim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="induktiv_files/figure-html/fig-cisim-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cisim-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Ábra&nbsp;3.3: Konfidenciaintervallumok szemléltetése szimulációval.
+</figcaption>
+</figure>
 </div>
 </div>
-<div id="induktivhipotezisvizsgalat" class="section level2 hasAnchor" number="4.3">
-<h2><span class="header-section-number">4.3</span> Hipotézisvizsgálat<a href="induktiv.html#induktivhipotezisvizsgalat" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+</section>
+<section id="sec-hipotezisvizsgalat" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-hipotezisvizsgalat"><span class="header-section-number">3.3</span> Hipotézisvizsgálat</h2>
 <p>Az induktív statisztika másik nagy ága a hipotézisvizsgálat. A hipotézisvizsgálat nagyon sok szempontból a becsléselmélet, ezen belül is az intervallumbecslés elméletének ikertestvére (ami ekvivalens, csak átfogalmazottan felírt egyenletekre vezet), mégis, saját szóhasználata, fogalomköre, és hatalmas gyakorlati jelentősége indokolja, hogy külön tárgyaljuk.</p>
-<p>Amíg a becsléselmélettől azt vártuk, hogy nyilatkozzon egy számunkra ismeretlen jellemzőről, addig a hipotézisvizsgálat esetében van előzetes elképzelésünk a jellemző értékéről (például, hogy egy adott számmal egyenlő) – csak épp nem tudjuk, hogy ez igaz-e. Ha az előzetes feltevésünk mintára vonatkozna, akkor nem is volna semmi probléma: kiszámítjuk a jellemzőt a mintából, és megnézzük, hogy teljesült-e a feltevésünk. Mivel azonban a feltevés a sokaságra vonatkozik, így megint csak visszatérünk oda, hogy erről biztos döntést hozni lehetetlen minta alapján – de valószínűségit lehet. Nem tudjuk megmondani, hogy a sokaság átlagos testtömege 70 kg-e, ha a mintabeli átlag 65 kg de meg fogjuk tudni mondani (egyéb mintaadatok felhasználásával), hogy <em>mennyire hihető</em>, hogy 70 kg a sokasági átlag. Erre szolgál a hipotézisvizsgálat. Már most fontos megjegyezni, hog a hipotézisvizsgálat logikája bizonyos szempontból fordított: az előbbi kérdés ellentétére keresi a választ, arra, hogy ha 70 kg <em>lenne</em> a sokasági átlag, akkor mennyire lenne valószínű, hogy ettől olyannyira eltérő eredményt kapunk, mint a 65 (vagy annál is kisebb). Ha nagyon, akkor azt mondjuk, hogy ,,minden bizonnyal’’ nem 70 kg volt az átlag.</p>
-<p>A problémát nyilván az adja, hogy – maradva a fenti példánál – nem tudhatjuk, hogy mi okozta ezt az 5 kg különbséget. Valójában tényleg 70 kg a sokaság átlaga, csak a mintavételi ingadozás játéka miatt pont olyan mintát fogtunk ki, amiben picit kisebb volt az átlag, vagy ez az 5 kg különbség olyan nagy, ami túlmutat a mintavételi ingadozáson, és azt kell feltételeznünk, hogy a hátterében sokasági hatás (is) van (tehát, hogy a sokasági átlag kisebb mint 70 kg)?</p>
-<p>Amint a fentiekből is kiderült, a hipotézisvizsgálat mindig a sokaságra megfogalmazott állításból indul ki. Valójában nem is egy, hanem rögtön két állítást használ a hipotézisvizsgálat; nevük nullhipotézis (<span class="math inline">\(H_0\)</span>) és ellenhipotézis (<span class="math inline">\(H_1\)</span>) melyek jellemzően egymás komplementerei. (Azaz egymást kizárják, de a kettőből valamelyik biztosan fennáll.) A fenti példát így írhatnánk:
-<span class="math display">\[\begin{align*}
+<p>Amíg a becsléselmélettől azt vártuk, hogy nyilatkozzon egy számunkra ismeretlen jellemzőről, addig a hipotézisvizsgálat esetében van előzetes elképzelésünk a jellemző értékéről (például, hogy egy adott számmal egyenlő) – csak épp nem tudjuk, hogy ez igaz-e. Ha az előzetes feltevésünk mintára vonatkozna, akkor nem is volna semmi probléma: kiszámítjuk a jellemzőt a mintából, és megnézzük, hogy teljesült-e a feltevésünk. Mivel azonban a feltevés a sokaságra vonatkozik, így megint csak visszatérünk oda, hogy erről biztos döntést hozni lehetetlen minta alapján – de valószínűségit lehet. Nem tudjuk megmondani, hogy a sokaság átlagos testtömege 70 kg-e, ha a mintabeli átlag 65 kg… de meg fogjuk tudni mondani (egyéb mintaadatok felhasználásával), hogy <em>mennyire hihető</em>, hogy 70 kg a sokasági átlag. Erre szolgál a hipotézisvizsgálat. Már most fontos megjegyezni, hog a hipotézisvizsgálat logikája bizonyos szempontból fordított: az előbbi kérdés ellentétére keresi a választ, arra, hogy ha 70 kg <em>lenne</em> a sokasági átlag, akkor mennyire lenne valószínű, hogy ettől olyannyira eltérő eredményt kapunk, mint a 65 (vagy annál is kisebb). Ha nagyon, akkor azt mondjuk, hogy „minden bizonnyal” nem 70 kg volt az átlag.</p>
+<p>A problémát az adja, hogy – maradva a fenti példánál – nem tudhatjuk, hogy mi okozta ezt az 5 kg különbséget. Valójában tényleg 70 kg a sokaság átlaga, csak a mintavételi ingadozás játéka miatt pont olyan mintát fogtunk ki, amiben picit kisebb volt az átlag, vagy ez az 5 kg különbség olyan nagy, ami túlmutat a mintavételi ingadozáson, és azt kell feltételeznünk, hogy a hátterében sokasági hatás (is) van (tehát, hogy a sokasági átlag kisebb mint 70 kg)…?</p>
+<p>Amint a fentiekből is kiderült, a hipotézisvizsgálat mindig a sokaságra megfogalmazott állításból indul ki. Valójában nem is egy, hanem rögtön két állítást használ a hipotézisvizsgálat; nevük nullhipotézis (<span class="math inline">\(H_0\)</span>) és ellenhipotézis (<span class="math inline">\(H_1\)</span>) melyek jellemzően egymás komplementerei. (Azaz egymást kizárják, de a kettőből valamelyik biztosan fennáll.) A fenti példát így írhatnánk:</p>
+<p><span class="math display">\[\begin{align*}
     H_0&amp;: \mu = \mu_0\\
     H_1&amp;: \mu \neq \mu_0\\
-\end{align*}\]</span>
-úgy, hogy <span class="math inline">\(\mu_0\)</span>=70 kg.</p>
+\end{align*}\]</span></p>
+<p>úgy, hogy <span class="math inline">\(\mu_0\)</span>=70 kg.</p>
 <!-- A hipotézisvizsgálat eredményét (elfogadjuk vagy elutasítjuk az állítást) inkább a $H_0$-ra vonatkozóan adjuk meg, tehát ha csak annyit mondunk, hogy elfogadunk vagy elutasítunk, az mindig úgy értendő, hogy $H_0$-t fogadjuk el (és így $H_1$-et elutasítjuk), illetve $H_0$-t utasítjuk el (és így $H_1$-et fogadjuk el), rendre. -->
-<p>Amit fontos észben tartani, hogy hipotézisvizsgálatnál az erős döntés mindig az elutasítás tud lenni, ezért a legtöbb próba úgy van megszerkesztve, hogy a szakmailag ,,izgalmas’’ állítás, a tudományos nóvum (hatásos a gyógyszer, van eltérés a laboreredményben stb.) az ellenhipotézisbe kerüljön. Pontosan emiatt az elutasítás esetén nagyon gyakran – szinonimaként – azt mondjuk, hogy a ,,próba szignifikáns’’.</p>
+<p>Amit fontos észben tartani, hogy hipotézisvizsgálatnál az erős döntés mindig az elutasítás tud lenni, ezért a legtöbb próba úgy van megszerkesztve, hogy a szakmailag „izgalmas” állítás, a tudományos nóvum (hatásos a gyógyszer, van eltérés a laboreredményben stb.) az ellenhipotézisbe kerüljön. Pontosan emiatt az elutasítás esetén nagyon gyakran – szinonimaként – azt mondjuk, hogy a „próba szignifikáns”.</p>
 <p>A hipotézisvizsgálat központi eszköze a <strong>próbafüggvény</strong> (vagy más szóval <strong>tesztstatisztika</strong>). Az egész eszközt együtt <strong>tesztnek</strong> vagy <strong>próbának</strong> nevezzük. A próbafüggvény a mintaelemek függvénye, ilyen módon a próbafüggvénynek is eloszlása lesz. És itt jön a kulcs: a próbafüggvényt úgy választjuk meg, hogy <span class="math inline">\(H_0\)</span> fennállása esetén valamilyen <em>pontosan ismert</em> eloszlást kövessen; ezt szokás <em>nulleloszlásnak</em> is nevezni. Természetesen a próbafüggvény <em>konkrét értéke</em> függeni fog a mintaelemektől, de az <em>eloszlása</em> nem függhet ettől (sem más, ismeretlen paramétertől, ha volna ilyen).</p>
 <p>Hogy megértsük, hogy ez miért lesz alkalmas a hipotézispárról történő (valószínűségi) döntéshozatalra, nézzünk egy konkrét példát. Folytatva az előző példát, tegyük fel, hogy sokaságunk eloszlása normális, ismert szórással. Amint már megbeszéltük, ekkor <span class="math inline">\(\overline{X}= \sim \mathcal{N}\left(\mu,\sigma_0^2/n\right)\)</span>. Ez tehát a mintaelemek függvénye, és elvileg próbafüggvénynek is nevezhető, mert ha érvényesítjük rajta <span class="math inline">\(H_0\)</span>-t (azaz <span class="math inline">\(H_0\)</span>-t igaznak fogadjuk el), akkor azt kapjuk, hogy <span class="math inline">\(\overline{X}= \sim \mathcal{N}\left(\mu_0,\sigma_0^2/n\right)\)</span>, ami valóban már nem függ ismeretlen paramétertől. Ezzel, és a technikailag szintén megfelelő <span class="math inline">\(\overline{X}-\mu_0\sim \mathcal{N}\left(0,\sigma_0^2/n\right)\)</span>-nel is az a gyakorlati baj azonban, hogy nagyon nehézkes lenne a használatuk, hiszen bár a nulleloszlás ismert, de minden <span class="math inline">\(\mu_0\)</span>-ra, <span class="math inline">\(\sigma_0\)</span>-ra és <span class="math inline">\(n\)</span>-re más és más – azaz ezektől függően minden egyes hipotézisvizsgálathoz elő kéne keresni az adott eloszlást.</p>
 <p>A <span class="math inline">\(\overline{X}-\mu_0\)</span> azonban már mutatja az utat: próbálkozzunk a <span class="math inline">\(\frac{\overline{X}-\mu_0}{\sigma/\sqrt{n}}\)</span> próbafüggvénnyel (jele általában <span class="math inline">\(Z\)</span>)! Ez már minden szempontból tökéletes lesz, hiszen nulleloszlása <span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span>, azaz minden paramétertől függetlenül ugyanaz; egyetlen eloszlással elvégezhető az összes ilyen típusú hipotézisvizsgálat e körülmények között.</p>
-<p>Foglaljuk össze hol tartunk! Konstruáltunk egy olyan függvényét a mintaelemeknek, melynek ismerjük az eloszlását <em>ha</em> fennáll a nullhipotézis. Ki tudjuk azt is számolni, hogy mennyi ennek a próbafüggvénynek az értéke a konkrét (realizálódott) mintánkból; ezt szokás empirikus értéknek (<span class="math inline">\(z_{\mathrm{emp}}\)</span>) is nevezni. Innentől úgy okoskodhatunk: biztos döntést lehetetlen hozni (ez az előbbi példán nagyon jól látszik: a <span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span> nulleloszlás tartója az egész számegyenes, tehát még ha fenn is áll a nullhipotézis, elvileg <em>akármilyen</em> szám realizálódhat belőle, az elvileg bármilyen szám lehet a mintából kiszámított próbafüggvény értéke, azaz <span class="math inline">\(z_{\mathrm{emp}}\)</span>), de mégis, mennyire hihető, hogy a szaggatott vonallal jelölt érték a folytonosan behúzott eloszlásból realizálódott a következő esetekben (<a href="induktiv.html#fig:hipalap">4.4</a>. ábra).</p>
-<div class="figure"><span style="display:block;" id="fig:hipalap"></span>
-<img src="FerenciTamas_BevezetesABiostatisztikaba_files/figure-html/hipalap-1.png" alt="A hipotézisvizsgálat alapgondolatának szemléltetése." width="672" />
-<p class="caption">
-Ábra 4.4: A hipotézisvizsgálat alapgondolatának szemléltetése.
-</p>
+<p>Foglaljuk össze hol tartunk! Konstruáltunk egy olyan függvényét a mintaelemeknek, melynek ismerjük az eloszlását <em>ha</em> fennáll a nullhipotézis. Ki tudjuk azt is számolni, hogy mennyi ennek a próbafüggvénynek az értéke a konkrét (realizálódott) mintánkból; ezt szokás empirikus értéknek (<span class="math inline">\(z_{\mathrm{emp}}\)</span>) is nevezni. Innentől úgy okoskodhatunk: biztos döntést lehetetlen hozni (ez az előbbi példán nagyon jól látszik: a <span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span> nulleloszlás tartója az egész számegyenes, tehát még ha fenn is áll a nullhipotézis, elvileg <em>akármilyen</em> szám realizálódhat belőle, az elvileg bármilyen szám lehet a mintából kiszámított próbafüggvény értéke, azaz <span class="math inline">\(z_{\mathrm{emp}}\)</span>), de mégis, mennyire hihető, hogy a szaggatott vonallal jelölt érték a folytonosan behúzott eloszlásból realizálódott a következő esetekben (<a href="#fig-hipalap" class="quarto-xref"><span>3.4</span></a>. ábra).</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hipalap" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hipalap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="induktiv_files/figure-html/fig-hipalap-1.png" class="img-fluid figure-img" width="672">
 </div>
-<p>Érezhető, hogy bár <em>elvileg</em> mindkettő előfordulhat, de a bal oldalit <em>hajlamosak vagyunk</em> elhinni, a jobb oldalinál viszont épp ellenkezőleg, <em>hajlunk arra</em>, hogy azt gondoljuk, hogy az empirikus érték valójában más eloszlásból realizálódott. Noha elvileg a bal oldali is jöhet más eloszlásból, és a jobb oldali is ebből – ezért a bizonytalan megfogalmazások, mutatva, hogy ezek csak valószínűségi állítások.</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hipalap-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Ábra&nbsp;3.4: A hipotézisvizsgálat alapgondolatának szemléltetése.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Bár <em>elvileg</em> mindkettő előfordulhat, de a bal oldalit <em>hajlamosak vagyunk</em> elhinni, a jobb oldalinál viszont épp ellenkezőleg, <em>hajlunk arra</em>, hogy azt gondoljuk, hogy az empirikus érték valójában más eloszlásból realizálódott. Noha elvileg a bal oldali is jöhet más eloszlásból, és a jobb oldali is ebből – ezért a bizonytalan megfogalmazások, mutatva, hogy ezek csak valószínűségi állítások.</p>
 <p>Precízebben megfogalmazva: az kicsi valószínűségű esemény (<span class="math inline">\(\mathcal{N}\left(0,1\right)\)</span> eloszlás esetén), hogy <span class="math inline">\(\pm 3\)</span>-on kívül számot kapjunk. Ha <em>mégis</em> ilyen érték jön ki, akkor joggal kérdőjelezzük meg, hogy a próbafüggvény ilyen eloszlást követett – márpedig, ha fennáll a nullhipotézis, akkor ilyen eloszlást <em>kellett</em> követnie, így más szóval mi most arra következtettünk, hogy nem áll fenn a nullhipotézis!</p>
-<p>Ez persze bizonytalan döntés, és itt jól látszik ennek az oka: nagyon is kijöhet <span class="math inline">\(\pm 3\)</span>-on kívül szám <em>még akkor is</em>, ha fennáll a nullhipotézis, sőt, ennek a valószínűsége akár számszerűen is meghatározható (<span class="math inline">\(\Phi\left(-3\right)+\left[1-\Phi\left(3\right)\right]\)</span> ami kb. 0,27%). Ha a <span class="math inline">\(\pm 3\)</span>-on kívüli tartományra mondjuk az, hogy ide eső empirikus tesztstatisztika esetén ,,már nem hisszük el’’, hogy fennállt a nullhipotézis, akkor pontosan 0,27% valószínűséggel fogunk hibás döntést hozni: ekkora a valószínűsége ugyanis, hogy fennálló <span class="math inline">\(H_0\)</span> esetén is ilyen extrém tesztstatisztika jöjjön ki.</p>
-<p>Ha ez számunkra túl nagy, akkor megtehetjük, hogy mondjuk csak a <span class="math inline">\(\pm 4\)</span>-en kívüli értékeket tekintjük ,,gyanúsnak’’ – csakhogy ekkor a valódi különbségek felderítését is megnehezítjük.</p>
-<p>Az tehát egy kompromisszum eredménye, hogy ,,hol húzzuk meg a határt’’. A gyakorlatban ezt úgy hajtjuk végre, hogy az eloszlás legextrémebb, tehát a nullhipotézis fennállása esetén várt értéktől legtávolabb eső részein (a mostani példánkban: mindkét szélén szimmetrikusan) kijelölünk egy olyan tartományt, melynek egy adott, kicsi érték (jele <span class="math inline">\(\alpha\)</span>) a valószínűsége<a href="#fn13" class="footnote-ref" id="fnref13"><sup>13</sup></a>. Más szóval azt mondjuk, hogy ebbe az intervallumba elvileg ugyan eshet egy realizálódott érték akkor is, ha a nulleloszlás fennáll, de ennek olyan kicsi a valószínűsége, hogy ezt már nem tartjuk hihetőnek (hivatkozva arra, hogy ez a tartomány fekszik a legtávolabb nullhipotézis fennállása esetén várt értéktől). Tökéletesen látszik azonban, hogy csak bizonytalan döntést tudunk hozni: ez a kijelentésünk <em>automatikusan</em> az esetleges hibázás elfogadását jelenti – nagyon is tudjuk, hogy ebbe a tartományba eshet a realizálódott érték a nulleloszlás fennállása esetén is, mi <em>mégis</em> azt mondjuk, hogy ekkor már nem hisszük el a nullhipotézist. Mivel a normális eloszlás tartója az egész számegyenes, így egyértelmű, hogy ennél jobbat nem tudunk tenni, valahol korlátot kell húznunk.</p>
+<p>Ez persze bizonytalan döntés, és itt jól látszik ennek az oka: nagyon is kijöhet <span class="math inline">\(\pm 3\)</span>-on kívül szám <em>még akkor is</em>, ha fennáll a nullhipotézis, sőt, ennek a valószínűsége akár számszerűen is meghatározható (<span class="math inline">\(\Phi\left(-3\right)+\left[1-\Phi\left(3\right)\right]\)</span> ami kb. 0,27%). Ha a <span class="math inline">\(\pm 3\)</span>-on kívüli tartományra mondjuk az, hogy ide eső empirikus tesztstatisztika esetén „már nem hisszük el”, hogy fennállt a nullhipotézis, akkor pontosan (és előre megmondható, általunk tudott módon) 0,27% valószínűséggel fogunk hibás döntést hozni: ekkora a valószínűsége ugyanis, hogy fennálló <span class="math inline">\(H_0\)</span> esetén is ilyen extrém tesztstatisztika jöjjön ki.</p>
+<p>Ha ez számunkra túl nagy, akkor megtehetjük, hogy mondjuk csak a <span class="math inline">\(\pm 4\)</span>-en kívüli értékeket tekintjük „gyanúsnak” – csakhogy ekkor a valódi különbségek felderítését is megnehezítjük.</p>
+<p>Az tehát egy kompromisszum eredménye, hogy „hol húzzuk meg a határt”. A gyakorlatban ezt úgy hajtjuk végre, hogy az eloszlás legextrémebb, tehát a nullhipotézis fennállása esetén várt értéktől legtávolabb eső részein (a mostani példánkban: mindkét szélén szimmetrikusan) kijelölünk egy olyan tartományt, melynek egy adott, kicsi érték (jele <span class="math inline">\(\alpha\)</span>) a valószínűsége<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. Más szóval azt mondjuk, hogy ebbe az intervallumba elvileg ugyan eshet egy realizálódott érték akkor is, ha a nulleloszlás fennáll, de ennek olyan kicsi a valószínűsége, hogy ezt már nem tartjuk hihetőnek (hivatkozva arra, hogy ez a tartomány fekszik a legtávolabb nullhipotézis fennállása esetén várt értéktől). Tökéletesen látszik azonban, hogy csak bizonytalan döntést tudunk hozni: ez a kijelentésünk <em>automatikusan</em> az esetleges hibázás elfogadását jelenti – nagyon is tudjuk, hogy ebbe a tartományba eshet a realizálódott érték a nulleloszlás fennállása esetén is, mi <em>mégis</em> azt mondjuk, hogy ekkor már nem hisszük el a nullhipotézist. Mivel a normális eloszlás tartója az egész számegyenes, így egyértelmű, hogy ennél jobbat nem tudunk tenni, valahol korlátot kell húznunk.</p>
 <p>Ilyen módon kijelöltük, hogy milyen empirikus tesztstatisztika-értékek esetén fogadjuk el a nullhipotézist (<strong>elfogadási tartomány</strong>), és milyenek esetén nem (<strong>elutasítási (vagy kritikus) tartomány</strong>). Látható, hogy a tartományok helyét az <span class="math inline">\(\alpha\)</span> valószínűség szabja meg, ennek a valószínűségnek a neve: <strong>szignifikanciaszint</strong>.</p>
-<p>Ebben a feladatban a túl magas és a túl alacsony tesztstatisztika érték is ugyanúgy az elvetés irányába mutat<a href="#fn14" class="footnote-ref" id="fnref14"><sup>14</sup></a>, így az elfogadási tartományt valóban a nullára szimmetrikusan jelöljük ki. Ha például azt mondjuk, hogy a szignifikanciaszint 5%, azaz a legextrémebb 5%-nyi területen utasítsunk el, akkor azt úgy tehetjük meg, hogy a nulleloszlás alsó és a felső szélén is 2,5-2,5%-nyi valószínűséget vágunk le. Ezeket a ,,szétvágási pontokat’’, melyek az elutasítási és az elfogadási tartományokat határolják, <strong>kritikus értékeknek</strong> szokás nevezni. Mivel a nulleloszlás ismert, így ezek könnyen számszerűsíthetőek is mint a 0,025-ös és a 0,975-ös kvantilisei az eloszlásnak; például <span class="math inline">\(\alpha=5\)</span>%-ra a két kritikus érték a <span class="math inline">\(c_a=-1,\!96\)</span> alsó kritikus érték és a <span class="math inline">\(c_f=+1,\!96\)</span> felső kritikus érték.</p>
-<p>Mindezeket összefoglalóan szemlélteti @aref(fig:hiptartomanyok). ábra, <span class="math inline">\(\alpha=5\)</span> és <span class="math inline">\(\alpha=1\)</span>%-os szignifikanciaszintekre.</p>
-<div class="figure"><span style="display:block;" id="fig:hiptartomanyok"></span>
-<img src="FerenciTamas_BevezetesABiostatisztikaba_files/figure-html/hiptartomanyok-1.png" alt="A hipotézisvizsgálat döntésének szemléltetése két szignifikanciaszint mellett." width="1440" />
-<p class="caption">
-Ábra 4.5: A hipotézisvizsgálat döntésének szemléltetése két szignifikanciaszint mellett.
-</p>
+<p>Ebben a feladatban a túl magas és a túl alacsony tesztstatisztika érték is ugyanúgy az elvetés irányába mutat<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>, így az elfogadási tartományt valóban a nullára szimmetrikusan jelöljük ki. Ha például azt mondjuk, hogy a szignifikanciaszint 5%, azaz a legextrémebb 5%-nyi területen utasítsunk el, akkor azt úgy tehetjük meg, hogy a nulleloszlás alsó és a felső szélén is 2,5-2,5%-nyi valószínűséget vágunk le. Ezeket a „szétvágási pontokat”, melyek az elutasítási és az elfogadási tartományokat határolják, <strong>kritikus értékeknek</strong> szokás nevezni. Mivel a nulleloszlás ismert, így ezek könnyen számszerűsíthetőek is mint a 0,025-ös és a 0,975-ös kvantilisei az eloszlásnak; például <span class="math inline">\(\alpha=5\)</span>%-ra a két kritikus érték a <span class="math inline">\(c_a=-1,\!96\)</span> alsó kritikus érték és a <span class="math inline">\(c_f=+1,\!96\)</span> felső kritikus érték.</p>
+<p>Mindezeket összefoglalóan szemlélteti a <a href="#fig-hiptartomanyok" class="quarto-xref"><span>3.5</span></a>. ábra, <span class="math inline">\(\alpha=5\)</span> és <span class="math inline">\(\alpha=1\)</span>%-os szignifikanciaszintekre.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-hiptartomanyok" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hiptartomanyok-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="induktiv_files/figure-html/fig-hiptartomanyok-1.png" class="img-fluid figure-img" width="672">
 </div>
-<p>Amint arra már utaltunk is, <span class="math inline">\(\alpha\)</span> beállításával a hipotézisvizsgálatban elkövethető kétféle hiba között egyensúlyozunk. Az egyik tévedési lehetőség, hogy fennáll a nullhipotézis, mi mégis elvetünk (ennek neve <strong>elsőfajú hiba</strong>; a valószínűsége felett nagyon is erős kontrollunk van, hiszen az épp <span class="math inline">\(\alpha\)</span>); a másik hibázási lehetőség, hogy elvethetnénk a nullhipotézis, mi mégis elfogadunk (ennek neve <strong>másodfajú hiba</strong>, a valószínűségét <span class="math inline">\(\beta\)</span>-val szokás jelölni; <span class="math inline">\(\beta\)</span> értékét nem tudjuk jól kézben tartani, hiszen attól is függ, hogy konkrétan milyen ellenhipotézis áll fenn, amit általában mi sem tudhatunk). Ha <span class="math inline">\(\alpha\)</span>-t növeljük (,,beljebb húzzuk’’ a kritikus értékeket, növeljük az elutasítási, csökkentjük az elfogadási tartomány méretét), akkor megemeljük a téves elutasítás, és lecsökkentjük a téves elfogadás valószínűségét, ha <span class="math inline">\(\alpha\)</span>-t csökkentjük (,,kijjebb toljuk’’ a kritikus értékeket, növeljük az elfogadási, csökkentjük az elutasítási tartomány méretét), akkor megemeljük a téves elfogadás, és lecsökkentjük a téves elutasítás valószínűségét. Az <span class="math inline">\(\alpha=5\)</span>% egy tipikus kompromisszum a kétféle hibázás között. Kiegészítésként megjegyezzük, hogy <span class="math inline">\(\left(1-\beta\right)\)</span>-t a próba <strong>erejének</strong> szokás nevezni (hiszen azt mutatja meg, hogy ha a valóságban nem áll fenn a nullhipotézis, akkor azt mekkora valószínűséggel fogjuk detektálni).</p>
-<p>A fentiekből is érezhető, hogy egy próba eredményének olyan formában történő megadása, hogy ,,5%-on szignifikáns’’ nem a legszerencsésebb, hiszen rögtön adódik a kérdés: vajon 1%-on is szignifikáns lett volna? És 0,1%-on? Nem mindegy, hiszen egy olyan eredmény, mely 5%-on szignifikáns, de 4%-on nem, sokkal nagyobb bizonytalanságú, mint egy olyan, ami 0,1%-on is szignifikáns. Megoldás lehetne a tesztstatisztika konkrét értékének megadása, ez azonban gyakorlati szempontból nehézkes, hiszen így minden esetben meg kéne nézni, hogy mi a nulleloszlás (hiszen a tesztstatisztika empirikus értékét muszáj ahhoz viszonyítani). Éppen ezért a mai gyakorlatban inkább azt adják meg, hogy <em>melyik lenne</em> az a szignifikanciaszint, ami mellett a tesztstatisztika empirikus értéke épp az elutasítás és az elfogadás határa kerülne. Ennek neve: <strong><span class="math inline">\(p\)</span>-érték</strong> (vagy empirikus szignifikanciaszint). Például, gondoljuk azt, hogy próbánk 5%-on elutasít. Ekkor elkezdjük az <span class="math inline">\(\alpha\)</span>-t csökkenteni (ezzel kijjebb húzzuk a kritikus értékeket, bővítjük az elfogadási, szűkítjük az elutasítási tartomány). Elérjük a 4%-ot, az empirikus tesztstatisztikánk még mindig az elutasítási tartományban van, tovább csökkentjük az <span class="math inline">\(\alpha\)</span>-t, és így tovább míg nem egyszer csak azt vesszük észre, hogy mondjuk 2,31%-on még elutasít a teszt, de 2,29%-on már nem. Ekkor azt mondjuk, hogy a teszt <span class="math inline">\(p\)</span>-értéke 2,3%.</p>
-<p>A <span class="math inline">\(p\)</span>-érték tehát nem más, mint a szignifikanciaszint akkor, ha a megfelelő (alsó vagy felső) kritikus értéket a tesztstatisztika empirikus értékének helyére helyezzük át. (A másikat pedig, értelemszerűen, az ellentétére, hiszen a kritikus értékek ebben ez esetben – ahogy már megbeszéltük – szimmetrikusak.) Ebből az is következik, hogy a <span class="math inline">\(p\)</span>-érték számszerűen a nulleloszlás integrálja az empirikus tesztstatisztikától extrémebb irányba (illetve ennek kétszerese), ugyanúgy, ahogy az <span class="math inline">\(\alpha\)</span> is – definíció szerint – a nulleloszlás integrálja a kritikus értékektől extrémebb irányokba (és itt, ahogy megbeszéltük, a kritikus érték szerepét az empirikus tesztstatisztika játssza). Ennek meghatározása tehát manapság már számítástechnikai szempontból is problémamentes.</p>
-<p>Világos, hogy <span class="math inline">\(p\)</span>-érték az elvetésben való bizonyosságunkat fejezi ki. Ez az eredményközlés azért rendkívül praktikus, mert – szemben az előzőekkel – az olvasó ,,elvégezheti magának’’ a hipotézisvizsgálatot, és <em>bármilyen szignifikanciaszinten</em> döntést hozhat. A <span class="math inline">\(p\)</span>-értéknél magasabb szignifikanciaszinteken elutasítás lesz a döntés (ekkor bővebb az elutasítási tartomány, bele fog esni az empirikus tesztstatisztika), a <span class="math inline">\(p\)</span>-értéknél alacsonyabb szinteken pedig elfogadás (az elutasítási tartomány szűkebb, az empirikus tesztstatisztika az elfogadási tartományba fog esni).</p>
-<p>Végezetül egy fontos gyakorlati kérdésre hívjuk fel a figyelmet. Amint már megbeszéltük, az <span class="math inline">\(\alpha\)</span> azt mutatja meg, hogy egy adott próba mekkora valószínűséggel ad téves jelzést. (Emlékezzünk rá, hogy általában mi az elutasítást keressük!) Igen ám, de ha mi két próbát végzünk egymástól függetlenül <em>úgy</em>, hogy akkor is találatot deklarálunk, ha <em>legalább</em> az egyik teszt szignifikáns lett, akkor valójában már <em>nem</em> <span class="math inline">\(\alpha\)</span> valószínűséggel kapunk jelzést akkor is, ha nincs hatás (egyik esetben sem), hanem <span class="math inline">\(1-\left(1-\alpha\right)^2\)</span> valószínűséggel! (Hiszen a hibás jelzés annak a komplementere, hogy mindkét teszt jó döntés ad, mivel pedig függetlenek, ezek valószínűsége összeszorzódik.) Ez pedig nagyon nem mindegy, a tipikus <span class="math inline">\(\alpha=5\)</span>%-ra ez a valószínűség már 9,75%! Tehát valójában majdnem a nominális szignifikanciaszint kétszerese lesz annak a valószínűsége, hogy kapunk elutasítást – miközben a valóságban nincs is hatás egyik esetben sem! Ezt a jelenséget szokás <span class="math inline">\(\alpha\)</span>-inflációnak nevezni. (A kétféle <span class="math inline">\(\alpha\)</span>-t pedig néha megkülönböztetésül comparisonwise (<span class="math inline">\(\alpha_C\)</span>) <span class="math inline">\(\alpha\)</span>-nak illetve familywise (<span class="math inline">\(\alpha_F\)</span>) <span class="math inline">\(\alpha\)</span>-nak nevezik. Az előbbi annak a valószínűsége, hogy egy teszt hibás jelzést ad (ez az eddig tárgyalt <span class="math inline">\(\alpha\)</span>), az utóbbi annak a valószínűsége, hogy tesztek egy családjából <em>legalább egy</em> lesz, ami hibás jelzést ad.) Az összefüggés a kettő között tehát:
-<span class="math display">\[
-    \alpha_F = 1-\left(1-\alpha_C\right)^k,
-\]</span>
-ahol <span class="math inline">\(k\)</span> az elvégzett próbák száma.</p>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hiptartomanyok-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Ábra&nbsp;3.5: A hipotézisvizsgálat döntésének szemléltetése két szignifikanciaszint mellett.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Amint arra már utaltunk is, <span class="math inline">\(\alpha\)</span> beállításával a hipotézisvizsgálatban elkövethető kétféle hiba között egyensúlyozunk. Az egyik tévedési lehetőség, hogy fennáll a nullhipotézis, mi mégis elvetünk (ennek neve <strong>elsőfajú hiba</strong>; a valószínűsége felett nagyon is erős kontrollunk van, hiszen az épp <span class="math inline">\(\alpha\)</span>); a másik hibázási lehetőség, hogy elvethetnénk a nullhipotézis, mi mégis elfogadunk (ennek neve <strong>másodfajú hiba</strong>, a valószínűségét <span class="math inline">\(\beta\)</span>-val szokás jelölni; <span class="math inline">\(\beta\)</span> értékét nem tudjuk jól kézben tartani, hiszen attól is függ, hogy konkrétan milyen ellenhipotézis áll fenn, amit általában mi sem tudhatunk). Ha <span class="math inline">\(\alpha\)</span>-t növeljük („beljebb húzzuk” a kritikus értékeket, növeljük az elutasítási, csökkentjük az elfogadási tartomány méretét), akkor megemeljük a téves elutasítás, és lecsökkentjük a téves elfogadás valószínűségét, ha <span class="math inline">\(\alpha\)</span>-t csökkentjük („kijjebb toljuk” a kritikus értékeket, növeljük az elfogadási, csökkentjük az elutasítási tartomány méretét), akkor megemeljük a téves elfogadás, és lecsökkentjük a téves elutasítás valószínűségét. Az <span class="math inline">\(\alpha=5\)</span>% egy tipikus kompromisszum a kétféle hibázás között. Kiegészítésként megjegyzem, hogy <span class="math inline">\(\left(1-\beta\right)\)</span>-t a próba <strong>erejének</strong> szokás nevezni (hiszen azt mutatja meg, hogy ha a valóságban nem áll fenn a nullhipotézis, akkor azt mekkora valószínűséggel fogjuk detektálni).</p>
+<p>A fentiekből is érezhető, hogy egy próba eredményének olyan formában történő megadása, hogy „5%-on szignifikáns” nem a legszerencsésebb, hiszen rögtön adódik a kérdés: vajon 1%-on is szignifikáns lett volna? És 0,1%-on? Nem mindegy, hiszen egy olyan eredmény, mely 5%-on szignifikáns, de 4%-on nem, sokkal nagyobb bizonytalanságú, mint egy olyan, ami 0,1%-on is szignifikáns. Megoldás lehetne a tesztstatisztika konkrét értékének megadása, ez azonban gyakorlati szempontból nehézkes, hiszen így minden esetben meg kéne nézni, hogy mi a nulleloszlás (hiszen a tesztstatisztika empirikus értékét muszáj ahhoz viszonyítani). Éppen ezért a mai gyakorlatban inkább azt adják meg, hogy <em>melyik lenne</em> az a szignifikanciaszint, ami mellett a tesztstatisztika empirikus értéke épp az elutasítás és az elfogadás határa kerülne. Ennek neve: <strong><span class="math inline">\(p\)</span>-érték</strong> (vagy empirikus szignifikanciaszint). Például, gondoljuk azt, hogy próbánk 5%-on elutasít. Ekkor elkezdjük az <span class="math inline">\(\alpha\)</span>-t csökkenteni (ezzel kijjebb húzzuk a kritikus értékeket, bővítjük az elfogadási, szűkítjük az elutasítási tartomány). Elérjük a 4%-ot, az empirikus tesztstatisztikánk még mindig az elutasítási tartományban van, tovább csökkentjük az <span class="math inline">\(\alpha\)</span>-t, és így tovább… míg nem egyszer csak azt vesszük észre, hogy mondjuk 2,31%-on még elutasít a teszt, de 2,29%-on már nem. Ekkor azt mondjuk, hogy a teszt <span class="math inline">\(p\)</span>-értéke 2,3%.</p>
+<p>A <span class="math inline">\(p\)</span>-érték tehát nem más, mint a szignifikanciaszint akkor, ha a megfelelő (alsó vagy felső) kritikus értéket a tesztstatisztika empirikus értékének helyére helyezzük át. Ebből az is következik, hogy a <span class="math inline">\(p\)</span>-érték számszerűen a nulleloszlás integrálja az empirikus tesztstatisztikától extrémebb irányba (illetve ennek kétszerese), ugyanúgy, ahogy az <span class="math inline">\(\alpha\)</span> is – definíció szerint – a nulleloszlás integrálja a kritikus értékektől extrémebb irányokba (és itt, ahogy megbeszéltük, a kritikus érték szerepét az empirikus tesztstatisztika játssza). Ennek meghatározása tehát manapság már számítástechnikai szempontból is problémamentes.</p>
+<p>Világos, hogy <span class="math inline">\(p\)</span>-érték az elvetésben való bizonyosságunkat fejezi ki. Ez az eredményközlés azért rendkívül praktikus, mert – szemben az előzőekkel – az olvasó „elvégezheti magának” a hipotézisvizsgálatot, és <em>bármilyen szignifikanciaszinten</em> döntést hozhat. A <span class="math inline">\(p\)</span>-értéknél magasabb szignifikanciaszinteken elutasítás lesz a döntés (ekkor bővebb az elutasítási tartomány, bele fog esni az empirikus tesztstatisztika), a <span class="math inline">\(p\)</span>-értéknél alacsonyabb szinteken pedig elfogadás (az elutasítási tartomány szűkebb, az empirikus tesztstatisztika az elfogadási tartományba fog esni).</p>
+<p>Végezetül egy fontos gyakorlati kérdésre hívom még fel a figyelmet. Amint már beszéltük, az <span class="math inline">\(\alpha\)</span> azt mutatja meg, hogy egy adott próba mekkora valószínűséggel ad téves jelzést. (Emlékezzünk rá, hogy általában mi az elutasítást keressük!) Igen ám, de ha mi két próbát végzünk egymástól függetlenül <em>úgy</em>, hogy akkor is találatot deklarálunk, ha <em>legalább</em> az egyik teszt szignifikáns lett, akkor valójában már <em>nem</em> <span class="math inline">\(\alpha\)</span> valószínűséggel kapunk jelzést akkor is, ha nincs hatás (egyik esetben sem), hanem <span class="math inline">\(1-\left(1-\alpha\right)^2\)</span> valószínűséggel! (Hiszen a hibás jelzés annak a komplementere, hogy mindkét teszt jó döntés ad, mivel pedig függetlenek, ezek valószínűsége összeszorzódik.) Ez pedig nagyon nem mindegy, a tipikus <span class="math inline">\(\alpha=5\)</span>%-ra ez a valószínűség már 9,75%! Tehát valójában majdnem a nominális szignifikanciaszint kétszerese lesz annak a valószínűsége, hogy kapunk elutasítást – miközben a valóságban nincs is hatás egyik esetben sem! Ezt a jelenséget szokás <span class="math inline">\(\alpha\)</span>-inflációnak nevezni. (A kétféle <span class="math inline">\(\alpha\)</span>-t pedig néha megkülönböztetésül comparisonwise (<span class="math inline">\(\alpha_C\)</span>) <span class="math inline">\(\alpha\)</span>-nak illetve familywise (<span class="math inline">\(\alpha_F\)</span>) <span class="math inline">\(\alpha\)</span>-nak nevezik. Az előbbi annak a valószínűsége, hogy egy teszt hibás jelzést ad (ez az eddig tárgyalt <span class="math inline">\(\alpha\)</span>), az utóbbi annak a valószínűsége, hogy tesztek egy családjából <em>legalább egy</em> lesz, ami hibás jelzést ad.) Az összefüggés a kettő között tehát:</p>
+<p><span class="math display">\[\alpha_F = 1-\left(1-\alpha_C\right)^k,\]</span></p>
+<p>ahol <span class="math inline">\(k\)</span> az elvégzett próbák száma.</p>
 <p>Azt a helyzetet, amikor egymással párhuzamosan több, egymástól független hipotézisvizsgálatot futtatunk (és vagylagosan keresünk szignifikáns eredményt), <strong>többszörös összehasonlítások helyzetének</strong> szokás nevezni.</p>
 <p>A dolog azt sugallja számunkra, hogy ha sok tesztet végzünk párhuzamosan, akkor valamit tenni kell az ellen, hogy ne találjuk túl könnyen fals elutasításokat. A legegyszerűbb megoldás, ha a tesztenkénti (comparisonwise) szignifikanciaszintet lecsökkentjük. Például, az ún. Bonferroni-egyenlőtlenség szerint <span class="math inline">\(1-\left(1-\alpha\right)^k\leq \alpha\cdot k\)</span>, ezért durva becsléssel úgy korrigálhatjuk a szignifikanciaszintet, hogy elosztjuk a célszintet az elvégzett hipotézisvizsgálatok számával. Ez garantálja, hogy a <span class="math inline">\(k\)</span> teszt elvégzését <em>együttesen tekintve</em> sem lehet a kitűzött szignifikanciaszint feletti az elsőfajú hibák aránya.</p>
-<p>A módszer hátránya, hogy túl drasztikus: annyira megnehezíti a nullhipotézis elvetését, hogy a valós különbségek is ,,el fognak veszni’’. Vannak módszerek, melyek ezt enyhítik (pl. Holm–Bonferroni-korrekció), illetve melyek teljesen más elven próbálják elérni az <span class="math inline">\(\alpha\)</span>-infláció enyhítését (pl. FDR). Ennek a kérdéskörnek például a microarray adatok kiértékelése kapcsán (ahol elképesztő mennyiségű tesztet kell függetlenül végezni) nagyon megnőtt a jelentősége; ettől eltekintve azonban az orvosok általában nem viszik túlzásba a védekezést ez ellen</p>
-<p>Itt hívjuk fel a figyelmet az ún. <strong>szignifikanciavadászat</strong> jelenségére. Ez lényegében nem más, mint a többszörös összehasonlítások helyzetének rosszindulatú kiaknázása inkorrekt következtetésre. A szignifikanciavadászat jelenségét inkább egy példával illusztráljuk: tegyük fel, hogy bizonyítani akarjuk, hogy a hétfőn és kedden született emberek laboreredményei között szignifikáns eltérés van. Bár ez ránézésre látható módon abszurdum, a fentiek kihasználásával tulajdonképpen nem is nehéz bizonyítani: manapság már a rutinszerűen vizsgált laborparaméterek száma is eléri a 20-30-at, így nincs más dolgunk, mint mindegyiket összehasonlítani! Természetesen valós különbség sehol nem lesz, de mivel 5% valószínűséggel mindegyik adhat téves jelzést, így 30 között már az lenne a meglepő, ha nem kapnánk egyetlen elutasítást sem. Ha a vizsgálatot – korrekt módon – úgy publikáljuk le, hogy összehasonlítottunk 30 laborváltozót 5%-on, és közülük 1 esetben, az XYZ-nél szignifikáns különbséget találtunk, akkor mindenki rögtön tudni fogja, hogy mi történt (azaz, hogy nem jelenthetjük ki, hogy találtunk bármit is). Igen ám, de ha inkorrekt módon játszunk, akkor azt tesszük, hogy a cikket úgy írjuk meg, hogy mi <em>előre</em> tudtuk, hogy XYZ-ben lesz különbség (mert van egy ragyogó kórélettani modellünk, mely az XYZ termelését a születés napjával hozza összefüggésbe), és ezért <em>célirányosan</em> XYZ-t leteszteltük, és lám: valóban szignifikáns különbséget is kaptunk! Ezzel szemben nehéz védekezni, hiszen magából az eredményközlésből nem lehet rájönni, hogy mi történt (de természetesen a vizsgálat reprodukciója azonnal lebuktatja a csalást).</p>
-<p>Zárásként részletesebb indoklás nélkül felhívjuk három összefüggésre a figyelmet.</p>
-<ol style="list-style-type: decimal">
-<li>Nagyon fontos gyakorlati probléma, hogy adott feladat vizsgálatára konkrétan melyik próbát használjuk. Ez közel sem triviális kérdéskör, ugyanis a feladat önmagában még nem determinálja a próbát: sok feladat van, amire akár tucatnyi különböző próba is elérhető; ezek tipikusan az előfeltevéseikben különböznek. (Azaz, hogy milyen <em>a priori</em> megkötésekkel élnek a sokaságra vonatkozóan.) Ennek kapcsán arra hívjuk fel a figyelmet, hogy egyrészt ha egy próba előfeltevései nem teljesülnek, de mi mégis alkalmazzuk, akkor nem garantált, hogy valid végeredményt kapunk, másrészt viszont a több előfeltevésre építő próbáknak általában kisebb az erejük. A tanulság, hogy mindig annyi előfeltevésre építő próbát használjunk, amennyit tudunk, se többet se kevesebbet: amely előfeltevésekről tudjuk, hogy teljesülnek (a priori!) azokat építsük be a próbaválasztásba de többet ne.</li>
+<p>A módszer hátránya, hogy túl drasztikus: annyira megnehezíti a nullhipotézis elvetését, hogy a valós különbségek is „el fognak veszni”. Vannak módszerek, melyek ezt enyhítik (pl. Holm–Bonferroni-korrekció), illetve melyek teljesen más elven próbálják elérni az <span class="math inline">\(\alpha\)</span>-infláció enyhítését (pl. FDR).</p>
+<!-- Ennek a kérdéskörnek például a microarray adatok kiértékelése kapcsán (ahol elképesztő mennyiségű tesztet kell függetlenül végezni) nagyon megnőtt a jelentősége; ettől eltekintve azonban az orvosok általában nem viszik túlzásba a védekezést ez ellen\dots{} -->
+<p>Itt hívom fel a figyelmet az ún. <strong>szignifikanciavadászat</strong> jelenségére. Ez lényegében nem más, mint a többszörös összehasonlítások helyzetének rosszindulatú kiaknázása inkorrekt következtetésre. A szignifikanciavadászat jelenségét inkább egy példával illusztráljuk: tegyük fel, hogy bizonyítani akarjuk, hogy a hétfőn és kedden született emberek laboreredményei között szignifikáns eltérés van. Bár ez ránézésre látható módon abszurdum, a fentiek kihasználásával tulajdonképpen nem is nehéz bizonyítani: manapság már a rutinszerűen vizsgált laborparaméterek száma is eléri a 20-30-at, így nincs más dolgunk, mint mindegyiket összehasonlítani! Természetesen valós különbség sehol nem lesz, de mivel 5% valószínűséggel mindegyik adhat téves jelzést, így 30 között már az lenne a meglepő, ha nem kapnánk egyetlen elutasítást sem. Ha a vizsgálatot – korrekt módon – úgy publikáljuk le, hogy összehasonlítottunk 30 laborváltozót 5%-on, és közülük 1 esetben, az XYZ-nél szignifikáns különbséget találtunk, akkor mindenki rögtön tudni fogja, hogy mi történt (azaz, hogy nem jelenthetjük ki, hogy találtunk bármit is). Igen ám, de ha inkorrekt módon játszunk, akkor azt tesszük, hogy a cikket úgy írjuk meg, hogy mi <em>előre</em> tudtuk, hogy XYZ-ben lesz különbség (mert van egy ragyogó kórélettani modellünk, mely az XYZ termelését a születés napjával hozza összefüggésbe), és ezért <em>célirányosan</em> XYZ-t leteszteltük, és lám: valóban szignifikáns különbséget is kaptunk…! Ezzel szemben nehéz védekezni, hiszen magából az eredményközlésből nem lehet rájönni, hogy mi történt (de természetesen a vizsgálat reprodukciója azonnal lebuktatja a csalást).</p>
+<p>Zárásként részletesebb indoklás nélkül felhívom három összefüggésre a figyelmet.</p>
+<ol type="1">
+<li>Nagyon fontos gyakorlati probléma, hogy adott feladat vizsgálatára konkrétan melyik próbát használjuk. Ez közel sem triviális kérdéskör, ugyanis a feladat önmagában még nem determinálja a próbát: sok feladat van, amire akár tucatnyi különböző próba is elérhető; ezek tipikusan az előfeltevéseikben különböznek. (Azaz, hogy milyen <em>a priori</em> megkötésekkel élnek a sokaságra vonatkozóan.) Ennek kapcsán arra fontos felhívni a figyelmet, hogy egyrészt ha egy próba előfeltevései nem teljesülnek, de mi mégis alkalmazzuk, akkor nem garantált, hogy valid végeredményt kapunk (abban az értelemben, hogy az elsőfajú hibák várható aránya nem fog egyezni a szignifikanciaszinttel), másrészt viszont a több előfeltevésre építő próbáknak általában kisebb az erejük. A tanulság, hogy mindig annyi előfeltevésre építő próbát használjunk, amennyit tudunk, se többet se kevesebbet: amely előfeltevésekről tudjuk, hogy teljesülnek (a priori!) azokat építsük be a próbaválasztásba… de többet ne.</li>
 <li>Rögtön itt érdemes megjegyezni, hogy – bár egyes statisztikai programcsomagok notóriusan az ellenkezőjét sugallják – elvileg nem illik az alapján dönteni, hogy milyen próbát használunk, hogy az előfeltevéseit <em>ugyanazon</em> mintán <em>egy másik próbával</em> leellenőrizzük. Ezért hangsúlyoztuk az előbbi pontban, hogy a feltevésekről <em>a priori</em> kell döntenünk (korábbi eredmény, másik mintán végzett teszt stb. alapján).</li>
-<li>Végül felhívjuk a figyelmet, hogy egy próba erejét önmagában növeli a nagyobb mintanagyság. Pontosan ezért a klasszikus mondás szerint: ,,kis hatás kimutatásához nagy minta kell, nagy hatáshoz elég a kisebb minta is!’’.</li>
+<li>Végül felhívjuk a figyelmet, hogy egy próba erejét önmagában növeli a nagyobb mintanagyság. Pontosan ezért a klasszikus mondás szerint: „kis hatás kimutatásához nagy minta kell, nagy hatáshoz elég a kisebb minta is!”.</li>
 </ol>
-<p>Mutatunk egy példát a hipotézisvizsgálat alkalmazására is: vizsgáljuk meg azt a kérdést, hogy a dohányzó anyák újszülötteinek születési tömege eltér-e a nemdohányzó anyák újszülötteitől!</p>
-<p>Az első kérdés, hogy mit értünk az alatt, hogy ,,eltér’’. Ezt többféleképp is lehetne operacionalizálni, most maradjunk annál a – kézenfekvő, és klinikailag is releváns – megközelítésnél, hogy a várható születési tömegük kisebb-e. (Tehát a kérdést a várható értékek egyezésére hegyezzük ki, nem az érdekel minket, hogy például a szórása a születési tömegeknek eltér-e a két csoportban.)</p>
-<p>Az adatbázisban 115 nemdohányzó és 74 dohányzó anyától származó újszülött van. Gyorsan kiszámolhatjuk, hogy az előbbi csoportban az újszülöttek átlagos születési tömege 3055,7 gramm, míg az utóbbiban 2771,9 gramm. Mondhatjuk akkor, hogy a dohányzó anyák újszülöttjei kisebb tömegűek? Természetesen nem! Ez ugyanis csak annyit mondott, hogy a <em>mintában</em> kisebb a tömegük, de minket természetesen nem a konkrét minta érdekel, hanem a sokaság! Kijelenthetjük ez alapján, hogy a sokaságban is kisebb a dohányzó anyák újszülöttjeinek a várható születési tömege? Nem, a helyzet nem ilyen egyszerű: elképzelhető, hogy mindkét csoportnak ugyanannyi (a sokaságban!) a várható születési tömege, csak épp pont olyan mintát vettünk, amiben a dohányzó anyáknál ez kisebb. (Ez természetesen tökéletes mintavétel esetén is előfordulhat – mintavételi ingadozás, ugyebár!) Sőt, akár az is lehet, hogy épp a dohányzó anyák újszülöttei nagyobb születési súlyúak várhatóan, csak a mintavétel ördöge az ő csoportjukból pont kicsi, a nemdohányzó csoportból meg nagyobb újszülötteket dobott ki.</p>
+<p>Zárásként nézzünk meg egy konkrét példát a hipotézisvizsgálat alkalmazására is: vizsgáljuk meg azt a kérdést, hogy a dohányzó anyák újszülötteinek születési tömege eltér-e a nemdohányzó anyák újszülötteitől!</p>
+<p>Az első kérdés, hogy mit értünk az alatt, hogy „eltér”. Ezt többféleképp is lehetne operacionalizálni, most maradjunk annál a – kézenfekvő, és klinikailag is releváns – megközelítésnél, hogy a várható születési tömegük kisebb-e. (Tehát a kérdést a várható értékek egyezésére hegyezzük ki, nem az érdekel minket, hogy például a szórása a születési tömegeknek eltér-e a két csoportban.)</p>
+<p>Az adatbázisban 115 nemdohányzó és 74 dohányzó anyától származó újszülött van. Gyorsan kiszámolhatjuk, hogy az előbbi csoportban az újszülöttek átlagos születési tömege 3055,7 gramm, míg az utóbbiban 2771,9 gramm. Mondhatjuk akkor, hogy a dohányzó anyák újszülöttjei kisebb tömegűek? Természetesen nem! Ez ugyanis csak annyit mondott, hogy a <em>mintában</em> kisebb a tömegük, de minket természetesen nem a konkrét minta érdekel, hanem a sokaság! Kijelenthetjük ez alapján, hogy a sokaságban is kisebb a dohányzó anyák újszülöttjeinek a várható születési tömege? Nem, a helyzet nem ilyen egyszerű: elképzelhető, hogy mindkét csoportnak ugyanannyi (a sokaságban!) a várható születési tömege, csak épp pont olyan mintát vettünk, amiben a dohányzó anyáknál ez kisebb. (Hiszen ez tökéletesen véletlen mintavétel esetén is előfordulhat – mintavételi ingadozás, ugyebár!) Sőt, akár az is lehet, hogy épp a dohányzó anyák újszülöttei nagyobb születési súlyúak várhatóan, csak a mintavétel ördöge az ő csoportjukból pont kicsi, a nemdohányzó csoportból meg nagyobb újszülötteket dobott ki.</p>
 <p>A kérdésről tehát <em>biztosat</em> nem lehet mondani – de statisztikai próbával <em>valószínűségi kijelentést</em> tehetünk. Elsőként döntenünk kell arról, hogy milyen próbát alkalmazzunk. Ennek a részletei számunkra most nem fontosak, a lényeg csak a végeredmény: a körülmények (két független csoport, aránylag nagy mintanagyság mindkét csoportban, <em>a priori</em> nem ismert sokasági szórás) a választásunk az ún. Welch-próbára esik. Ennek nullhipotézise, hogy a két csoport várható értéke között nincs különbség, ellenhipotézise, hogy van, a két várható érték nem egyezik.</p>
 <p>Végezzük el a próbát:</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="induktiv.html#cb37-1" tabindex="-1"></a><span class="fu">t.test</span>( bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt )</span></code></pre></div>
-<pre><code>## 
-##  Welch Two Sample t-test
-## 
-## data:  bwt by smoke
-## t = 2.7299, df = 170.1, p-value = 0.007003
-## alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
-## 95 percent confidence interval:
-##   78.57486 488.97860
-## sample estimates:
-## mean in group 0 mean in group 1 
-##        3055.696        2771.919</code></pre>
-<p>A <span class="math inline">\(p\)</span>-érték: <span class="math inline">\(p=0,\!007\)</span>, ez minden szokásos szignifikanciaszintnél kisebb (még az 1%-ot sem éri el), így kijelenthetjük: a várható értékek egyezésére vonatkozó nullhipotézis minden szokásos szignifikanciaszinten elvethető, azaz minden szokásos szignifikanciaszinten kijelenthető, hogy a két csoport (sokaságbeli!) várható értéke között különbség van. (Azaz: a mintában tapasztalt különbség olyan nagy (a minta egyéb jellemzőit is figyelembe véve), hogy az már túlmutat a mintavételi ingadozás hatásán, nem hihető, hogy betudható pusztán a mintavételi ingadozás hatásának. Azt kell feltételeznünk, hogy mögötte sokasági hatás (azaz sokaságban is eltérő várható érték) van.)</p>
-<p>Mindezt röviden úgy is megfogalmazhatjuk, hogy a különbség szignifikáns, még más szóval, hogy a két csoport között lényeges különbség van. (Ebben a kontextusban a ,,lényeges’’ statisztikai értelemben szignifikánsat jelent.) Ez a jó pont arra, hogy felhívjuk a figyelmet a különbségre a – most definiált – <em>statisztikai szignifikancia</em> és a – köznapi értelmű – <em>klinikai szignifikancia</em> között. E kettőt mindig szigorúan különböztessük meg egymástól! A köznapi szóhasználatban a ,,lényeges különbség’’ alatt ugyanis azt értjük, hogy a tárgyterületi (esetünkben: orvosi) skálán mi bír jelentőséggel. 1 grammal nagyobb születési tömegnek semmi (klinikai) jelentősége (nem gondol az orvos más klinikai helyzetre, nem rendel más vizsgálat, más kezelést stb.), 500 grammnak nagyon is lehet. A statisztikai szignifikancia viszont <em>teljesen mást</em> mér: azt, hogy mennyire hihető, hogy a különbség betudható a mintavételi ingadozásnak! Adott esetben lehet 500 gramm különbség is (statisztikailag) inszignifikáns (ha nagy a szórás, vagy kicsi a mintanagyság), és lehet 1 gramm különbség is (statisztikailag) szignifikáns (ha kicsi a szórás, vagy nagy a mintanagyság).</p>
-<p>Biztos ez a döntés? Természetesen nem! Bár a <span class="math inline">\(p\)</span>-érték nagyon alacsony, de mivel nem nulla (soha nem is lehet az), így épp azt mutatja, hogy a döntésünkben mekkora bizonytalanság van – mert van benne.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  bwt by smoke
+t = 2.7299, df = 170.1, p-value = 0.007003
+alternative hypothesis: true difference in means between group 0 and group 1 is not equal to 0
+95 percent confidence interval:
+  78.57486 488.97860
+sample estimates:
+mean in group 0 mean in group 1 
+       3055.696        2771.919 </code></pre>
+</div>
+</div>
+<p>A <span class="math inline">\(p\)</span>-érték: <span class="math inline">\(p=0,\!007\)</span>, ez minden szokásos szignifikanciaszintnél kisebb (még az 1%-ot sem éri el), így kijelenthetjük: a várható értékek egyezésére vonatkozó nullhipotézis minden szokásos szignifikanciaszinten elvethető, azaz minden szokásos szignifikanciaszinten kijelenthető, hogy a két csoport (sokaságbeli!) várható értéke között különbség van. Azaz: a mintában tapasztalt különbség olyan nagy (a minta egyéb jellemzőit is figyelembe véve), hogy az már túlmutat a mintavételi ingadozás hatásán, nem hihető, hogy betudható pusztán a mintavételi ingadozás hatásának. Azt kell feltételeznünk, hogy mögötte sokasági hatás, vagyis sokaságban is eltérő várható érték van.</p>
+<p>Mindezt röviden úgy is megfogalmazhatjuk, hogy a különbség szignifikáns, még más szóval, hogy a két csoport között lényeges különbség van. (Ebben a kontextusban a „lényeges” statisztikai értelemben szignifikánsat jelent.) Ez a jó pont arra, hogy felhívjuk a figyelmet a különbségre a – most definiált – <em>statisztikai szignifikancia</em> és a – köznapi értelmű – <em>klinikai szignifikancia</em> között. E kettőt mindig szigorúan különböztessük meg egymástól! A köznapi szóhasználatban a „lényeges különbség” alatt ugyanis azt értjük, hogy a tárgyterületi (esetünkben: orvosi) skálán mi bír jelentőséggel. 1 grammal nagyobb születési tömegnek semmi (klinikai) jelentősége (nem gondol az orvos más klinikai helyzetre, nem rendel más vizsgálat, más kezelést stb.), 500 grammnak nagyon is lehet. A statisztikai szignifikancia viszont <em>teljesen mást</em> mér: azt, hogy mennyire hihető, hogy a különbség betudható a mintavételi ingadozásnak! Adott esetben lehet 500 gramm különbség is – statisztikailag – inszignifikáns (ha nagy a szórás, vagy kicsi a mintanagyság), és lehet 1 gramm különbség is – statisztikailag – szignifikáns (ha kicsi a szórás, vagy nagy a mintanagyság).</p>
+<!-- Biztos ez a döntés? Természetesen nem! Bár a $p$-érték nagyon alacsony, de mivel nem nulla (soha nem is lehet az), így épp azt mutatja, hogy a döntésünkben mekkora bizonytalanság van -- mert van benne. -->
 <!-- Végezetül egy nagyon fontos intelem. A fentiekben megállapítottuk, hogy a dohányzó anyák újszülöttjeinek a várható születési tömege kisebb. Mondhatjuk ez alapján, hogy a dohányzás kisebb születési tömeget \emph{okoz}? \emph{Nem, semmiképp!} Ez megsértené a statisztika legfontosabb alapelveinek egyiket (mely a biostatisztikában lépten-nyomon előkerül): azt, hogy a \emph{korreláció nem implikál kauzalitást}. Abból, hogy két jelenség együttjár, nem következik, hogy az egyik okozója a másiknak. Abból, hogy a dohányzás és a kisebb születési tömeg együttjár, nem következik, hogy egyik \emph{okozza} a másikat. -->
 <!-- A probléma ugyanis, hogy nem tudhatjuk, hogy a két csoport milyen tulajdonságokban tér el. Azt persze tudjuk, hogy a dohányzásban igen, de mi van az összes többi (végtelen számú) egyéb jellemzővel? Ebben a keresztmetszeti vizsgálatban ezekről \emph{semmit nem tudhatunk}! Innen kezdve viszont arról sem nyilatkozhatunk \emph{semmit}, hogy a születési tömegben tapasztalt eltérést a dohányzás, vagy valamilyen egyéb -- általunk nem ismert -- eltérés, vagy netán ezek valamilyen kombinációja okozza-e. Extrém példaként hozhatnánk egy olyan (képzeletbeli) vizsgálatot, amelyben azt nézzük, hogy az anya fogának színe és a megszületett gyermek testtömege között van-e kapcsolat. Ezen a ponton megállva, és jól végiggondolva a szituációt, már sejthető, hogy mi fog jönni: arra jutnánk, hogy igenis van kapcsolat, a sárgásabb fog kisebb születési tömeggel jár együtt. Ha nem vesszük figyelembe a 'korreláció nem implikál kauzalitást' elvét, akkor ebből egy olyan következtetést vonathatnánk le, ami természetesen klinikai abszurdum: nyilvánvaló, hogy az anya fogának színe semmilyen módon nem hat az újszülött testtömegére. -->
 <!-- Ez azért jó példa, mert ennél -- jelen felvezetés után -- mindenki érti mi a \emph{valódi} magyarázat: nyilván nem arról van szó, hogy maga a fogszín hat a testtömegre, hanem arról, hogy a háttérben van egy harmadik tényező (a dohányzás), ami \emph{egyszerre} hat mindkettőre, egyszerre jár együtt sárgásabb foggal \emph{és} kisebb születési tömeggel. De ha a dohányzást figyelmen kívül hagyjuk, és csak a fogszín és a születési tömeget nézzük, akkor kapcsolatot találunk köztük. Ez a \emph{látszólagos kapcsolat} jelensége; az ilyet okozó változót pedig \emph{zavaró változónak} szokás nevezni. -->
 <!-- A gond az, hogy egy ilyen elrendezésű vizsgálatban soha nem tudhatjuk, hogy mi vagy mik lehetnek zavaró változók. A fogszín--születési tömeg esetben nyilvánvaló volt, hogy a dohányzás az, de mi a helyzet a dohányzás--születési tömeg esettel? Honnan tudhatjuk, hogy ott nincs egy zavaró változó, ami olyan szerepet játszik, mint a fogszín--születési tömeg esetben a dohányzás? Sehonnan! -->
-<!-- Ez természetesen nem azt jelenti, hogy lehetetlen statisztikailag megvizsgálni, hogy a dohányzás valóban kisebb születési tömeget okoz-e, csak annyit mond, hogy \emph{így} nem lehet ezt kideríteni. Ehhez más elrendezésű vizsgálat kell. (Természetesen ettől még a keresztmetszeti vizsgálatoknak is megvan a szerepük (az például rögtön látszik, hogy ,,tippadónak'' kitűnőek lehetnek az ilyenek is, hogy sejtsük mit érdemes más, bonyolultabb és drágább vizsgálatokkal megnézni), de ezekkel a kérdésekkel most nem foglalkozunk részletesebben.) -->
+<!-- Ez természetesen nem azt jelenti, hogy lehetetlen statisztikailag megvizsgálni, hogy a dohányzás valóban kisebb születési tömeget okoz-e, csak annyit mond, hogy \emph{így} nem lehet ezt kideríteni. Ehhez más elrendezésű vizsgálat kell. (Természetesen ettől még a keresztmetszeti vizsgálatoknak is megvan a szerepük (az például rögtön látszik, hogy "tippadónak" kitűnőek lehetnek az ilyenek is, hogy sejtsük mit érdemes más, bonyolultabb és drágább vizsgálatokkal megnézni), de ezekkel a kérdésekkel most nem foglalkozunk részletesebben.) -->
 <!-- Arra viszont mindenképp fontos emlékezni, hogy keresztmetszeti adatokból nem szabad minden további nélkül okozati következtetést levonni\dots{} hiszen a korreláció nem implikál kauzalitást. -->
 
-</div>
-</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div class="footnotes">
-<hr />
-<ol start="11">
-<li id="fn11"><p>Ebbe természetesen beletartozhat több jellemző egyszerre történő becslése is, mi most azonban az ún. egydimenziós paraméterbecslésekre fogjuk korlátozni magunkat.<a href="induktiv.html#fnref11" class="footnote-back">↩︎</a></p></li>
-<li id="fn12"><p>Átlagról általában akkor beszélünk, amikor a sokaság véges, ilyenkor tipikusan úgy képzeljük (,,elemeivel adott sokaság’<q>), hogy a sokaságot véges sok érték felsorolásával megadhatjuk; várható értéket általában akkor mondjuk, ha a sokaság fiktív, végtelen, ilyen tipikusan úgy gondoljuk (,,eloszlásával adott sokaság</q>’), hogy azt a háttéreloszlást ismerjük, melyet a sokaság minden egyes eleme követ, legegyszerűbb esetben független és azonos eloszlású módon.<a href="induktiv.html#fnref12" class="footnote-back">↩︎</a></p></li>
-<li id="fn13"><p>Egy tartomány valószínűsége alatt most azt értjük, hogy adott eloszlás mellett mekkora annak a valószínűsége, hogy az eloszlásból realizálódott érték a tartományba esik, azaz mennyi a sűrűségfüggvény integrálja a tartomány felett.<a href="induktiv.html#fnref13" class="footnote-back">↩︎</a></p></li>
-<li id="fn14"><p>Ez nem szükségszerű, a hipotézispár függvényében léteznek ún. egyoldali próbák is, de ezzel most nem foglalkozunk.<a href="induktiv.html#fnref14" class="footnote-back">↩︎</a></p></li>
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>A gondolatmenet egyszerűsítése érdekében egy dolgot szőnyeg alá söpörtem: hogy a mintába be nem került elemeknek valójában eloszlását sem fogjuk <em>biztosan</em> ismerni, hiszen arra csak a – véges sok – mintába bekerült elem alapján tudunk következtetni, ami persze szintén hibával lesz terhelt. Vagyis az eloszlásban is lesz bizonytalanság (ha valaki szeretné: a sztochasztikus információt is csak sztochasztikusan fogjuk ismerni…), ebből fakadóan a becslésünk hibája <em>maga is</em> egy becsült érték lesz. De igaz lesz erre is minden pozitív jellemző, amit a becslésekről mondtunk.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Átlagról általában akkor beszélünk, amikor a sokaság véges, ilyenkor tipikusan úgy képzeljük („elemeivel adott sokaság”), hogy a sokaságot véges sok érték felsorolásával megadhatjuk; várható értéket általában akkor mondjuk, ha a sokaság fiktív, végtelen, ilyen tipikusan úgy gondoljuk („eloszlásával adott sokaság”), hogy azt a háttéreloszlást ismerjük, melyet a sokaság minden egyes eleme követ, legegyszerűbb esetben független és azonos eloszlású módon, és ezt az eloszlást adjuk meg. Az első esetekben tehát felsorolunk elemeket, a másodikban megadunk egy valószínűségszámítási eloszlást.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>A valóságban ez nem igazán definíció volt, hanem inkább egy illusztráció; erre illene egy valószínűségszámítási definíciót is adni. Ezt később meg fogom tenni.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Gondoljuk végig, hogy miért kötelező kikötni, hogy csak torzítatlan becslők körében gondolkozunk! Miért válna értelmetlenné a mintavételi szórás minimalizálása, ha nem kötnénk ki, hogy a becslőfüggvény torzítatlan legyen…?<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Itt egy elég nagyon egyszerűsítettem, de a konzisztencia valódi definíciója ez: hogy a becslőfüggvény, mint valószínűségi változó, konvergál a valódi értékhez. Azért egyszerűsítettem, hogy ne kelljen behozni a valószínűségi változók konvergenciájának kérdéskörét; de ha valaki ebben jártas, akkor elég annyit tudnia, hogy egy becslőfüggvényt adott értelemben – erősen, gyengén, négyzetes középben – konzisztens, ha abban az értelemben tart a valódi értékhez, midőn <span class="math inline">\(n \rightarrow\infty\)</span>. Az én definícióm igazából a négyzetes középben – és így gyengén – konzisztens becslő definíciója, azt persze külön tételként kellene bizonyítani, hogy ha egy becslő aszimptotikusan torzítatlan és nullába tart a mintavételi szórása, akkor valóban négyzetes középben konzisztens.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Egy tartomány valószínűsége alatt most azt értjük, hogy adott eloszlás mellett mekkora annak a valószínűsége, hogy az eloszlásból realizálódott érték a tartományba esik, azaz mennyi a sűrűségfüggvény integrálja a tartomány felett.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Ez nem szükségszerű, a hipotézispár függvényében léteznek ún. egyoldali próbák is, de ezzel most nem foglalkozunk.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </ol>
-</div>
-<!-- Default Statcounter code for Ferenci Tamás
-elektronikus jegy https://tamas-ferenci.github.io/ -->
-<script type="text/javascript">
-var sc_project=12422840;
-var sc_invisible=1;
-var sc_security="d32cce24";
-</script>
-<script type="text/javascript"
-src="https://www.statcounter.com/counter/counter.js"
-async></script>
-<noscript><div class="statcounter"><a title="látogató
-számláló" href="https://www.statcounter.hu/"
-target="_blank"><img class="statcounter"
-src="https://c.statcounter.com/12422840/0/d32cce24/1/"
-alt="látogató számláló"></a></div></noscript>
-<!-- End of Statcounter Code -->
-            </section>
+</section>
 
-          </div>
-        </div>
-      </div>
-<a href="deskriptiv.html" class="navigation navigation-prev navigation-unique" aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
-
-    </div>
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kimásolva!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kimásolva!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ferenci-tamas\.github\.io\/biostatisztika");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./deskriptiv.html" class="pagination-link" aria-label="Deskriptív statisztika">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Deskriptív statisztika</span></span>
+      </a>          
   </div>
-<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
-<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
-<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
-<script>
-gitbook.require(["gitbook"], function(gitbook) {
-gitbook.start({
-"sharing": {
-"github": false,
-"facebook": true,
-"twitter": true,
-"linkedin": false,
-"weibo": false,
-"instapaper": false,
-"vk": false,
-"whatsapp": false,
-"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
-},
-"fontsettings": {
-"theme": "white",
-"family": "sans",
-"size": 2
-},
-"edit": {
-"link": "https://github.com/tamas-ferenci/FerenciTamas_BevezetesABiostatisztikaba/edit/master/03-induktiv.Rmd",
-"text": "Szerkesztés"
-},
-"history": {
-"link": null,
-"text": null
-},
-"view": {
-"link": null,
-"text": null
-},
-"download": ["FerenciTamas_BevezetesABiostatisztikaba.pdf", "FerenciTamas_BevezetesABiostatisztikaba.epub"],
-"search": {
-"engine": "fuse",
-"options": null
-},
-"toc": {
-"collapse": "subsection"
-}
-});
-});
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ferenci-tamas/biostatisztika/edit/main/induktiv.qmd" class="toc-action"><i class="bi bi-github"></i>Az oldal szerkesztése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/blob/main/induktiv.qmd" class="toc-action"><i class="bi empty"></i>Forráskód megtekintése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/issues/new" class="toc-action"><i class="bi empty"></i>Észrevétel jelzése</a></li></ul></div></div></div></footer><script type="text/javascript">
+var sc_project=12422840; 
+var sc_invisible=1; 
+var sc_security="d32cce24"; 
 </script>
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async=""></script>
+<noscript><div class="statcounter"><a title="ingyenes
+webstatisztika" href="https://www.statcounter.hu/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12422840/0/d32cce24/1/" alt="ingyenes webstatisztika" referrerpolicy="no-referrer-when-downgrade"></a></div></noscript>
 
-<!-- dynamically load mathjax for compatibility with self-contained -->
-<script>
-  (function () {
-    var script = document.createElement("script");
-    script.type = "text/javascript";
-    var src = "true";
-    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
-    if (location.protocol !== "file:")
-      if (/^https?:/.test(src))
-        src = src.replace(/^https?:/, '');
-    script.src = src;
-    document.getElementsByTagName("head")[0].appendChild(script);
-  })();
-</script>
-</body>
 
-</html>
+
+
+</body></html>

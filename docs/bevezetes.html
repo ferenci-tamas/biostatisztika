@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="hu-HU" xml:lang="hu-HU"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
+
+<title>1&nbsp; A statisztika alapjai – Bevezetés a biostatisztikába</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./deskriptiv.html" rel="next">
+<link href="./index.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "Nincs találat",
+    "search-matching-documents-text": "találat",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "További találatok elrejtése",
+    "search-more-match-text": "további találat ebben a dokumentumban",
+    "search-more-matches-text": "további találat ebben a dokumentumban",
+    "search-clear-button-title": "Törlés",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Mégse",
+    "search-submit-button-title": "Keresés",
+    "search-label": "Keresés"
+  }
+}</script>
+
+
+<meta property="og:title" content="1&nbsp; A statisztika alapjai – Bevezetés a biostatisztikába">
+<meta property="og:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
+<meta property="og:image" content="https://ferenci-tamas.github.io/biostatisztika/ferenci-tamas-biostatisztika-cover.png">
+<meta property="og:site_name" content="Bevezetés a biostatisztikába">
+<meta property="og:image:height" content="628">
+<meta property="og:image:width" content="1200">
+<meta name="twitter:title" content="1&nbsp; A statisztika alapjai – Bevezetés a biostatisztikába">
+<meta name="twitter:description" content="Ez a jegyzet rövid bevezetést nyújt a biostatisztika alapjaiba.">
+<meta name="twitter:image" content="https://ferenci-tamas.github.io/biostatisztika/ferenci-tamas-biostatisztika-cover.png">
+<meta name="twitter:image-height" content="628">
+<meta name="twitter:image-width" content="1200">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-sidebar floating quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./bevezetes.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A statisztika alapjai</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Keresés" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Bevezetés a biostatisztikába</a> 
+        <div class="sidebar-tools-main tools-wide">
+    <a href="https://github.com/ferenci-tamas/biostatisztika" title="Forráskód" class="quarto-navigation-tool px-1" aria-label="Forráskód"><i class="bi bi-github"></i></a>
+    <div class="dropdown">
+      <a href="" title="Letöltés" id="quarto-navigation-tool-dropdown-0" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Letöltés"><i class="bi bi-download"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-0">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./ferenci-tamas-biostatisztika.pdf">
+              <i class="bi bi-file-pdf pe-1"></i>
+            Letöltés PDF
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="./ferenci-tamas-biostatisztika.epub">
+              <i class="bi bi-journal pe-1"></i>
+            Letöltés ePub
+            </a>
+          </li>
+      </ul>
+    </div>
+    <div class="dropdown">
+      <a href="" title="Megosztás" id="quarto-navigation-tool-dropdown-1" class="quarto-navigation-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false" role="link" aria-label="Megosztás"><i class="bi bi-share"></i></a>
+      <ul class="dropdown-menu" aria-labelledby="quarto-navigation-tool-dropdown-1">
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+              <i class="bi bi-twitter pe-1"></i>
+            Twitter
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+              <i class="bi bi-facebook pe-1"></i>
+            Facebook
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+              <i class="bi bi-linkedin pe-1"></i>
+            LinkedIn
+            </a>
+          </li>
+      </ul>
+    </div>
+</div>
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Keresés"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Előszó</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./bevezetes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A statisztika alapjai</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./deskriptiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Deskriptív statisztika</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./induktiv.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Induktív statisztika</span></span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Tartalomjegyzék</h2>
+   
+  <ul>
+  <li><a href="#a-statisztika-alapfogalmai-és-ágai" id="toc-a-statisztika-alapfogalmai-és-ágai" class="nav-link active" data-scroll-target="#a-statisztika-alapfogalmai-és-ágai"><span class="header-section-number">1.1</span> A statisztika alapfogalmai és ágai</a></li>
+  <li><a href="#sec-alapokvaltozok" id="toc-sec-alapokvaltozok" class="nav-link" data-scroll-target="#sec-alapokvaltozok"><span class="header-section-number">1.2</span> Változók és mérési skálák</a></li>
+  <li><a href="#sec-alapokvelhatarolas" id="toc-sec-alapokvelhatarolas" class="nav-link" data-scroll-target="#sec-alapokvelhatarolas"><span class="header-section-number">1.3</span> A biostatisztika kapcsolódó tudományai és elhatárolása</a></li>
+  <li><a href="#sec-alapokszamtech" id="toc-sec-alapokszamtech" class="nav-link" data-scroll-target="#sec-alapokszamtech"><span class="header-section-number">1.4</span> A biostatisztika számítástechnikai háttere</a></li>
+  <li><a href="#sec-alapokfutopelda" id="toc-sec-alapokfutopelda" class="nav-link" data-scroll-target="#sec-alapokfutopelda"><span class="header-section-number">1.5</span> Futó példa</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/ferenci-tamas/biostatisztika/edit/main/bevezetes.qmd" class="toc-action"><i class="bi bi-github"></i>Az oldal szerkesztése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/blob/main/bevezetes.qmd" class="toc-action"><i class="bi empty"></i>Forráskód megtekintése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/issues/new" class="toc-action"><i class="bi empty"></i>Észrevétel jelzése</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">A statisztika alapjai</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>A biostatisztika a <em>statisztika</em> egyik alkalmazott ága, mely az orvosbiológiai területen felmerülő, empirikus adatokkal leírt kérdések kvantitatív vizsgálatával foglalkozik.</p>
+<p>Egy új vérnyomáscsökkentő gyógyszer-jelölt valóban csökkenti a vérnyomást? Nagyfeszültségű vezeték közelében tartózkodás növeli a rák-kockázatot? Van-e összefüggés egy gyermek táplálkozási energiabevitele és magasságának növekedése között? Ez csak pár példa olyan kérdésekre, melyek megválaszolásának egyik lehetősége az <em>empirikus adatok</em> alkalmazása: összegyűjtjük gyógyszert szedő és nem szedő emberek vérnyomását; emberek lakhelyének távolságát a nagyfeszültségű vezetékektől, és azt, hogy kialakult-e náluk rák; gyermekek táplálási adatait és magasságuk alakulását. Ezen adatok birtokában van remény a problémák vizsgálatára, orvosilag releváns kérdések megválaszolására. Továbbmenve az is látható, hogy végeredményben mind számszerű adatra vezet (vérnyomásalakulás, rákkockázat, magasságváltozás stb.), így adhatunk <em>kvantitatív</em> válaszokat is a kérdésekre (pontosan mekkora vérnyomás-csökkenést okoz várhatóan a gyógyszer-jelölt, ha egyáltalán okoz, hány százalékkal változtatja a rákkockázatot adott nagyfeszültségű vezeték, ha egyáltalán változtatja, nagyobb energiabevitel mennyiben módosítja a növekedés ütemét, ha egyáltalán módosítja stb.). Ehhez természetesen megfelelő elemzéseket kell végrehajtanunk, megfelelő modelleket kell alkotnunk. Ezzel foglalkozik a biostatisztika.</p>
+<!-- A fejezetben elsőként röviden összefoglaljuk a biostatisztika történelmi fejlődését, és kidomborítjuk mai jelentőségét (\ref{sec:jelentoseg}. alfejezet). Ezt követően, \aref{sec:alapok}. alfejezetben a statisztika alapfogalmaival és feladataival ismerkedünk meg, illetve foglalkozunk a biostatisztika pár specialitásával is. -->
+<!-- A fejezet hátralevő része már konkrét biostatisztikai módszereket és eszközöket mutat be. \Aref{sec:deskriptiv}. alfejezetben részletesebb bevezetőt adunk az ún. deskriptív (leíró) statisztikába, \aref{sec:induktiv}. alfejezetben pedig röviden bemutatjuk az ún. induktív (következtető) statisztika alapfogalmait. Ezek során mindenhol a biostatisztikai alkalmazásokra fogjuk helyezni a hangsúlyt. -->
+<!-- Noha a biostatisztika alapja a matematikai statisztika, törekedtem a közérthető bevezetés adására, így specifikusabb matematikai (valószínűségszámítási) ismeretek egyedül az induktív statisztikával foglalkozó [-@sec-induktiv]. fejezetben lesznek szükségesek. -->
+<!-- \section{A biostatisztika fejlődése és jelentősége} -->
+<!-- \label{sec:jelentoseg} -->
+<!-- Napjaink orvostudományi kutatásai a legtöbb esetben elképzelhetetlenek statisztikai módszerek (ha más nem, támogató szerepű) alkalmazása nélkül. -->
+<!-- Ez nem meglepő kijelentés, ha áttekintjük az orvoslás fejlődési tendenciáit. Ezek közül is kettőt emelnénk ki most. Az egyik az egyre erősebb \emph{empirikus orientáció}. Noha nyomokban már régebbről is vannak ilyen emlékeink, empirikus gondolkodásról érdemben csak a XVIII. századtól kezdődően beszélhetünk. (James Lind 1747-ben hajtotta végre nevezetes klinikai kísérletét, melyben empirikusan demonstrálta, hogy a skorbut citrusfélékkel gyógyítható.) -->
+<!-- Mindez nem független attól, hogy mind az egészséges ember működéséről, mind a betegségek mechanizmusáról ekkortól kezdtek el mai szemmel nézve is tartható ismeretek összegyűlni. Ami az előbbit illeti, nyilvánvaló a boncolásos eredmények hatása (és persze az is, hogy az emberiség egész történetét tekintve ez milyen későn következett be -- mellbevágó példaként hozhatnánk, hogy még egy olyan abszolút alapvető jelenségnek, mint a vérkeringés is csak 1628-ban adták meg (William Harvey a De Motu Cordis-ban) az első, lényegileg helyes leírását). A betegségek kapcsán ekkor kezdték a korábbi, mai szemmel nézve megmosolyogtató teóriákat (rossz levegő, isteni bosszú, testnedvek egyensúlyának felborulása stb.) természettudományosabb alapokon álló magyarázatokkal felváltani. -->
+<!-- Az empirikus orientáció innen kezdve folyamatosan csak erősödött az évszázadok alatt, és talán nem túlzás azt mondani, hogy ez torkollott -- a XX. század második felében -- a \emph{bizonyítékokon alapuló orvoslás} (\selectlanguage{english}Evidence Based Medicine\selectlanguage{magyar}, EBM) kialakulásába. (Aminek lényege, hogy a klinikai döntéshozatalt a rendelkezésre álló legjobb tudományos bizonyítékok (azaz jórészt empirikus vizsgálatok eredményeinek!) gyűjtése és kritikus értékelése alapján kell végrehajtani.) -->
+<!-- Külön megjegyzendő, hogy nem csak egyszerűen az empirikus eredmények szerepe nőtt, de ezen belül a \emph{kvantitatív} eredményeké is. A XX. század (különösen a vége) ráadásul elhozta a nagy volumenű adatgyűjtés műszaki lehetőségeit is. -->
+<!-- Ennek kapcsán -- szintén jellemzően XX. század második felére eső fejleményként -- érdemes megemlíteni a gyógyszerengedélyezési folyamatok hihetetlen elbonyolódását és megnehezedését, melyek egyre jobb empirikus bizonyítékokat (is) megkövetelnek a törzskönyvezéshez. -->
+<!-- A másik tényező az orvostudomány egyre erősebb átmenete \emph{modellalapúba}. Hogy egy klasszikus kérdéssel világítsunk erre rá: mi a lényegi különbség egy elromlott autó és egy "elromlott" ember diagnosztizálása között? (A kérdés jogos, gépjárműveknél is tényleg sokszor használják a diagnosztika szót a hibakeresésre.) Bár vannak apróbb, inkább formai különbségek (az autót jobban szét lehet szedni mint az embert stb.), az érdemi különbség, hogy az autónál \emph{tudjuk}, hogy jó állapotában elvileg hogy \emph{kéne} működnie -- embernél ezzel szemben sokszor nem. A XX. században azonban ezt egyre több területen sikerült megdönteni (vagy legalábbis csökkenteni): egyre több területen és egyre jobb modelljeink vannak arról is, hogy az emberi szervezetnek elvileg hogyan kéne működnie "jó" állapotában. -->
+<!-- Azt, hogy mindezek a fejlődési tendenciák szinte exponenciálisan gyorsuló jelleget mutatnak, talán említenünk sem kell\dots{} -->
+<!-- Ezek voltak a biostatisztika "orvosi oldalán" az előzmények. Van azonban az éremnek egy másik fele is: a "matematikai oldal". -->
+<!-- A valószínűségszámítás szintén a XVIII. században indult fejlődésnek (elsősorban Jacob Bernoulli és Abraham de Moivre, majd később Pierre-Simon de Laplace tevékenysége nyomán). Ezzel szemben a statisztika matematikai ága\footnote{Természetesen a "procedurális" része, például a népszámlálások, ókorig visszanyúló hagyományokkal bírnak.}, és különösen a mai értelemben vett induktív statisztika csak a XIX. század végén, XX. század elején szökkent szárba. -->
+<!-- Érdekes, hogy már ennek is igen komoly alkalmazott tudományos motivációja volt (bár jórészt például az agrometria révén -- igaz, nagyon hamar bekapcsolódott az alkalmazók közé az orvostudomány is). Az úttörők Ronald Aylmer Fisher, Jerzy Neyman és a két Pearson, Karl és Egon voltak. -->
+<!-- A két fejlődési tendencia a XX. században ért össze. Az említett matematikai statisztikai eredmények megteremtették a módszertani bázist, az orvosi fejlődés pedig az igényt azon módszerek és eljárások alkalmazására, melyeket ma már \emph{biostatisztika} összefoglaló néven említünk. -->
+<!-- Ebben az alfejezetben a statisztika, illetve a biostatisztika néhány fundamentális kérdésével fogunk foglalkozni. -->
+<!-- Először, motiváció gyanánt is, mutatunk pár demonstratív kérdést, melyek megválaszolását a biostatisztikától várhatjuk (természetesen megfelelő adatok birtokában). Ezt azért is tartjuk fontosnak, mert a későbbiekben konkrétan is látni fogjuk, hogy e kérdések hogyan válnak szabatosan megválaszolhatóvá a megfelelő biostatisztikai apparátus alkalmazásával. Ezt követően megadjuk a statisztika fő feladatait, és definiáljuk a statisztika legfontosabb alapfogalmait, melyek lépten-nyomon előkerülnek a statisztikai szóhasználatban; ezen belül is külön kitérünk a változókkal kapcsolatos kérdésekre (mint amilyen a mérési skálák témája). -->
+<!-- Ezt követően -- immár rátérve a biostatisztikára -- foglalkozunk azzal, hogy milyen tudományágak alapozzák meg a biostatisztikát, illetve elhatároljuk a biostatisztikát pár rokon területtől. Beszélünk arról is, hogy mi a számítástechnika jelentősége a modern biostatisztikában, és röviden ismertetjük a legfontosabb (bio)statisztikai programcsomagokat. -->
+<!-- Az alfejezet zárásaként bemutatjuk azt az adatbázist, mely majd futó példaként fog szolgálni a későbbi módszertani mondanivaló illusztrálására. -->
+<!-- \subsection{Pár demonstratív kérdés} -->
+<!-- \label{subsec:alapokparkerdes} -->
+<!-- Hogy \emph{motiváljuk} a biostatisztikai fejezet elolvasását, összegyűjtöttünk néhány olyan orvostudomány területéről származó kérdést, melyek szabatos megválaszolásához elengedhetetlen a biostatisztika eszköztárának alkalmazása: -->
+<!-- \begin{enumerate} -->
+<!--    \item Egy új vérnyomáscsökkentő gyógyszer-jelölt valóban csökkenti a vérnyomást? -->
+<!--    \item Egy új vérnyomáscsökkentő gyógyszer-jelölt nem okoz megnövekedett epilepszia kockázatot? -->
+<!--    \item Nagyfeszültségű vezeték közelében tartózkodás növeli a rák-kockázatot? -->
+<!--    \item Mennyi egy adott kurzus hallgatóinak átlagos testtömege? -->
+<!--    \item Mennyi az I. éves fiú egyetemisták átlagos testtömege? -->
+<!--    \item Igaz-e, hogy az I. éves fiú egyetemisták átlagos testtömege 70 kg? -->
+<!--    \item Van-e összefüggés egy gyermek táplálkozási energiabevitele és magasságának növekedése között? -->
+<!-- \end{enumerate} -->
+<!-- E kérdéseket ráadásul úgy választottuk meg, hogy a jó részük terítékre kerüljön a fejezetben, így bátorítjuk az olvasót, hogy újra és újra lapozzon ide vissza, ellenőrizve, hogy tényleg egyre több kérdésre tudna-e választ adni. -->
+<section id="a-statisztika-alapfogalmai-és-ágai" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="a-statisztika-alapfogalmai-és-ágai"><span class="header-section-number">1.1</span> A statisztika alapfogalmai és ágai</h2>
+<!-- A statisztika fogalmát nem definiáljuk túl precízen, \aref{sec:jelentoseg}.  alfejezetben mondottak fényében feltesszük, hogy érthető a statisztika szerepe és hozzávetőleges feladata. Ha mégis formálisabb definíciót kéne adnunk, akkor azt mondhatnánk, hogy a statisztika a valóság, azon belül is elsősorban a tömeges jelenségek számszerűsíthető tényeinek szisztematikus összegyűjtésével és elemzésével foglalkozó tudományos módszer és gyakorlat. -->
+<p>Ahogy láttuk, a statisztika egyik fontos feladata lesz bizonyos kérdések szabatos megválaszolása empirikus adatok alapján. Ennek kapcsán be kell vezetnünk pár alapfogalmat, mely a statisztikusok beszédében lépten-nyomon előkerül.</p>
+<p>Azt a halmazt, melyre a statisztikai eszközökkel megvizsgálandó kérdésünk vonatkozik (cél)populációnak, vagy <em>sokaságnak</em> szokás nevezni. A sokaság elemeit szokás <em>megfigyelési egységnek</em> is nevezni. Ha azt kérdezzük, hogy „Mennyi egy adott kurzus hallgatóinak átlagos testtömege?”, akkor a sokaság az adott kurzus hallgatóiból álló halmaz; a megfigyelési egységek az egyes hallgatók.</p>
+<p>Azt a szempontot, amely szerint a sokaság elemeit vizsgálat alá vonjuk, <em>ismérvnek</em>, vagy más szóval <em>változónak</em> hívjuk. Az előbbi példa esetében a változó a testtömeg; más esetekben persze több változót is használunk. Azt a lépést, amikor adott változó értékét meghatározzák egy adott sokasági elemre, általában <em>megfigyelésnek</em> nevezik a statisztikában.</p>
+<p>Nagyon sokszor nem tudunk a sokaság valamennyi egyedéről információt szerezni (azaz: nem tudjuk mindegyiket megfigyelni). Ilyenkor a sokaság azon részhalmazát, amelyet meg tudunk figyelni (tehát amelyről információnk van), <em>mintának</em> nevezzük, és ezt a helyzetet magát <em>mintavételi helyzetnek</em> hívjuk. Ennek egyrészt technikai okai lehetnek: sok esetben a sokaság valamennyi egységéről való adatgyűjtés (az ún. teljes körű megfigyelés) technikai okok miatt nehézkes vagy egyenesen lehetetlen (túl költséges, túl bonyolult a megszervezése, túl időigényes stb.). A biostatisztikában azonban ennél is fontosabb egy másik ok: az, hogy sok kérdés nem egy kézzelfogható, véges nagyságú sokaságra (mint egy adott kurzus hallgatói), hanem egy ún. fiktív sokaságra vonatkoznak. A kurzus hallgatóit fel lehet sorolni, felírhatjuk a neveiket egymás alá egy lapra. Egy ország lakosainál ugyan ez nehezebb a gyakorlatban, de elvileg minden további nélkül megtehető. De vessük ezt össze azzal a kérdéssel, hogy egy új vérnyomáscsökkentő gyógyszer-jelölt valóban csökkenti-e a vérnyomást – mi itt a sokaság? Itt valami alapvető különbség van: ennek a sokaságnak az elemeit nem tudjuk felírni egy lapra! Soha nem mondhatjuk azt, hogy tessék, itt a névsor, <em>konkrétan, név szerint őket</em> kell gyógyítania a gyógyszernek. E kérdés nem emberek egy konkrét, összeszedhető csoportjára vonatkozik, hanem egy képzeletbeli, megfoghatóan nem létező, absztrakt csoportra („aki megfelel a gyógyszer alkalmazási feltételeinek és nincs ellenjavallata”). Ez nem egy konkrét sokaság, hanem egy fiktív csoport; sokszor hasznos ha úgy gondolunk rá, mintha ebben végtelen sok elem lenne. Ebből az is következik, hogy akármennyi embert is vizsgálunk meg ebből a sokaságból, az szükségképp csak része lesz annak, azaz szükségképp csak mintát fog jelenteni a sokaságból. (Soha nem mondhatjuk, hogy mindenkin kipróbáltuk a gyógyszert, akin működnie kell.) Ilyenkor tehát <em>mindenképp</em> mintavételi helyzettel lesz dolgunk. Mivel ez a helyzet tipikus a biostatisztikában, így máris érthető, hogy miért mondtam, hogy a mintavételi helyzetnek – illetve kezelésének – kiemelt jelentősége van a biostatisztikában.</p>
+<p>A statisztika azon ágát, mely sokaságról szerzett adatokkal foglalkozik, vagy mintabeliekkel de úgy, hogy elhanyagolja, hogy csak mintáról van szó (mintha a minta lenne a sokaság) <em>deskriptív (vagy leíró) statisztikának</em> nevezik; erről később bővebben lesz szó (<a href="deskriptiv.html" class="quarto-xref"><span>2</span></a>. fejezet). Ide tartoznak olyan kérdések, mint az információtömörítés, lényegkiemelés, adatvizualizáció. A statisztika azon ága, mely figyelembe veszi a mintavételi helyzetet, azaz mintabeli adatokkal foglalkozik, de úgy, hogy szem előtt tartja, hogy a kérdések valójában a sokaságra irányulnak, és – a minta alapján – arra próbál válaszolni, az <em>induktív (vagy következtető) statisztikának</em> névre hallgat, szintén részletesen lesz róla szó később (<a href="induktiv.html" class="quarto-xref"><span>3</span></a>. fejezet).</p>
+<!-- A statisztika azonban nem csak meghatározott kérdések precíz megválaszolásával foglalkozik. A statisztika feladata ezen felül, hogy segítsége \emph{új ismeretek megszerzését}, például az adatbázisok struktúrájának feltárásával és alkalmas megjelenítésével, a változók közti kapcsolatok felderítésével, információtömörítéssel, lényegkiemeléssel stb. (Ebben hatalmas motivációt jelent a számítástechnikai (és orvosi) lehetőségek fejlődése miatt létrejövő egyre nagyobb és nagyobb adatbázisok léte.) -->
+<!-- Ezen felül a statisztika megtanít arra is minket, hogy hogyan kerüljünk el bizonyos gondolkodási csapdákat, és hogyan legyünk képesek \emph{empirikus kérdésekben racionálisan dönteni}. -->
+</section>
+<section id="sec-alapokvaltozok" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="sec-alapokvaltozok"><span class="header-section-number">1.2</span> Változók és mérési skálák</h2>
+<p>Az előbbi pontban kissé nagyvonalúan csak annyit írtam, hogy a változó (vagy ismérv) az a szempont, ami alapján a megfigyelési egységeket vizsgálat alá vonjuk. (Természetesen több ilyen is szerepelhet egy vizsgálatban.) Ez meglehetősen kézenfekvő akkor, ha mondjuk az emberek testtömege a vizsgálati szempont – ekkor mondhatjuk egyszerűen, hogy lemérjük őket alkalmas módszerrel, és az e tulajdonságot leíró „testtömeg” változó legyen a lemért tömeg mondjuk kilogrammban kifejezett értéke. Más esetekben azonban közel nem ilyen egyértelmű a változók megválasztásának a kérdése.</p>
+<p>A statisztika alapvetően számszerű információk feldolgozásával foglalkozó tudomány, így ahhoz, hogy egy szempontot statisztikai úton tudjunk vizsgálni, előbb <em>számszerűen mérhetővé</em> kell tenni. Ez természetesen olyan információkkal is végrehajtható, melyek eredetileg nem számszerűek, ezt nevezzük <em>operacionalizálásnak</em>. Néha ez valóban szinte triviális feladat (a testtömeget mérjük az adott módon lemért és kilogrammban kifejezett testtömeggel), máskor viszont egyáltalán nem az. Gondoljunk arra, hogy hogyan lehet számszerűen mérhetővé tenni egy olyan jellemzőt, mint hogy milyen súlyos egy alany depressziója – szinte külön tudományág, hogy ehhez milyen kérdőívek, egyéb vizsgálatok kellenek, mellyel „lemérhető” ez. (Valójában a testtömeg mérése sem feltétlenül triviális. Mikor mérjük, reggel, délben, este? Ruhával, anélkül, mennyi ruhával? Milyen mérlegen?)</p>
+<p>A változók kapcsán a másik probléma, hogy egy sor tulajdonság nem mérhető közvetlenül – akár technikai akadályok miatt, akár az operacionalizálás nehézségei miatt. Ez esetben gyakran kényszerülünk arra, hogy az eredetileg megcélzott változó helyett más, immár mérhető, és az eredetivel – lehetőleg minél szorosabb – kapcsolatban lévő változót vagy változókat mérjünk le. Az ilyen célból használt változót nevezzük <em>proxy változónak</em>. Például komoly gondban lennénk, ha az alany szocioökonómiai státuszát kéne lemérnünk egyetlen változóval – ezt ilyen formában aligha tehetjük meg, így a gyakorlatban proxykat próbálnánk hozzá keresni, például iskolai végzettséget mérnénk, jövedelmet, munkahelyi beosztást stb.</p>
+<p>A következő kérdéskör, amiről a változók kapcsán beszélni kell, az a <em>mérési skála</em> fogalma. Mivel a statisztika végeredményben számszerű információkat dolgoz fel, így a változóinkat is tipikusan számokkal fogjuk leírni. Észre kell azonban venni, hogy vannak jellemzői a változóknak, amik <em>önmagukban</em> e számokból nem olvashatóak ki. Példának okáért tekintsük azt az adatot, hogy mi az alany szemszíne, és azt, hogy mennyi a CRP-je (ez egy laboreredmény). Tételezzük most fel, hogy a szemszínt úgy számszerűsítettük, hogy a barnához 1-et, a feketéhez 2-t, az egyébhez 3-at rendelünk; a CRP-nél pedig a koncentrációja számértékét adjuk meg, egész mg/l-ben. Mármost ekkor mindkét adat (a szemszín és a CRP) is lehet történetesen 1, 2 és 3 értékű – ám ettől még hatalmas különbség van köztük: a CRP-nél van értelme azt mondani, hogy 1,23 volt az alanyaink átlagos CRP-je, de annak nyilván nincs értelme, hogy 1,23 volt az átlagos szemszínük. E mögött az húzódik meg, hogy a CRP-k számértékeit van értelme összeadni egymással, a szemszínek számértékeit nem. Tehát: az, hogy milyen műveletek végezhetőek el az adott változóval, nem olvasható ki a változó által felvett értékekből. Ezeket a különbségeket a mérési skála fogalma ragadja meg, mely azt írja le, hogy hogyan viselkednek, viselkedhetnek az adataink. A leghíresebb Stanley Smith Stevens mérési skála modellje, mely négy lépcsőfokot különböztet meg. (Azért is beszélünk lépcsőfokokról, mert ez egy egymásra épülő, folyamatosan bővülő felosztás: a későbbi, magasabb skálák bírnak az összes többi korábbi, alacsonyabb skála tulajdonságaival, és még persze valamilyen többlettel is.) Stevens skálái a következőek:</p>
+<ol type="1">
+<li><em>Névleges (nominális) skála</em> Ilyen skálán mért adatok esetén az adat számértékének valójában nincs semmi jelentősége, kizárólag az számít, hogy a számérték ugyanaz-e két alanynál vagy sem: ha ugyanaz, akkor a két alany egyezik a változó szempontjából, ha nem, akkor nem – és kész, ennyit mondhatunk, semmi többet. Erre jó példa a beteg lakóhelye megye szerint; 1-től 20-ig kódolva. Ha az egyik betegnél ez 3, a másiknál 6, akkor kizárólag annyit mondhatunk, hogy különböző megyében laknak, semmi többet. Olyan kijelentéseknek, hogy a második „hárommal nagyobb megyében”, „kétszer akkora megyében”, vagy akár csak annak, hogy „nagyobb megyében lakik” nyilvánvalóan nincs értelmük. További tipikus példa nominális ismérvre a beteg neme, rassza, szemszíne stb.</li>
+<li><em>Sorrendi (ordinális) skála</em> Ilyen skála esetében már valamennyi jelentősége van a számértékeknek: számít ugyanis, hogy melyik <em>nagyobb</em> – ám ezen kívül semmi más. Ezzel tehát a lehetséges kimeneteket sorba rendeztük (innen a skála neve), ám egyebet nem mondhatunk. Tipikusan ide tartozik a különféle betegségek staging adata. Ha ez egyik beteg I., a másik II. stádiumban van, akkor mondhatjuk azt, hogy ez utóbbi állapota súlyosabb (ha ez nominális skálán mért ismérv lenne, akkor már ennyit sem mondhatnánk, csak annyit, hogy <em>nem ugyanaz</em> a súlyosság), ám olyan kijelentéseknek, hogy „eggyel súlyosabb”, vagy „kétszer olyan súlyos” állapotban van, nincs értelme. Vegyük észre, hogy ez valóban tartalmazza a nominális skála jellemzőit (hiszen ha a kimenetek sorbarendezhetőek, akkor természetesen meg is különböztethetőek), azaz tényleg kibővítése annak.</li>
+<li><em>Valódi skálán mért ismérvek</em> Ide tartoznak azok az ismérvek, amelyek kimeneteivel már egyéb műveletek (nem csak az összehasonlítás és a sorbarendezés) is értelmezettek. Például ha egy beteg CRP-je 1 mg/l, egy másiké 2 mg/l, akkor mondhatjuk, hogy a kettő különbözik (nominális tulajdonság), mondhatjuk, hogy az utóbbi nagyobb (ordinális tulajdonság), <em>de</em> nyugodtan tehetünk olyan kijelentést is, hogy az utóbbi „eggyel nagyobb”, vagy hogy „kétszer akkora” mint az előbbi! Ezek a skálán mért ismérvek, ide tartozik például a legtöbb laboreredmény. A statisztikai irodalomban ezen a kategórián belül két további csoportot szokás megkülönböztetni: a különbségi – vagy intervallum – skálán mért ismérveket, és az arányskálán mért ismérveket. Az eltérés a kettő között, hogy az előzőben csak az összeadás, míg az utóbbiban az összeadás <em>és</em> a szorzás is értelmezett. Például a CRP arányskálán mért, hiszen két érték vonatkozásában beszélhetünk arról, hogy az egyik mennyivel több, illetve hányszorosa a másiknak. A beteg testhőmérsékleténél, ha azt Celsius-fokban mérjük, már nem ez a helyzet! Annak van értelme, hogy az egyik beteg maghőmérséklete 5 fokkal több, de olyat nem mondhatunk, hogy 10%-kal magasabb<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>.</li>
+</ol>
+<p>Megjegyezzük, hogy az első két skálán mért változót nagyon gyakran <em>minőségi</em> (vagy kvalitatív) változónak nevezik közös néven, míg a valódi skálán mért változókat sokszor <em>mennyiségi</em> (vagy kvantitatív) változónak hívják.</p>
+<p>Itt érdemes megemlíteni, hogy a változókat csoportosíthatjuk aszerint is, hogy hány lehetséges kimenetet vehetnek fel. Ha véges sokat vagy legfeljebb megszámlálhatóan végtelen sokat, akkor <em>diszkrét</em> változóról beszélünk, különben <em>folytonosról</em>. Folytonos változóra tipikus példa az olyan változó, melynek értékei a valós számok közül, vagy a valós számok valamilyen intervallumából (pl. pozitív valós számok) kerülnek ki. Természetesen a gyakorlatban a korlátos mérési pontosság miatt elvileg minden változó diszkrét, de ha nagyon nagy a lehetséges kimenetek száma, és ezek egymáshoz sűrűn helyezkednek el, akkor általában nyugodtan alkalmazható a folytonos közelítés.</p>
+<p>Nagyon sokszor a diszkrét változó fogalmat azonosítják a minőségi, a folytonosat pedig a mennyiségi változóval. Tisztán elméleti szempontból ez nem helyes (hiszen két különböző szempontról van szó), bár tény, hogy a legtöbb esetben valóban fennállnak ezek a megfeleltetések. Egy nevezetes kivétel ez alól a különféle darabszámokat, események számát stb. tartalmazó adatok, melyek a 0, 1, 2, 3 stb. értékeket vehetik fel (tehát diszkrétek), mégis skálán mértek, sőt, azon belül is arányskálán (tehát pont hogy a legmagasabb mérési skálán), hiszen általában van értelme nem csak különbségükről, de akár a hányadosukról is beszélni.</p>
+<!-- A változók jellege mellett az adatbázis jellege is fontos kérdés; illetve, pontosabban megfogalmazva, inkább a vizsgálat jellegéről kéne beszélnünk (az adatbázis ennek csak következménye). Beszélhetünk kísérletekről és megfigyeléses vizsgálatokról, ez utóbbiak adatbázisain belül beszélhetünk \emph{keresztmetszeti} adatbázisról (ha több megfigyelési egység ugyanazon időpontra vonatkozó adait tartalmazza), \emph{longitudinális} adatbázisról (ha több időszakot fog át), a vizsgálatok lehetséges konkrét elrendezéseiről pedig egyenesen könyveket lehet írni; de ezzel most nem foglalkozunk. -->
+</section>
+<section id="sec-alapokvelhatarolas" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="sec-alapokvelhatarolas"><span class="header-section-number">1.3</span> A biostatisztika kapcsolódó tudományai és elhatárolása</h2>
+<p>A biostatisztika az alkalmazott statisztika egyik ága, hasonlóan a pszichometriához, agrometriához stb. Látni kell, hogy a statisztika többé-kevésbé egységes tudomány, így végső soron hasonló módszereket alkalmaz az összes felsorolt ág, különbség inkább a részletekben (partikuláris problémákhoz testreszabott vagy kifejlesztett módszerek) és a az eljárások prezentációjában van.</p>
+<p>Mint minden alkalmazott ágnak, a biostatisztikának is a statisztika, matematikai statisztika adja az alapját. Az itt bemutatott módszerek jó részéhez ugyan nincs szükség mélyebb matematikai statisztikai ismeretekre, de a manapság kifejlesztett új módszerek egyre komolyabb matematikai eszköztárat használnak.</p>
+<p>A matematikai statisztika a matematika több ágára is épít, de ezek közül természetesen a valószínűségszámítás a kiemelkedően legfontosabb. (Ezt több más terület is kiegészíti természetesen, például a lineáris algebra.) Nem túlzás azt mondani, hogy a valószínűségszámítás a statisztika mögötti „alaptudomány”, melynek alapos ismerete elengedhetetlen a matematikai statisztika magas szintű műveléséhez. E jegyzetben azonban egyedül az induktív statisztikai rész fog komolyabb valószínűségszámítási alapismereteket feltételezni, a többi rész minden speciális matematikai ismeret nélkül is követhető lesz.</p>
+<p>A valószínűségszámításon, matematikai statisztikán kívül természetesen orvosi ismeretekre is szükség van a biostatisztika műveléséhez. Ha nem is feltétlenül létkérdés, de a biostatisztikus munkáját megkönnyíti, ha legalább érti az orvosok szóhasználatát, valamint tisztában van az emberi test működésének élettani és a betegségek kórélettani alapjaival.</p>
+<p>Ezt a szakaszt azzal zárom, hogy kísérletet teszünk a biostatisztika elhatárolására két olyan területtől, amellyel gyakran keveredik a fogalma. Az egyik a <em>bioinformatika</em>: ez a manapság rendkívül népszerű terület azonban inkább számítástechnikai, algoritmikus kérdésekkel foglalkozik (melyekkel nagy orvosbiológiai adatbázisokon is hatékonyan végezhetőek bizonyos műveletek, megválaszolhatóvá válnak bizonyos orvosilag releváns kérdések). A másik a <em>biomatematika</em>, ez alatt azonban inkább olyan területet értünk, mely jellemzően nem statisztikai, hanem más matematikai (elsősorban analízisbeli) eszközöket, például differenciálegyenleteket használ, és a modellek adatokból történő becslése csak másodlagos kérdés.</p>
+</section>
+<section id="sec-alapokszamtech" class="level2" data-number="1.4">
+<h2 data-number="1.4" class="anchored" data-anchor-id="sec-alapokszamtech"><span class="header-section-number">1.4</span> A biostatisztika számítástechnikai háttere</h2>
+<p>Modern biostatisztika szinte elképzelhetetlen számítógépek, számítástechnikai támogatás nélkül. Ennek legalább három konkrét aspektusa van.</p>
+<p>Először is, a leginkább „mechanikus” támogatás, amit a gépek adhatnak, hogy a szokásos számítási műveleteket (például egy átlag meghatározása vagy egy statisztikai próba kiszámítása) végrehajtják helyettünk. Bár sok statisztika kurzuson még ma is megtanítják a hallgatókat a kézi számításra (elsősorban azért, hogy jobban rögzüljenek a számítások részletei is), valójában már minden gyakorlati alkalmazásban számítógépek végzik a mechanikus kalkulációkat, érthető okokból kifolyólag.</p>
+<p>A számítógépek ennél kicsit általánosabb módon is tudják támogatni a statisztikus munkáját. Azáltal, hogy segítik a nagy adatbázisok kezelését (szűrés, rendezés, keresés stb.), az adattranszformációkat (változók átkódolása, függvény szerint transzformálása stb.), lehetővé teszik, hogy könnyen kiszámoljunk mutatókat, vizualizáljunk adatokat és így tovább, a hatékonyabb, kreatívabb munkavégzést is segítik. (Részint azáltal, hogy csökkentik vagy szinte megszüntetik a rutinfeladatok időigényét, és így segítik, hogy a statisztikus a lényegre tudjon koncentrálni, részint azáltal, hogy számítógépek nélkül nem, vagy csak nagyon nehezen kivitelezhető segítségeket – pl. háromdimenziós ábrák – is tudnak adni a helyzet jobb megértéséhez.)</p>
+<p>Végül pedig, vannak bizonyos módszerek, melyek nem csak nehézkesek lennének, de egyenesen elképzelhetetlenek számítástechnikai támogatás nélkül. Ezek az ún. <em>számításintenzív módszerek</em> (például az újramintavételezésen alapuló eljárások, a különféle algoritmikus modellek) mind rendkívüli számításigénnyel bírnak, így lényegében a számítógépekkel egyidősek, hiszen a nélkül kifejlesztésük, és különösen az érdemi használatuk nem volt elképzelhető.</p>
+<p>Zárásként nagyon röviden megemlítem a talán legfontosabb programokat, melyeket a (bio)statisztikusok használnak:</p>
+<ul>
+<li><em>SAS</em> A SAS egy komplex, nagyméretű és drága programcsomag. Legfőbb előnye, hogy jól standardizált, bejáratott, és a gyógyszeriparban – épp emiatt – előszeretettel alkalmazzák.</li>
+<li><em>SPSS</em> Az SPSS egy általános célú statisztikai programcsomag (eredetileg szociológusoknak fejlesztették ki), funkcionalitása számos – egyenként megvásárolható – modullal állítható be a kívánt szintre. Grafikus kezelőfelülete rendkívül egyszerű és kényelmes (ráadásul nagyon sokan eleve ezt szokták meg), mellyel a beépített funkciók néhány kattintással végrehajthatóak. Cserében a bonyolultabb statisztikai problémák megoldása – noha van saját szkript-nyelve – nagyon nehézkes lehet. Összességében véve az alapvető dolgokat könnyű megcsinálni – a komplexebbeket viszont nagyon nehéz. Az SPSS-t bár sokan használják, nincs mögötte széles, támogató nemzetközi közösség, mely érdemben bővítené a programcsomagot. Didaktikai hibái, gyatra adatvizualizációs lehetőségei, korlátozott bővíthetősége miatt nem ajánlható a használata biostatisztikai célokra.</li>
+<li><em>R</em> Az R egy ingyenes és nyílt forráskódú programnyelv (<a href="http://www.rstudio.com/">http://www.rstudio.com/</a>), egyben a talán legismertebb és legfontosabb biostatisztikai számítási környezet. Fő erejét az adja, hogy – az egyébként kezdők számára is nagyon támogató hozzáállású – virágzó nemzetközi felhasználói közösségnek köszönhetően hihetetlen mennyiségű kiegészítő érhető el hozzá a legkülönfélébb alkalmazásokhoz, AFT-modellektől a Zipf-eloszlásig, de ha valaki méhpopulációk ökológiájáról készítene statisztikát, még ahhoz is talál kész csomagot. (2025-ben több mint 22 ezer csomag érhető el, nem ritka, hogy napi 5-10 új jelenik meg!) Egy sor újonnan kifejlesztett statisztikai módszert elsőként R alatt implementálnak. E kiegészítő csomagokkal az R ereje hatalmas: rendkívül komplex feladatok is végrehajthatóak egysoros hívásokkal (néha szó szerint). Az R alapváltozatában még csak érdemi grafikus felület sincs hozzá és minden utasítást parancsként kell beírnunk; ezen segít az RStudio (szintén ingyenes és nyílt forráskódú) integrált fejlesztőkörnyezet (<a href="http://www.rstudio.com/">http://www.rstudio.com/</a>) alkalmazása.</li>
+<li><em>Stata</em> A Stata az R legfontosabb alternatívája, szintén széleskörű nemzetközi közösséggel és számos kiegészítővel, azonban az R-rel szemben nem ingyenes és nem nyílt forráskódú programról van szó. A Stata-nak van grafikus felülete, azonban a szkriptnyelve is elég erős, bár a közelében nincs az R elterjedtségének. Nem ingyenes és nem nyílt forráskódú jellege korlátozza a széleskörű használatot, illetve a nyelv néhány jellegzetessége is elég furcsa (például sokáig egyszerre csak egy adatbázist lehetett betölteni a memóriába és használni).</li>
+</ul>
+<p>Jelen jegyzet mindenhol az R statisztikai programcsomagot fogja használni az elméleti mondanivaló illusztrálásához. Az R-be bevezetést nyújt a <a href="https://ferenci-tamas.github.io/r-nyelv/">https://ferenci-tamas.github.io/r-nyelv/</a> címen elérhető elektronikus jegyzet.</p>
+</section>
+<section id="sec-alapokfutopelda" class="level2" data-number="1.5">
+<h2 data-number="1.5" class="anchored" data-anchor-id="sec-alapokfutopelda"><span class="header-section-number">1.5</span> Futó példa</h2>
+<p>A jegyzet hátralevő részében szereplő példák didaktikai okokból mind ugyanarra az adatbázisra vonatkoznak; ebben a szakaszban ezt mutatom be.</p>
+<p>Az adatbázis egy klasszikus demonstrációs adatbázis, általánosan használt neve Low Infant Birth Weight (LOWBWT vagy BIRTHWT); a Baystate Medical Center (Springfield, Massachusetts, Egyesült Államok) kórházban végrehajtott kutatásból (1986) származik. A kutatás célja annak vizsgálata volt, hogy milyen tényezők befolyásolják, hogy egy világra jövő újszülött kis születési tömegű<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> lesz-e.</p>
+<p>Az adatbázis 189, Baystate Medical Center-ben lezajlott szülésről tartalmaz adatokat, egyrészt azt, hogy kis születési tömegű volt-e a világra jött újszülött, másrészt egy sor tényezőt, ami összefügghet a kis születési súllyal. A változók rövidítését, jelentését és mérési skáláját a <a href="#tbl-birthwt" class="quarto-xref"><span>1.1</span></a>. táblázat mutatja.</p>
+<div id="tbl-birthwt" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-birthwt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Táblázat&nbsp;1.1: A futó példa, a Low Infant Birth Weight adatbázisának változói főbb jellemzőikkel
+</figcaption>
+<div aria-describedby="tbl-birthwt-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Rövidítés</th>
+<th>Tartalom</th>
+<th>Mérési skála</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>low</td>
+<td>Születési tömeg &lt; 2,5 kg? [0:nem, 1:igen]</td>
+<td>Nominális</td>
+</tr>
+<tr class="even">
+<td>age</td>
+<td>Anya életkora [év]</td>
+<td>Arányskála</td>
+</tr>
+<tr class="odd">
+<td>lwt</td>
+<td>Anya testtömege (UM) [font]</td>
+<td>Arányskála</td>
+</tr>
+<tr class="even">
+<td>race</td>
+<td>Rassz [1: kaukázusi, 2: afroamerikai, 3: egyéb]</td>
+<td>Nominális</td>
+</tr>
+<tr class="odd">
+<td>smoke</td>
+<td>Anya dohányzik? [0:nem, 1:igen]</td>
+<td>Nominális</td>
+</tr>
+<tr class="even">
+<td>ptl</td>
+<td>Korábbi koraszülések száma [darab]</td>
+<td>Arányskála</td>
+</tr>
+<tr class="odd">
+<td>ht</td>
+<td>Anyai hipertónia? [0:nem, 1:igen]</td>
+<td>Nominális</td>
+</tr>
+<tr class="even">
+<td>ui</td>
+<td>Irritábilis méh? [0:nem, 1:igen]</td>
+<td>Nominális</td>
+</tr>
+<tr class="odd">
+<td>ftv</td>
+<td>Vizitek száma (1. trimeszter) [darab]</td>
+<td>Arányskála</td>
+</tr>
+<tr class="even">
+<td>bwt</td>
+<td>Születési tömeg [g]</td>
+<td>Arányskála</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Szemléltetésként az adatbázis első néhány megfigyelési egysége (az adatbázis megtalálható az R statisztikai környezet <code>MASS</code> nevű könyvtárában <code>birthwt</code> néven):</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">data</span>(birthwt, <span class="at">package =</span> <span class="st">"MASS"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(birthwt, <span class="dv">10</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   low age lwt race smoke ptl ht ui ftv  bwt
+85   0  19 182    2     0   0  0  1   0 2523
+86   0  33 155    3     0   0  0  0   3 2551
+87   0  20 105    1     1   0  0  0   1 2557
+88   0  21 108    1     1   0  0  1   2 2594
+89   0  18 107    1     1   0  0  1   0 2600
+91   0  21 124    3     0   0  0  0   0 2622
+92   0  22 118    1     0   0  0  0   1 2637
+93   0  17 103    3     0   0  0  0   1 2637
+94   0  29 123    1     1   0  0  0   1 2663
+95   0  26 113    1     1   0  0  0   0 2665</code></pre>
+</div>
+</div>
+
+
+</section>
+<section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1"><p>Gondoljunk csak bele, ha ma 2 fok van kint egy téli napon, tegnap 1 fok volt, akkor aligha mondhatjuk, hogy ma kétszer olyan meleg van… Ez abból adódik, hogy a hőmérsékletnek nincsen rögzített nulla pontja – az teljesen esetleges, hogy a Celsius-skála hova rakta azt.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Kis születési tömegről akkor beszélünk, ha az újszülött testtömege kisebb mint 2 500 gramm, akármennyi is a gesztációs kora.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Kimásolva!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Kimásolva!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/ferenci-tamas\.github\.io\/biostatisztika");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./index.html" class="pagination-link" aria-label="Előszó">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Előszó</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./deskriptiv.html" class="pagination-link" aria-label="Deskriptív statisztika">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Deskriptív statisztika</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer"><div class="nav-footer"><div class="nav-footer-center"><div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/ferenci-tamas/biostatisztika/edit/main/bevezetes.qmd" class="toc-action"><i class="bi bi-github"></i>Az oldal szerkesztése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/blob/main/bevezetes.qmd" class="toc-action"><i class="bi empty"></i>Forráskód megtekintése</a></li><li><a href="https://github.com/ferenci-tamas/biostatisztika/issues/new" class="toc-action"><i class="bi empty"></i>Észrevétel jelzése</a></li></ul></div></div></div></footer><script type="text/javascript">
+var sc_project=12422840; 
+var sc_invisible=1; 
+var sc_security="d32cce24"; 
+</script>
+<script type="text/javascript" src="https://www.statcounter.com/counter/counter.js" async=""></script>
+<noscript><div class="statcounter"><a title="ingyenes
+webstatisztika" href="https://www.statcounter.hu/" target="_blank"><img class="statcounter" src="https://c.statcounter.com/12422840/0/d32cce24/1/" alt="ingyenes webstatisztika" referrerpolicy="no-referrer-when-downgrade"></a></div></noscript>
+
+
+
+
+</body></html>

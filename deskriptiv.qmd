@@ -1,0 +1,613 @@
+# Deskriptív statisztika {#sec-deskriptiv}
+
+```{r}
+#| echo: false
+
+library(ggplot2)
+theme_set(theme_bw())
+data(birthwt, package = "MASS")
+```
+
+Ebben az fejezetben a statisztika *deskriptív* (leíró) ágával fogunk foglalkozni. Már utaltam rá, hogy deskriptív statisztikáról akkor beszélünk, amikor kizárólag a mintában lévő információt igyekszünk valamilyen módon megragadni (és nem törődünk azzal, hogy a minta maga is csak a valóság egy "szelete", szebben megfogalmazva: figyelmen kívül hagyjuk a mintavételi helyzetet).
+
+Először ezt a gondolatot fogjuk pontosítani, közelebbről körüljárni; majd pedig megismerkedünk a leíró statisztika legalapvetőbb módszereivel. Látni fogunk grafikus és analitikus módszereket, foglalkozunk egy- és (röviden) többváltozós helyzetekkel; az ismertetést pedig a vizsgált változók mérési skálája ([-@sec-alapokvaltozok]. alfejezet) szerint végezzük. (Azzal, hogy a nominális és az ordinális, illetve az intervallum- és arányskálán mért változókat nem választjuk szét, hanem minőségi és mennyiségi változókról fogunk beszélni.) Ezek után az olvasó számára ismerős lesz a mai orvostudományi cikkekben alkalmazott deskriptív eszköztár túlnyomó része; az elemi eszközöknek pedig szinte egésze.
+
+Ebben a fejezetben a már említett módon a Low Infant Birth Weight adatbázist fogom futó példaként használni a módszertani mondanivaló illusztrálására. Az ábrák és a számítások R statisztikai környezet alatt készültek.
+
+## A deskriptív statisztikáról általában {#sec-deskriptivaltalaban}
+
+Amint már többször említettük, a deskriptív statisztika definíciós jellemzője, hogy kizárólag a mintában lévő információval törődik, számára az az "univerzum", és teljes mértékben figyelmen kívül hagyja azt a kérdéskört, hogy a mintában lévő információ hogyan viszonyul a sokaságban lévő információhoz. Innen ered a módszer neve is: a deskripció leírást jelent, azaz a deskriptív módszerek *pusztán* a minta -- valamilyen szempontból "jó" -- leírását célozzák meg (nem pedig következtetést a sokaságra). Nem véletlen, hogy ebben a kontextusban nagyon sokszor minta helyett *adatbázist* mondunk (tükrözve, hogy itt igazából nincs is jelentősége annak, hogy az adataink csak -- a szó statisztikai értelmében -- egy mintát jelentenek).
+
+A "jó leírás" alatt legtöbbször azt értjük, hogy a mintában lévő információt úgy próbáljuk *tömöríteni*, hogy közben -- valamilyen elemzési célra tekintettel -- *kiemeljük a lényeget*. Erre azért van szükség, mert a legtöbb esetben a mintában lévő információ (még ha csak néhány változóra, és néhány tucat megfigyelési egységre is gondolunk) feldolgozhatatlan "ránézésre". A számok tengeréből még a legalapvetőbb kérdésekre sem tudnánk válaszolni. Szükség van tehát olyan módszerekre, melyek "emészthetővé teszik" ezt a számtengert: csökkentik a bonyolultságát, hogy tudjuk értelmezni azt, fel tudjuk használni kérdések megválaszolásához, illetve új megállapítások eléréséhez.
+
+Nyilvánvaló, hogy a bonyolultság csökkentése csak úgy lehetséges, ha információt hagyunk el. Az egész művelet kritikus pontja épp ez: annak megválasztása, hogy mennyi információt hanyagoljunk el (és persze hogyan). A "hogyan" szerepe triviális: ha egy adott, mennyiségi változóra vonatkozó 100 elemű mintából elhagyjuk az első 99 elemet, akkor ugyan egyetlen számmá, azaz teljesen áttekinthetővé alakítjuk az információt -- csak épp nyilván semmit nem érünk el vele. Ha viszont kiszámoljuk az átlagot, akkor ugyanúgy egyetlen számot kapunk, de immár úgy, hogy annak van értelme, azaz felhasználhatjuk kérdések megválaszolásához, illetve új megállapítások eléréséhez.
+
+A meghatározó kulcskérdés az elhanyagolásban (az információtömörítésben) tehát a "mennyit". Látható, hogy átváltás, trade-off áll fenn az *áttekinthetőség*, és a *reprodukciós hűség* között: minél többet hanyagolunk el, annál inkább segítjük az áttekinthetőséget, de annál többet vesztünk az eredeti információ hűséges reprodukciójából. A deskriptív statisztika igazi sava-borsa (végeredményben a legtöbb módszer, így vagy úgy, de ebben foglal el egy álláspontot) a jó kompromisszum megkötése a kettő között. Példának okáért, adatbázisunkban a születési tömeg változó megfigyelései így néznek ki:
+
+```{r}
+birthwt$bwt
+```
+
+Ezt a megadást nevezhetnénk az egyik végpontnak ebben a kompromisszumban: 100% reprodukciós hűség, de -- szinte -- 0% áttekinthetőség. Ez a legalapvetőbb kérdések megválaszolását, a legalapvetőbb észrevételek elérését is lehetetlenné teszi. (Képzeljük el, hogy mi van, ha tízezer alany lenne az adatbázisban!)
+
+Másik végpontnak vehetjük azt, amikor a fenti adatoknak csak az átlagát adjuk meg
+
+```{r}
+mean(birthwt$bwt)
+```
+
+Ez nagyon alacsony reprodukciós hűséget jelent (189 számból 1-et "gyártottunk", szinte semmit nem tudunk reprodukálni az eredeti adatbázisból), viszont remek az áttekinthetősége, látható, hogy mi a "közepes" születési tömeg.
+
+Az igazán érdekes az, hogy -- természetszerűleg -- a két végpont között számos egyéb kompromisszumot köthetünk. Megadhatjuk például (az utóbbi végponttól az előbbi felé haladva) az adatok átlagát *és* szórását: `r mean(birthwt$bwt)` $\pm$ `r sd(birthwt$bwt)`, az adatok átlagát, mediánját, szórását és interkvartilis terjedelmét^[Most még nem fontos, hogy ezek a mutatók pontosan mit jelentenek (a későbbiekből úgyis ki fog derülni), csak annyi számít, hogy a minta különböző leírói.]: `r mean(birthwt$bwt)` (`r median(birthwt$bwt)`) $\pm$ `r sd(birthwt$bwt)` (`r IQR(birthwt$bwt)`), vagy épp az adatok átlagát, mediánját, szórását, interkvartilis terjedelmét, illetve minimumát és maximumát: `r mean(birthwt$bwt)` (`r median(birthwt$bwt)`) $\pm$ `r sd(birthwt$bwt)` (`r IQR(birthwt$bwt)`) [`r paste(range(birthwt$bwt), collapse = "-")`].
+
+Látszik, hogy minden ilyen megadás egyfajta kompromisszum: egyre több információt őrzünk meg (egyre kevesebb az adatvesztés, hűségesebb a reprodukció), viszont közben romlik a megadás áttekinthetősége.
+
+Összefoglalva tehát megállapíthatjuk, hogy bár az információtömörítés ugyan szükségképp adatvesztést jelent, ez azonban nem feltétlenül baj, épp ellenkezőleg: ez teszi lehetővé, hogy a fontosat észrevegyük. A kulcs a kettő közötti egyensúlyozás.
+
+## A deskriptív statisztika módszereinek csoportosításáról {#sec-deskriptivcsoportositas}
+
+Azért, hogy az igen nagy számú leíró statisztikai módszert áttekinthetően tudjuk tárgyalni, érdemes megismerkedni pár szemponttal, melyek mentén e módszerek jellegzetes, és gyakorlati szempontból fontos csoportokba sorolhatóak. Ez egyrészt segít a módszerek áttekintését, megtanulását is, másrészt jól jön később, a gyakorlati munka során is: mindig érdemes végiggondolni, hogy egy adott helyzet melyik csoportba tartozik, és ez rögtön megadja, hogy mik a szóba jövő eszközök.
+
+### Grafikus és analitikus módszerek {#sec-deskriptivcsoportositasgrafanal}
+
+A fent mutatott példák (átlagtól szóráson át a terjedelemig) mind ún. *analitikus* eszközök voltak, azaz a (számszerű) információból számszerű, csak épp tömörebb, lényeget kiemelő információt gyártottak. Az analitikus módszerek tipikus példái a mutatószámok, mint amilyen az átlag vagy a szórás, bár léteznek ennél komplexebb (nem egyetlen számból álló) eredményt szolgáltató analitikus eszközök is -- az azonban közös pont, hogy mindegyik számszerű kimenetet ad.
+
+Ezzel állnak szemben a *grafikus* módszerek, melyek a bemenő (számszerű) információból valamilyen képi megjelenítést konstruálnak. Szokás ezért az ilyet *adatvizualizációnak* is nevezni, bár ezt a megnevezést gyakran csak a komplexebb módszerekre alkalmazzák.
+
+A grafikus módszerek általában kevésbé tömörek és kevésbé objektivizálhatóak (ami gond lehet, ha például összehasonlításra van szükség), de cserébe nagyon sokszor jobban értelmezhető benyomást tudnak adni a vizsgált adatbázisról. Ennek hátterében az van, hogy az emberi agy különösen alkalmas struktúrák azonosítására, vizsgálatára grafikus információkban; így ha ügyesen tudjuk vizualizálni adatbázisunk tartalmát, azzal nagyban megkönnyíthetjük az elemzését. Nem véletlen, hogy John Wilder Tukey egyszer azt mondta: "There is no excuse for failing to plot and look!" ("Nincs mentség arra, ha nem ábrázoljuk az adatokat és nézünk egyszerűen rá!").
+
+### Egy- és többváltozós módszerek {#sec-deskriptivcsoportositasegytobbvalt}
+
+Szemben azzal, amit sokan elsőre gondolnának, hogy ti. az egyváltozós módszerekkel egyetlen változót vizsgálunk (míg a többváltozósakkal többet), valójában **egyváltozós** módszerekkel is vizsgálhatunk akárhány változót. A különbség tehát nem ez, hanem az, hogy az egyváltozós módszerekkel *egy időben* egyetlen változót vizsgálunk csak, míg a **többváltozós** módszerek egyidejűleg is több változót tekintenek. (Ha megadjuk, hogy pontosan hányat, akkor ezt az elnevezésben is szerepeltethetjük, pl. kétváltozós vizsgálat, háromváltozós vizsgálat stb.)
+
+Hogy mit értünk az alatt, hogy "egy időben"? Képzeljünk el egy adatbázist, melyben emberek testmagasságát és testtömegét mértük le. Okkal várjuk azt, hogy a nagyobb testmagasság tendenciájában nagyobb testtömeggel jár együtt, tehát azoknak, akiknek nagyobb a testmagasságuk, várhatóan^[E jelenséget később pontosabban is meg fogjuk ragadni, de most bőven elég lesz ez a kissé pontatlan megfogalmazás is.] nagyobb a testtömegük is. Igen ám, de ha *önmagában* *csak* a testmagasságot vizsgáljuk, vagy *csak* a testtömeget, akkor ezt soha nem vennénk észre! Vegyük észre, hogy bármilyen alapos elemzést is végeznénk (beleértve akár az összes megfigyelés tömörítés nélküli felsorolását), soha nem jövünk rá erre a kapcsolatra -- hiszen a külön-külön végzett vizsgálatokban nem tudjuk összerendelni az ugyanazon emberhez tartozó testmagasságot és testtömeget (épp ez a definíciója a külön-külön végzésnek). Amit tehát elvesztünk, az a változók közötti *kapcsolatok* kérdésköre. Éppen ezért mondhatjuk azt, hogy egy többváltozós vizsgálat több, mint több egyváltozós vizsgálat -- hiszen itt már megjelenik a változók közötti kapcsolatok kérdése is.
+
+Végezetül megjegyezzük, hogy a többváltozós kategóriát néha szétbontják, arra tekintettel, hogy a többváltozós elemzés klasszikus arzenálja csak egy-két tucat változóig alkalmazható hatásosan (sőt, igazán hatásosan inkább csak 10-nél is kevesebb változóra). Az e fölötti tartományban néha megkülönböztetésül **sokváltozós** adatelemzésről beszélnek.
+
+### A vizsgált változó(k) mérési skálája {#sec-deskriptivcsoportositasmeresiskala}
+
+A leíró statisztika módszerei jellegzetesen eltérnek aszerint is, hogy milyen mérési skálán mért változó elemzéséről van szó. Amint már említettem is, az ordinális és nominális változókat általában nem fogjuk megkülönböztetni, és egységesen minőségi változókról fogunk beszélni, hasonlóképp az intervallum- és arányskálán mért változók esetében is egységesen mennyiségi változókról lesz szó.
+
+## Minőségi változó egyváltozós elemzése {#sec-minosegi-egyvaltozos}
+
+Minőségi változóra jó példa adatbázisunk rassz (`race`) változója, mely az alany rassz szerinti hovatartozását adja meg és ilyen módon nominális. A következőkben megvizsgáljuk, hogy egy ilyen változó leírására milyen analitikus ([-@sec-minosegi-egyvaltozos-analitikus]. pont) és grafikus ([-@sec-minosegi-egyvaltozos-grafikus]. pont) eszközeink vannak.
+
+### Analitikus eszközök {#sec-minosegi-egyvaltozos-analitikus}
+
+Ilyen változó elemzésének tipikus analitikus eszköze a **gyakorisági sor**. A gyakorisági sor a változó lehetséges kimeneteit (kategóriáit) tartalmazza, együtt azzal, hogy az adott kimenet hányszor fordult elő az adatbázisban. Az ilyen "darabszámot" a statisztikában általában is **gyakoriságnak** nevezik, és $f$-fel jelölik. (Illetve, ha utalni akarunk arra, hogy az $i$-edik kategória gyakoriságáról van szó, akkor $f_i$-vel.) Általában $n$-nel szokás jelölni a mintanagyságot, így $\sum_{i=1}^n f_i = n$.
+
+Szokás még beszélni **relatív gyakoriságról** is, ami nem más, mint az előbbi (abszolút) gyakoriság osztva a mintanagysággal (azaz $n$-nel). A relatív gyakoriság tehát azt mutatja meg, hogy egy kategóriába a megfigyelési egységek mekkora hányada esik. Természetesen $\sum_{i=1}^n g_i = 1$.
+
+Példának okáért, a rassz változó gyakorisági sora:
+
+```{r}
+birthwt$race <- factor(birthwt$race, levels = 1:3,
+                       labels = c("Kaukázusi", "Afroamerikai", "Egyéb"))
+table(birthwt$race)
+prop.table(table(birthwt$race))
+cbind(table(birthwt$race), prop.table(table(birthwt$race)))
+```
+
+Megjegyezzük, hogy a teljes relatív gyakorisági sort a statisztikusok nagyon gyakran a változó **megoszlásának** hívják.
+
+Vegyük észre, hogy ebben a speciális esetben az információtömörítés igazából semmilyen információveszteséggel nem járt: ez a három szám *pontosan ugyanúgy* hordoz *minden* információt erről a változóról mint az eredeti 189 szám! (Az adatbázis keresztmetszeti, az alanyok felsorolási sorrendjének nincsen semmilyen jelentősége.) Ez azonban egy speciális eset, ami kizárólag a változó minőségi mivoltának volt köszönhető.
+
+A gyakorisági soron kívül egy mutatószámnak van még értelme ennél a mérési skálánál: a **módusznak**. A módusz (jele: $\mathrm{Mo}$) nem más, mint a leggyakoribb^[Érdemes az angol mode, vagy a német die Mode szavakra gondolni: a "legdivatosabb" érték.] kimenet (tehát az a kimenet, melyhez tartozó gyakoriság a legnagyobb az adatbázisban). Nagyon formalizálva ezt írhatnánk:
+
+$$\mathrm{Mo}=\mathop{\mathrm{arg\,max}}_i f_i$$.
+
+A példánkban tehát a rassz módusza a kaukázusi.
+
+Érdemes megfigyelni, hogy itt viszont *már érvényesül* a kompromisszum a hűség és az áttekinthetőség között! Nyilván még áttekinthetőbb, ha a fenti 3 szám megadása helyett annyit mondunk, hogy "a módusz a kaukázusi", de ebben már nagyon is lesz információveszteség: nem tudhatjuk, hogy a 189-ből 189 kaukázusi vagy 64 (vagy épp 96), és semmit nem tudunk a többi kategória gyakoriságáról.
+
+Végezetül megjegyezzük, hogy az ordinalitás csak annyit módosít a fentieken, hogy a gyakorisági sorban a kategóriák felsorolási sorrendje kötött^[Ebből a kötöttségből még egy dolog következik: lesz értelme beszélni arról is, hogy mennyi a gyakoriság egy adott kategóriá*ig*. (Nem csak adott kategóriá*ban*.) Ez nyilván értelmetlen fogalom mindaddig, amíg a kategóriák között nem értelmeztünk sorrendet. Éppen ezért ekkor bevezethető a **kumulált gyakoriság** fogalma (jele $f'$), mely adott kategóriára nem más, mint a gyakoriságok összege az adott a kategóriáig. (A szokásos definíció szerint: azt is beleértve.) Tehát formálisan: $f'_i=\sum_{j:C_j\leq C_i} f_j$. Hasonlóképp beszélhetünk *kumulált relatív gyakoriságról* (jele $g'$), mint a relatív gyakoriságok összege adott kategóriáig (azt is beleértve), tehát formálisan $g'_i=\sum_{j:C_j\leq C_i} g_j$. Nyilván $f'_{\max_j C_j}=n$ és $g'_{\max_j C_j}=1$.] lesz (nominális esetben, mint amilyen a mostani példánk is volt, érdektelen, hogy milyen sorrendben adjuk meg a kategóriákat, tetszőlegesen felcserélhettük volna a sorokat anélkül, hogy az változást okozott volna).
+
+Ami a mutatószámokat illeti, ordinális esetben elvileg már definiálható lenne a medián fogalma is, de mivel használata itt nem tipikus, a bevezetését meghagyjuk későbbre.
+
+### Grafikus eszközök {#sec-minosegi-egyvaltozos-grafikus}
+
+A minőségi változók grafikus elemzése lényegében a gyakorisági sor vizualizálását jelenti. Ennek két, gyakorlatban legtipikusabb eszköze az **oszlopdiagram** és a **kördiagram**. Az előbbi oszlopok magasságával, az utóbbi körcikkek területével szemlélteti a gyakoriságokat. (Bár ez utóbbi, jellegéből adódóan, igazából csak relatív gyakoriságokat tud szemléltetni. Oszlopdiagrammal gyakoriság és relatív gyakoriság is szemléltethető; sőt, a kettő lényegében ekvivalens, csak a függőleges tengely skálázása lesz más.)
+
+Oszlopdiagramot használtunk a [-@fig-oszlopdiagram]. ábrán.
+
+```{r}
+#| label: fig-oszlopdiagram
+#| fig-cap: "Példa egy minőségi változó ábrázolására oszlopdiagrammal."
+barplot(table(birthwt$race), xlab = "Rassz",
+        ylab = "Gyakoriság [fő]")
+```
+
+Az oszlop- és kördiagramok használata kapcsán fontos, hogy tudományos munkákban általában az oszlopdiagram a preferált, pszichológiai vizsgálatok szerint ugyanis az emberi szem jobban tud lineáris mértékeket kezelni és értelmezni, mint területet. Az egyetlen megfontolás, ami mégis az oszlopdiagram ellen szólhat néha, hogy az oszlopok kirajzolási sorrendje már implikál egyfajta sorrendezést (a természetes balról-jobbra olvasás miatt), ami adott esetben nem következik az változó tartalmából.
+
+Az ordinalitás e téren nem sok változást okoz: az oszlopok sorrendje kötött lesz, illetve ábrázolhatóvá válik a kumulált gyakoriság is (természetesen csak oszlopdiagrammal).
+
+## Mennyiségi változó egyváltozós elemzése {#sec-mennyisegi-egyvaltozos}
+
+Mennyiségi változóra jó példa adatbázisunk születési tömeg (`bwt`) változója, mely az alany születési tömegét adja meg (és mint ilyen, arányskálán mért). Elsőként az ilyen változók analitikus ([-@sec-mennyisegi-egyvaltozos-analitikus]. pont), majd pedig grafikus ([-@sec-mennyisegi-egyvaltozos-grafikus]. pont) vizsgálati eszközeivel ismerkedünk meg.
+
+### Analitikus eszközök {#sec-mennyisegi-egyvaltozos-analitikus}
+
+Az analitikus eszközök közül először az osztályközös gyakorisági sort ([-@sec-osztalykozos-gyakorisagi-sor]. pont), majd a különböző mutatószámokat ([-@sec-mennyisegi-egyvaltozos-mutatoszamok]. pont) tárgyaljuk meg.
+
+#### Osztályközös gyakorisági sor {#sec-osztalykozos-gyakorisagi-sor}
+
+Gyakorisági sor mennyiségi változóra is készíthető, de csak módosításokkal. Annak ugyanis, hogy megszámoljuk, hogy az egyes előforduló kimenetekből mennyi van, nincs sok értelme (az itt tipikus folytonos változóknál könnyen lehet, hogy minden egyes előforduló kimenetből csak egyetlen egy lesz). A problémát a folytonosság jelenti, ami ellen úgy védekezhetünk, hogy nem adott értéket felvevő megfigyelési egységek számát adjuk meg, hanem *adott intervallumba esőek* számát. Így kapjuk az **osztályközös gyakorisági sort**. (Az elnevezés arra utal, hogy osztályközöket hozunk létre -- így fogjuk hívni az előbb említett intervallumokat.) A gyakoriság, relatív gyakoriság, kumulált gyakoriság és kumulált relatív gyakoriság^[Emlékezzünk vissza, hogy a magasabb mérési skála minden alacsonyabb tulajdonságával bír, így természetesen az összes, alacsonyabb mérési skálán értelmezett módszer a magasabb mérési skálák esetében is alkalmazható.] értelmezése változatlan. A születési tömeg változó osztályközös gyakorisági sora (precízebben szólva: egy lehetséges osztályközös gyakorisági sora; hiszen ez már függeni fog az osztályközök megválasztásától is), a következő:
+
+```{r}
+tab <- table(cut(birthwt$bwt, seq(500, 5000, 500)))
+cbind(Ci0 = seq(500, 4500, 500), Ci1 = seq(1000, 5000, 500),
+      fi = tab, gi = prop.table(tab))
+```
+
+Itt $C_{i0}$ és $C_{i1}$ az $i$-edik osztályköz alsó és felső határát jelöli, rendre. (Az megállapodás kérdése, hogy a határon lévő megfigyelési egységeket, például egy pont 2000 grammos újszülöttet hová sorolunk, ennek természetesen csak a kerekítésből adódó diszkrétség miatt van egyáltalán jelentősége.)
+
+Vegyük észre, hogy ez a megoldás lényegében azt jelenti, hogy a mennyiségi változónkat első lépésben "lefokozzuk" minőségi változóvá, és utána alkalmazzuk -- mint teljesen közönséges minőségi változóra -- a korábban megismert módszert!
+
+Elöljáróban jegyezzük meg, hogy itt már a gyakorisági sor -- szemben a minőségi esettel -- igenis információvesztéssel jár: lehet 14 újszülött 1501 grammos, és lehet mind a 14 1999 grammos, mindkét esetben ugyanúgy a fenti osztályközös gyakorisági sort kapjuk. Az információvesztés mértékét az osztályközök hossza (a felosztás "finomsága") fogja meghatározni.
+
+A felosztás finomságára vonatkozó megjegyzés már utal arra, hogy mi az osztályközös gyakorisági sorok használatának legnagyobb kihívása: az osztályközök helyes megválasztása. A dolog azért nem könnyű -- sőt, bizonyos szempontból lehetetlen -- mert két, és egymásnak ellentmondó szempontnak kell megfelelni: van ok, ami miatt a minél szűkebb osztályközök a jók, és van, ami miatt a minél szélesebbek. E kérdéseket a [-@sec-hisztogram]. pontban fogjuk részletesebben megtárgyalni. Minden amit ott elmondok az osztályközök megválasztásáról, vonatkozik az osztályközös gyakorisági sorra is.
+
+#### Mutatószámok {#sec-mennyisegi-egyvaltozos-mutatoszamok}
+
+A mutatószámok a megfigyelések valamilyen jellemzőjét próbálják meg egy-egy számba tömörítve megragadni. A következőkben aszerint csoportosítva mutatom be őket, hogy mi ez a megragadott jellemző.
+
+##### Középértékek (centrális tendencia) {#sec-kozepertekek}
+
+A középértékek^[Néha centrális tendenciáról szoktak beszélni, erős anglicizmussal.] egy nagyon érdekes állatfajt jelentenek: egyik oldalról ezek a leghétköznapibb mutatószámok, de valójában mégsincs igazán precíz definíciója annak, hogy mit értünk általában alattuk. Legtöbbször még a statisztika könyvek is inkább valamiféle verbális körülírással próbálkoznak, "mi körül csoportosulnak az értékek", mi a "tipikus", vagy "jellemző", vagy "közepes" érték, de ez eléggé fából vaskarika, hiszen mégis mi a definíciója annak, hogy "jellemző" egy érték...? Ráadásul, mint az hamar ki fog derülni, ezek egy része még csak nem is igaz (pl. a megfigyeléseink fele 0, a másik fele 1000, akkor az 500-as átlag nemhogy nem tipikus vagy jellemző, de még csak elő sem fordul, sőt, még a környékén sincs megfigyelés). Az természetesen nagyon jó, ha az embernek van egy intuitív képe, amit a "közepes" magyar szó tényleg elég jól leír, de ezen túl nem hinném, hogy sokkal jobbat lehetne mondani, mint hogy a középérték az, amit a középérték-mutatók mérnek. És ezt egyáltalán nem viccből mondom, ennek a megfogalmazásnak fontos mondanivalója van: legyen az embernek intuitív képe, de ezen túl egész egyszerűen tudni kell, hogy pontosan mi a definíciója az adott mutatók, és az lesz a perdöntő.
+
+Amikor azt mondtam, hogy leghétköznapibb, akkor nem csak azt értettem alatta, hogy közismert, hanem azt is, hogy bizonyos értelemben ez a legfontosabb mutatószám, jelesül, ha csak egyetlen számba kell sűrítenünk az egész eloszlást, akkor az tipikusan egy középérték. Ha több mutatót is közlünk egy eloszlásról, jellemzően akkor is a közép az, amit elsőként megadunk.
+
+A legismertebb középérték a **(számtani) átlag**, jele $\overline{x}$. Definíciószerűen nem más, mint az a szám, amivel helyettesítve minden megfigyelési egység értékét, az ún. értékösszeg, tehát a változó megfigyeléseinek összege változatlan maradna, vagyis, amire igaz, hogy $\sum_{i=1}^n \overline{x} = n \cdot \overline{x} = \sum_{i=1}^n x_i$. Ebből már adódik, hogy az átlag:
+
+$$\overline{x}=\frac{\sum_{i=1}^n x_i}{n}$$.
+
+Úgy is mondhatnánk: ha egyenletesen szétosztanánk az értékösszeget minden megfigyelés között, akkor ennyi jutna mindenkire.
+
+Azonnal látható, hogy ennek akkor van értelme, ha a különböző megfigyelések számtani összege valamilyen értelmes tartalommal bír. Ez kézenfekvően megvalósul akkor, ha olyanokról beszélünk, mint például egy cég dolgozóinak átlagfizetése, vagy egy ország bányáinak átlagos széntermelése: az összeg itt az, hogy mennyi bért fizet ki a cég, vagy mennyi szenet termel az ország, ezek mind teljesen értelmes, tárgyterületi tartalommal, jelentéssel bíró számok. Érdekesebb a kérdés akkor, ha mondjuk egy osztály átlagos testtömegéről beszélünk, de kis ráolvasással ez is megindokolható (az összeg az, hogy mennyit mutatna a mérleg, ha együtt állna rá mindenki).
+
+Amikor viszont biztosan nem alkalmas mutató az átlag, az az eset, ha az összegnek egyáltalán nincs értelme. Tipikus példa erre az, ha a változó valamilyen növekedési ütemet jelent időben: ha egy alany testtömege egy évben 1,2-szeresére nőtt, rákövetkező évben pedig 1,3-szeresére, akkor az össznövekedés nyilván nem a növekedések összege ($1,\!2 + 1,\!2 = 2,\!4$), hanem azok szorzata ($1,\!2 \cdot 1,\!2 = 1,\!44$) lesz. Ebben az esetben, tehát, ha nem az összeg, hanem a szorzat értelmes, a mértani átlag fogalmához jutunk el (az a szám, amivel a megfigyelések szorzata -- nem összege -- ugyanaz maradna).
+
+A születési tömegek átlaga `r mean(birthwt$bwt)` gramm. Meglehetősen erőltetett azt mondani (noha formailag természetesen helyes), hogy ez azt jelenti, hogy az adatbázisban szereplő újszülöttek össz-testtömege akkor maradna változatlan, ha mindegyikük `r mean(birthwt$bwt)` gramm lenne; talán jobb, ha egyszerűen azt mondjuk, hogy ez egy középmutatója a csecsemők születési tömegei eloszlásának.
+
+Az átlagnak két további nevezetes tulajdonsága említést érdemel. Az egyik, hogy a megfigyelések tőle vett eltéréseinek az összege zérus; ez könnyen belátható:
+
+$$\sum_{i=1}^n \left(x_i - \overline{x}\right) = \sum_{i=1}^n x_i - \sum_{i=1}^n \overline{x} = n\overline{x} - n\overline{x} = 0$$.
+
+A másik fontos tulajdonsága, hogy az összes szám közül ez az, amire igaz, hogy a megfigyelések tőle vett eltérés*négyzeteinek* az összege minimális, tehát a $\sum_{i=1}^n \left(x_i - c\right)^2$ kifejezés akkor minimális^[A bizonyításhoz deriváljuk a kifejezést $c$ szerint: $-2\sum_{i=1}^n x_i + 2nc$, ezt tegyük egyenlővé nullával és oldjuk meg $c$-re: $c = \frac{1}{n}\sum_{i=1}^n x_i$, ami valóban az átlag. A második derivált $2n$, ami pozitív, bizonyítván, hogy ez valóban szélsőértékhely és minimum.], ha $c = \overline{x}$. Fontos megjegyezni: a négyzetre emelés eltünteti az előjelet, vagyis az eltérésnégyzet, szemben az előbbi előjeles eltéréssel, egyfajta távolság^[Ha valaki szeretné: $L_2$ távolság.] -- ilyen értelemben ez a megállapításunk azt mondja, hogy az átlag van a legközelebb a pontokhoz, ha ugyanannyira számít minden ponthoz a közelség! Ez egyfajta alátámasztását adja az átlag középérték jellegének. (Az összefüggés egyértelmű, ez a minimum-tulajdonság nem csak igaz az átlagra, de az átlag az egyetlen szám, amire igaz, tehát elvileg akár így is bevezethettük volna az átlagot, az értékösszeg egyenletes szétosztása helyett.)
+
+Az átlag előnye, hogy mindenki számára közismert, kényelmesen kezelhető, bevett mutató. (Ez olyannyira erős tényező, hogy nagyon sok orvosi publikáció még akkor is erőlteti az átlag használatát, amikor az -- a mindjárt részletezendő okokból -- nem célszerű.)
+
+Az átlag legnagyobb hátránya, hogy nem **robusztus**. A gyakorlatban ez két módon szokott megjelenni (matematikailag természetesen ugyanaz van a hátterében, ez ugyanazon jelenség két megjelenési formája, csak parktikus szempontokból érdemes különválasztani).
+
+Az egyik probléma az **outlierek** ügye: így szokás hívni a csoportosulás alaptendenciájától jelentősen eltérő értéket vagy értékeket. Ez megint kettéoszlik jellegét tekintve: egyfelől előfordulhat, hogy az adatokat valamilyen eltérő mechanizmus generálta (például az alapvetően egészségesekből álló mintába bekerül néhány beteg is, akiknek a vizsgált laborváltozója lényegesen magasabb), másfelől idetartoznak az adatbeviteli hibák is. Akármelyikkel is állunk szemben, az átlag elveszíti szokásos tartalmát. Vegyük mondjuk az utóbbi példát: van 1000 újszülöttünk, és egyetlen egynél -- de csak egynél -- elrontjuk az adatbevitelt, mondjuk 3 kg helyett 3 tonnát írunk be a súlyaként. Ekkor (hiába is korrekt az adatok 99,9%-a!) az átlag teljesen értelmetlenné válik: az átlagos születési tömeg 6 kg lesz... (ha egyébként mindenki 3 kg körüli). Ezért nem robusztus az átlag: hiába volt az adatok abszolút túlnyomó többsége korrekt, minödssze egyetlen egy hiba elég volt ahhoz^[Még szebben szólva: ha csak egyetlen egy megfigyelésre is $x_i \rightarrow \infty$, akkor $\overline{x} \rightarrow \infty$, *függetlenül* a megfigyelések számától.], hogy az átlag értelmetlenné váljon.
+
+Az outlierek esetén két kérdés merül fel: a detekció, tehát annak azonosítása, hogy egy megfigyelés outlier (mi ennek a kritériuma?), valamint a kezelés. A fenti adathibás példa azt sugallja, hogy a "kezelés" az egyszerűen az ilyen megfigyelések törlése, és ha valóban elírás van a hátterében, úgy, hogy a valódi értéket már nem tudjuk kideríteni, akkor tényleg nem tehetünk sokkal jobbat. Ez azonban szükségessé teszi a megfelelő detekciót, így annak is lehet értelme, hogy e helyett inkább olyan statisztikai módszereket használjunk, amelyek robusztusak, azaz nem érzékenyek az outlier-ek jelenlétére (tehát például, mint láttuk, *nem* átlagot...), hiszen így nem kell -- potenciálisan hibával terhelt módon -- azonosítanunk, hogy egyáltalán mi az outlier, megspóroljuk ezt a definíciós problémát. Végezetül annak is lehet értelme, hogy a fentiekkel szemben ne -- valamilyen módon -- megszabadulni akarjunk az outlier-ektől, hanem ellenkezőleg, kimondottan megragadjuk ezeket, és egy finomított statisztikai megközelítés segítségével explicite modellezzük őket is (például az egészséges-beteg laborváltozós esetben külön eloszlást illesszünk az egészségesekre és a betegekre).
+
+A robusztusság azonban nem csak az outlierek kapcsán érdekes, sőt, a gyakorlatban nagyon fontos tud lenni akkor is, ha egy fia outlier nincs, semmilyen adatbeviteli hiba nem történt, semmilyen többitől eltérő csoportosulási tendencia nem lép fel. Mikor? Az úgynevezett ferde eloszlások esetén. A ferdeség azt jelenti, hogy az eloszlás aszimmetrikus: egyik irányban messzebre szóródik, mint a másikban. Erre orvosi példákat könnyű mondani, vegyünk egy olyan laborváltozót mint a CRP: ez egy gyulladásmarker, koncentrációja normálisan néhány mg/dl a vérben, csakhogy -- és most jön a lényeg -- lefelé nem tud szabadon szóródni, hiszen valaminek a koncentrációja, így negatív nem lehet. Felfelé azonban tud, hiszen ilyen felső korlát nincs, nyugodtan lehet 10, 50, 100, vagy akár annál is több az értéke. Lényegében arról van szó, hogy 0-nál egy "fal" van, ami megakadályozza a szóródást, de a kulcs, hogy ez csak egy egyik irányban történik meg -- ez hozza létre a ferdeséget. Illusztratív példát mutat ilyen eloszlásra a [-@fig-ferde-eloszlas]. ábra.
+
+```{r}
+#| label: fig-ferde-eloszlas
+#| fig-cap: "Példa ferde eloszlásra"
+#| echo: false
+  
+ggplot() + geom_function(fun = dlnorm, xlim = c(0, 5), n = 1001)
+```
+
+Mi fog történni, ha ilyen változónak számítjuk az átlagát? Az ábrán szereplő példában ez 1,6 körül lesz, ami csak azért "furcsa", mert első ránézésre meglepően magas: úgy érzi az ember, hogy valamiért egészen az eloszlás jobb széle felé van, egyáltalán nem a közepénél (ahol lennie "kellene", ha már egyszer középmutató). Ez bizonyos értelemben jogos, hogy számszerűsítsük a dolog: a megfigyelések nagyjából 69%-a lesz kisebb az 1,6-nél! Na de hogy lehet 1,6 az átlag, ha egyszer a megfigyelések több mint kétharmada kisebb nála?! -- kérdezhetné valaki. A válasz az, hogy nagyon könnyen: az eloszlás jobb szélén ugyan ritkán vannak megfigyelések, de azok értéke *lényegesen* nagyobb, mint a többi, ami fel fogja húzni az átlagot ugyanis -- és most jön a lényeg! -- a másik oldalról nem lesz, még kis számban sem, olyan érték, ami a túl oldalra kilógva tudná ezt ellensúlyozni! Ez egyáltalán nem outlier-probléma a fenti értelemben, mégis, az átlag használata megkérdőjeleződik^[Bármely más ferde eloszlásnál ugyanaz a helyzet; a kérdés gyakran előjön például a keresetek kapcsán.].
+
+*Nagyon fontos* hangsúlyozni, hogy ez a jelenség nem azt jelenti, hogy az átlag "elromlott" ezekben az esetekben. Az átlag *tényleg* annyi (ezen belül is különösen: *tényleg* 6 kg kell legyen mindenki születési tömege, hogy kiadja az összeget, amiben 3 tonna is van, *tényleg* 1,6 kell legyen mindenki CRP-je, hogy kiadja az összeget, amiben a kis számú nagy érték is benne van). Az átlag nem "rossz" ilyenkor, maximum nem felel meg annak, hogy mi a szubjektív képünk arról, hogy "közép"! De ez nem az átlag hibája; legfeljebb más mutatóra van szükségünk, ami jobban egybevág a szubjektív képünkkel^[Vegyük észre, hogy ha viszont áttérünk ilyenre, azzal az átlaghoz kapcsolódó értelmezést rontjuk el. Például az átlagos kereset úgy érezzük, hogy nem jó, mert túl nagy érték, ez esetben, ha valamilyen kisebbet mutató mérőszámot választunk, akkor elveszítjük az értékösszeg tartást: megváltozna a cég által kifizetett bértömeg, ha mindenki annyit keresne mint ez a kisebb középérték.]. (Itt is előjön, amit a felvezetőben mondtam: lehet verbális körülírásokkal élni, de egy ponton túl csak az lesz a perdöntő, hogy mi a definíció.)
+
+Vannak bizonyos ad hoc javítások erre a robusztussági problémára, talán egyet érdemes itt megemlíteni, a **trimmelt (vagy nyesett) átlagot**: ezt úgy kapjuk, hogy elhagyjuk a legkisebb és legnagyobb adott számú elemet, és csak a maradékot átlagoljuk ki. Tipikusan az elhagyott megfigyelések száma alul és felül is a mintanagyság 2,5%-a; ebben az esetben 5%-os trimmelt átlagról beszélünk. (Bár elsőre ez szokatlan mutatónak tűnhet, és a tudományos irodalomban tényleg ritkábban is használják, de számos pontozásos sportágban épp ilyen elven alakítják ki a zsűri "átlagos" pontszámát.) A születési tömegek 5%-os trimmelt átlaga `r mean(birthwt$bwt, trim = 0.05)` gramm, ami egyúttal azt is mutatja, lévén, hogy közel van a szokásos átlaghoz, hogy a születési tömegek aránylag szimmetrikus eloszlásúak, vélhetően komoly outlier nélkül.
+
+Alapvetően más megközelítését jelenti a centrális tendencia megragadásának a **medián** használata, melynek jele $\mathrm{Me}_x$. A medián nem más, mint a nagyság szerint sorbarendezett megfigyelések közül a középső. (Amennyiben a mintanagyság páros, úgy nyilván két "középső" is van, ez esetben megállapodás kérdése, hogy mit nevezünk mediánnak; vehetjük például a kettő átlagát.) Úgy is mondhatjuk, hogy a medián a felezőpont, az az érték, amiről elmondható, hogy alatta és felette is a mintaelemek fele található.
+
+A medián szintén a centrális tendenciát jellemzi, csak épp kevésbé megszokott módon, mint az átlag -- ez egyúttal használatának egyik fő gátja is: sok ember számára a medián tartalma (és egyáltalán, értelme) kevésbé ismert, így e mutató nem annyira jól kezelhető^[Ami egyébként elég érdekes, már úgy értem, pusztán pszichológiailag is, hiszen valójában a medián még egyszerűbb is, mint az átlag: csak sorba kell rendezni hozzá, még csak összeadni és osztani sem kell.]. Előnye viszont a robusztusság, ilyen szempontból az átlaggal szemben a másik végpontot képviseli: míg az átlag extrém érzékeny volt, addig a medián extrém robusztus. Ez mind az outlier-es esetekben, mind a ferde eloszlásoknál érvényesül. A minta minden medián feletti értéke (az egyszerűség kedvéért most gondoljunk páratlan mintanagyságra) tetszőlegesen megnövelhető (akár az összes  egyszerre is), vagy a medián alatti értékek tetszőlegesen lecsökkenthetőek (akár az összes egyszerre is), vagy akár a kettő együtt is, a medián értéke *nem változik*! Az előző példánkban: hiába a 3 tonnás csecsemő, a medián marad értelmes, 3 kg körüli, a CRP esetében pedig 1 lesz a medián -- nézzünk vissza az ábrára ([-@fig-ferde-eloszlas]. ábra) ez valóban sokak érzete szerint közelebb van a "középhez", mint az 1,6-os átlag.
+
+A medián hátránya (azon túl, hogy más az értelmezése, tartalma, de ez nem hátrány, csak egy jellemző), hogy a jó robusztusságért cserében kevesebb információt használ fel a mintából^[Így már az is érthető, hogy a trimmelt átlag egyfajta kompromisszumnak tekinthető a kettő között, ti. a robusztusság és a mintaértékek mind teljesebb kihasználása között. Az is észrevehető, hogy bizonyos értelemben ez ráadásul általánosítja is a két mutatót: a 0%-os trimmelt átlag épp a "hagyományos" átlag, a 100%-os trimmelt átlag pedig épp a medián.]; ezt épp a mintaértékek meglehetősen szabad "állítgathatósága" mutatja. Hogy ez miért baj, az precízen csak induktív statisztikai keretben lehet megérteni, az ottani tárgyalás után már érthető lesz, hogy mit jelent az, hogy a medián kevésbé hatásos becslő mint az átlag.
+
+A tanulság összességében az, hogy ha előre tudható, hogy a háttéreloszlás szimmetrikus-közeli, akkor érdemes átlagot használni, ha nem, vagy outlier-ek jelenlétére is fel kell készülni, akkor jobb a medián ilyen szempontból. Az is gyakori megoldás -- és ugyan az áttekinthetőségből feláldoz valamennyit, de cserében bombabiztos -- ha egész egyszerűen közöljük mindkettőt.
+
+Érdemes röviden megemlíteni, hogy a mediánnak is van távolság-optimum jellegű tulajdonsága, ráadásul egészen hasonló az átlagéhoz. Emlékeztetőül: az átlag az a szám, amire igaz, hogy a megfigyelések tőle vett távolságainak az összege minimális, ha a távolság alatt a különbség négyzetét értjük. Nos, a mediánra betű szerint ugyanez igaz, csak távolság alatt nem az eltérés négyzetét, hanem abszolútértékét^[Tehát ez az $L_1$ távolságmetrikát használja.] kell érteni! A $\sum_{i=1}^n \left| x_i - c \right|$ akkor minimális (és csak akkor), ha a $c$ a medián^[A bizonyítás azért zűrösebb, mert az abszolútérték-függvényt nem olyan egyszerű deriválni, mint a négyzetet. Pontosabban szólva a derivált negatív számokra $-1$, pozitív számokra $+1$, $0$-ban pedig nem értelmezett. A belső függvény deriváltja egy $-1$-es szorzót ad, tehát megfordítja az előbbit: negatív számokra $+1$, pozitív számokra $-1$; és ez van összeadva mindegyik mintaelemre. Mivel a negatív szám azt jelenti, hogy az adott mintaelem alatt vagyunk (a pozitív pedig azt, hogy felette), így az összeg egy adott ponton az lesz, hogy hánnyal több mintaelem van felettünk mint alattunk a kérdéses pontban, hiszen minden mintaelem, ami felettünk van -- azaz amihez képest mi alatta vagyunk -- $+1$-et ad az összeg és minden mintaelem, ami alattunk van -- tehát ami felett vagyunk -- pedig $-1$-et. Így rögtön látható, hogy a derivált ott lesz nulla, ahol pont ugyanannyi mintaelem van felettünk, mint alattunk! A teljesen precíz optimalizáláshoz még a mintaelemek pontjait meg kell nézni, hiszen ott a derivált nem volt értelmezett (ennek páratlan mintanagyságnál lesz jelentősége).]. Itt is elmondható ebből fakadóan, hogy ez újabb alátámasztását adja a medián középérték jellegének.
+
+A születési tömegek mediánja `r median(birthwt$bwt)` gramm, azaz a `r median(birthwt$bwt)` gramm az a testtömeg, amiről elmondható, hogy az újszülöttek fele kisebb ennél, fele nagyobb. (Láthatóan közel van az átlaghoz, újból megerősítve, hogy ez valószínűleg egy szimmetrikus eloszlás, nagy outlier-ek nélkül.)
+
+Ahogy a medián a minta "felezőpontja", ugyanúgy definiálhatók általános osztópontok; ezeket **kvantiliseknek** nevezzük. A $p$-kvantilis ($0<p<1$) az az érték, amiről elmondható, hogy a megfigyelések $p$-ed része kisebb nála, $\left(1-p\right)$-ed része nagyobb nála. (Tehát a medián az $1/2$-kvantilis.) Gyakorlati szempontból nagyobb jelentősége van még a negyedelőpontoknak, melyek neve **kvartilis**. Ilyenből tehát három van: a $p=1/4,2/4=1/2,3/4$-kvantilis, ezek közül a középső persze ugyanaz mint a medián. A másik kettőt alsó és felső kvartilisnek szokták nevezni, és $Q_1$-gyel, illetve $Q_3$-mal jelölik. Tehát például $Q_1$ az a szám, amire igaz, hogy a minta egynegyede nála kisebb értékű, háromnegyede nála nagyobb. Ezek valójában már nem is a centrális tendenciát, hanem általában az eloszlás alakját mutatják, mégpedig robusztus módon (ugyanazon okból, mint amiért a medián is robusztus). Ritkábban, de szokták használni ugyanerre a célra a tizedelőpontokat, nevük decilis ($D_1,D_2,\ldots,D_9$) és a századolópontokat, nevük percentilis^[Különösen az angol irodalomban a percentilist nagyon gyakran szinte a kvantilis szinonimájaként használják. Ez csak szóhasználati könnyebbség, amennyiben ahelyett, hogy 0,123-kvantilis jobban hangzik azt mondani, hogy 12,3 percentilis.] ($P_1,P_2,\ldots,P_{99}$). A 90. percentilist például gyakran használják olyankor, ha az eloszlás széli viselkedésének jellemzésére van szükség -- mi a legrosszabb eshetőség? -- amit első ránézésre a maximum mutatna, csak a 90. percentilis sokkal robusztusabb: a maximum nagyon ingadozó, olyan értelemben, hogy egyetlen érték is odébbhúzza (az nagyon esetleges lehet, hogy pont a legnagyobb mennyi); a 90. percentilis viszont továbbra is az eloszlás szélét méri, de kevéssé ingadozó, sokkal robusztusabb módon^[Azért vegyük észre, hogy igazából ez is egy kompromisszum: elvileg még jobb lenne a 99., a 99,9., a 99,99. stb. percentilis, csak ezeknél megint vissza fog jönni az a probléma, hogy csak nagy ingadozással lesznek meghatározhatóak, hacsak nincs hatalmas mintánk.].
+
+A korábbi értelemben vett módusz használatának a folytonosság miatt általában nincs értelme mennyiségi változó esetén, hiszen még az is lehet, hogy minden konkrét értékből csak egyetlen egy fordul elő, ahogy arról már volt is szó. Folytonos változó esetén emiatt a módusz többé nem a leggyakoribb kimenet, hanem a sűrűségfüggvény maximumhelye^[Az érdekesség kedvéért megjegyzem, hogy valójában még a módusz is beleszuszakolható a "távolság-minimalizálási" keretbe: az átlagot akkor kaptuk, ha az $L_2$ távolságok összegét minimalizáltuk, a mediánt akkor, ha az $L_1$ távolságokét -- nos, a móduszt akkor kapjuk, ha az $L_0$ távolságokét! Ez kicsit már feszegeti a szokásos kereteket, azt értjük alatta, hogy az $L_p$ távolság akkor, ha $p \rightarrow 0$; belátható, hogy ez $1$ értékű akkor, ha a két pont, aminek a távolságát nézzük, egybeesik, $0$ különben. Az összeg tehát azt fogja jelenteni adott pontra, hogy hány megfigyelés van, ami *nem* az adott pontban található (függetlenül attól, hogy mennyire távol vagy közel), innen már nyilvánvaló, hogy ezt valóban az minimalizálja, ha a pontot oda tesszük, ahol a legtöbb megfigyelés van.] -- csakhogy sűrűségfüggvényünk nincsen, azt legfeljebb közelíteni tudjuk a mintából, valamilyen simítóeljárással (részletesebb lásd a grafikus módszerek között, a [-@sec-mennyisegi-egyvaltozos-grafikus]. pontban). Ez lehet egy sima osztályközös gyakorisági sor / hisztogram (az is egyfajta simítás!), ez esetben modális osztályközről szokás beszélni, mint a legnagyobb gyakoriságú osztályköz / a hisztogram legmagasabb oszlopa, de használhatunk simításra magfüggvényes sűrűségbecslőt is ([-@sec-kde]. pont), ez esetben a maximum egyetlen pont lesz. Ez azonban még deskriptív statisztikai értelemben is csak egy közelítés. Az ilyen módon vett módusz használata ritka a mindennapi biostatisztikai gyakorlatban.
+
+Ennek kapcsán még annyit megjegyzek, hogy átlagot, mediánt (és általában minden egyéb mutatószámot is) lehetséges osztályközös gyakorisági sorból, a nyers mintaelemek ismerete nélkül is számolni, persze ekkor már csak közelítő jelleggel.
+
+##### Szóródás {#sec-szorodas}
+
+**Szóródásnak** nevezzük azt, hogy a megfigyelések milyen szorosan csoportosulnak azon érték körül, ami körül csoportosulnak (lásd a centrális tendenciát!), más szóval mennyire ingadoznak a megfigyelések, mekkora változékonyság van bennük. A gyakorlatban ez a második legfontosabb kérdés: ha csak egy jellemzőt adhatunk meg, akkor az a centrális tendencia lesz, de ha kettőt, akkor megadjuk azt is, hogy mekkora a szóródás.
+
+A minta szóródásának legegyszerűbb mérőszáma a legkisebb ($\mathrm{Min}$) és a legnagyobb ($\mathrm{Max}$) mintaelem értéke, a **mintaminimum** és **mintamaximum**, illetve kettejük különbsége, melyet **terjedelemnek** nevezünk és gyakran $R$-rel jelölünk: $R=\mathrm{Max}-\mathrm{Min}$. Ezek előnye, hogy teljesen egyértelmű a tartalmuk, hátrányuk, hogy rendkívül érzékenyek arra, hogy konkrétan milyen mintát vettünk a sokaságból, ezért, bár gyakran megadják információ gyanánt, a szóródás számszerű jellemzésére ritkán használják.
+
+A születési tömegek mintaminimuma `r min(birthwt$bwt)` gramm, mintamaximuma `r max(birthwt$bwt)` gramm, így e változó terjedelme `r diff(range(birthwt$bwt))`gramm.
+
+Az egyik alapvető mutatója a szóródásnak a **szóránégyzet** (vagy **variancia**), jele általában $s_x^2$. A szórásnégyzet tulajdonképpen a legkézenfekvőbb jellemzője a szóródásnak, hiszen nem más, mint a átlagtól vett átlagos eltérés. Az egyetlen amire vigyázni kell, hogy az eltérés alatt mit értünk: ha egyszerűen a megfigyelés és az átlag különbségét vennénk, az nem lenne jó, mert a pozitív és a negatív eltérések csökkentenék (sőt, belátható, hogy kioltanák) egymás hatását. Ezért inkább négyzetre emeljük ezt a különbséget, hogy megszabaduljunk az előjeltől, hogy a $+1$ és a $-1$ eltérés hatása ugyanolyan legyen, és ezzel már jók vagyunk:
+
+$$s_x^2=\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}$$.
+
+A szórásnégyzet problémája, hogy a mértékegysége nem ugyanaz, mint az eredeti változóé (a négyzetremelés miatt). Ha szeretnénk a szóródást ugyanazon a skálán jellemezni, akkor egy gyökvonással visszatérhetünk; ezt a mutatót hívjuk **szórásnak**, jele $s_x$:
+
+$$s_x=\sqrt{s_x^2} = \sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n}}$$.
+
+(A kettő neve nem keverendő: a "szóródás" a jellemző, a "szórás" egy lehetséges mutatószáma ennek a jellemzőnek.)
+
+Deskriptív esetben néha inkább mintavarianciát, illetve mintaszórást mondanak (hogy a megfelelő sokasági jellemzőtől megkülönböztessék -- sajnos nincs akkora szerencsénk, mint az átlagnál, ahol az "átlag" és a "várható érték" révén két teljesen különböző szavunk van a mintabeli, tehát statisztikai és a sokasági, tehát valószínűségszámításos fogalomra).
+
+A fent definiált mutatót szokás precízen *korrigálatlan* mintavarianciának, illetve mintaszórásnak nevezni, ezzel szemben a *korrigált* mutatóban nem $n$-nel, hanem $n-1$-gyel osztunk le. Például a korrigált mintaszórás, jele $s_x^{\ast}$:
+
+$$s_x^{\ast}=\sqrt{\frac{\sum_{i=1}^n \left(x_i-\overline{x}\right)^2}{n-1}}$$.
+
+A különbségük oka csak a következtető statisztikában válik világossá^[A korrigálatlan mintavariancia, első ránézésre talán meglepő módon, *nem* torzítatlan becslője a sokasági varianciának, ezzel szemben a korrigált igen. A mintaszórásnál sajnos nem ilyen egyszerű a helyzet, ott a korrigált mutató is torzított (igaz, arra nem is létezik becslő, ami általában torzítatlan lenne). E kérdésekkel a következtető statisztikánál fogunk foglalkozni részletesen.].
+
+A születési tömegek korrigált mintaszórása `r sd(birthwt$bwt)` gramm, tehát az újszülöttek testtömegeinek átlaguk körül vett ingadozásának átlaga `r sd(birthwt$bwt)` gramm.
+
+A szórás hátránya, hogy -- az átlaghoz hasonlóan -- nem robusztus^[Konkrétabban beszélve, például erre is igaz, hogy ha csak egyetlen egy megfigyelésre is $x_i \rightarrow \infty$, akkor $s_x \rightarrow \infty$, *függetlenül* a mintanagyságtól.] mutató. (Egyrészt azért nem, mert az átlagtól vett eltérések nézi, ami eleve nem robusztus középmutató, másrészt ezeket átlagolja, ami ugyebár nem robusztus, ráadásul a négyzetreemelés még ki is emeli a különbségeket.) Egyik gyakran alkalmazott robusztus alternatíva az **interkvartilis terjedelem** (jele $IQR$), ami a felső és az alsó kvartilis különbsége:
+
+$$IQR=Q_3-Q_1$$.
+
+ Mondhatjuk azt is, hogy az IQR az adatok középső 50%-ának szélessége.
+
+Az interkvartilis terjedelem a robusztus kvartiliseken alapul, így robusztus mutató, és könnyen látható, hogy tartalmilag a szóródást jellemzi, hiszen minél jobban szóródott az eloszlás, annál távolabb lesz az alsó és a felső negyedelőpontja.
+
+A születési tömegek interkvartilis terjedelme `r IQR(birthwt$bwt)` gramm, tehát az a tömeg, ami fölött az újszülöttek egynegyede (és alatta háromnegyede) van, `r IQR(birthwt$bwt)` grammal nagyobb annál a tömegnél, ami fölött az újszülöttek háromnegyede (és alatta egynegyede) van, tehát `r IQR(birthwt$bwt)` gramm szélességben szóródik a születési tömegek középső 50%-a.
+
+Egy másik lehetőség a szórás "megjavítása", olyan módon, hogy kiküszöböljük a nem-robusztusság fent említett forrásait: az eltéréseknek nem a négyzetét, hanem az abszolút értékét vesszük, az eltéréseket nem az átlagtól hanem a mediántól vesszük, végül pedig nem is átlagoljuk őket, hanem a mediánjukat képezzük. Az így kapott mutató neve **medián abszolút eltérés**, jele $MAD$, tehát
+
+$$MAD=\mathrm{Me}\left(\left|x_i-\mathrm{Me}\left(x\right)\right|\right)$$.
+
+(A szakirodalom itt nem teljesen egyértelmű: néha $MAD$-nak nevezik azt a mutatót is, ahol csak az első javítást csinálják meg, tehát abszolútértéket vesznek, de azokat továbbra is csak átlagolják, és az eltéréseket is az átlagtól veszik.)
+
+A születési tömegek medián abszolút eltérése `r mad(birthwt$bwt, constant = 1)` gramm, tehát az újszülöttek testtömegeinek mediánjuk körül vett (abszolút) ingadozásának mediánja `r mad(birthwt$bwt, constant = 1)` gramm.
+
+##### Alakmutatók {#sec-alakmutatok}
+
+A fenti két jellemzőn túlmenően néha egyéb, még inkább részletekbe menő jellemzőit is használják egy változó leírásának. Egy példát tulajdonképpen már láttunk is, a ferdeséget (szimmetriát), amire léteznek numerikus mutatók, melyek jellemzik az irányát és a mértékét. Vannak további mutatók, további statisztikai jellemzők (például csúcsosság) numerikus leírására, de ezeket, bár statisztika tankönyvek néha tartalmazzák, a mindennapi biostatisztikai gyakorlatban ritkán alkalmazzák, így most nem is részletezem bővebben.
+
+### Grafikus eszközök {#sec-mennyisegi-egyvaltozos-grafikus}
+
+A grafikus eszközök közül először a hisztogramot ([-@sec-hisztogram]. pont), utána a magfüggvényes sűrűségbecslőt ([-@sec-kde]. pont), majd végül a boxplotot ([-@sec-boxplot]. pont) tárgyaljuk meg.
+
+#### Hisztogram {#sec-hisztogram}
+
+A hisztogram lényegében nem más, mint az osztályközös gyakorisági sor ábrázolása oszlopdiagramon, annyi specialitással, hogy az oszlopokat közvetlenül egymás mellé rajzoljuk, hely kihagyása nélkül ([-@fig-hisztogram]. ábra).
+
+```{r}
+#| label: fig-hisztogram
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására hisztogrammal."
+
+hist(birthwt$bwt, xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]", main = "")
+```
+
+A hisztogram a háttérben lévő változó eloszlását (sűrűségfüggvényét) igyekszik közelíteni^[A "közelíteni" természetesen azt jelenti, hogy "becsülni", de az már egy induktív statisztikai fogalom.]. Ez azt is jelenti, hogy a fenti ábrán lévő függőleges vonalak igazából csak grafikai elemek, a hisztogram által reprezentált függvényben természetesen nem számítanak, az úgy néz ki, ahogy a [-@fig-hisztogram-kontur]. ábra mutatja.
+
+```{r}
+#| label: fig-hisztogram-kontur
+#| fig-cap: "A hisztogram által reprezentált függvény."
+#| echo: false
+
+with(hist(birthwt$bwt, plot = FALSE),
+     plot(rep(breaks, each = 2), c(0, rep(counts, each = 2), 0),
+          type = "l", xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]"))
+```
+
+A hisztogram tehát egy szakaszonként konstans, lépcsős függvényt ad -- így írja le az eloszlást (ezzel igyekszik közelíteni a valódi sűrűségfüggvényt). A probléma csak az, hogy a valódi eloszlás szinte minden realisztikus esetben szép folytonos, simán változó, szakadások nélküli függvény -- valahogy úgy, ahogy a [-@fig-hisztogram-valodi]. ábra mutatja.
+
+```{r}
+#| label: fig-hisztogram-valodi
+#| fig-cap: "Hisztogram, hátterében a valódi eloszlás"
+#| echo: false
+
+with(hist(birthwt$bwt, plot = FALSE),
+     plot(rep(breaks, each = 2), c(0, rep(counts, each = 2), 0),
+          type = "l", xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]"))
+lines(density(birthwt$bwt)$x,
+      density(birthwt$bwt)$y*nrow(birthwt)*
+        unique(diff((hist(birthwt$bwt, plot = FALSE))$breaks)),
+      col = "red")
+```
+
+*Nagyon fontos* hangsúlyozni, hogy ez csak egy *illusztráció*: a valóságban mi magunk sem tudhatjuk, hogy mi az eloszlás a háttérben! Pont ez a lényeg, ami miatt szükség van egyáltalán a hisztogramra. Az ábra tehát pusztán szemléltetni kívánja, ahogy a hisztogram egy lépcsős függvénnyel igyekszik leírni egy -- általunk sem ismert, de mindenesetre nem lépcsős -- függvényt.
+
+Mi következik mindebből? Először is az, hogy ez a leírás annál pontosabb tud lenni, minél szűkebbek az osztályközök -- annál finomabb a lépcsős függvény, annál jobban tud követni egy (bármilyen alakú) valódi függvényt! Ez tehát a szűk osztályközök mellett szól, avagy, fordítva megfogalmazva, a nagyon széles osztályközök azért lesznek rosszak, mert lehetetlen lesz vele követni a valódi függvényt, mert össze fog mosni különböző dolgokat. (Később úgy fogjuk mondani: torzított lesz. Érdemes összevetni ezt azzal, amit az osztályközös gyakorisági soroknál mondtunk: ilyenkor nagy lesz az információvesztés.) Ezt mutatja a [-@fig-hisztogram-szeles]. ábra, ahol nagyon széles osztályközöket választottam a születési tömegek ábrázolására.
+
+```{r}
+#| label: fig-hisztogram-szeles
+#| fig-cap: "Születési tömegek hisztogramja, széles osztályközökkel"
+#| echo: false
+
+hist(birthwt$bwt, 3, xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]", main = "")
+```
+
+Akkor tehát vegyünk fel nagyon szűk osztályközöket? Ez a fenti szempontból jó választásnak tűnik (jól tudjuk követni az igazi függvényt, nem mosunk össze különböző dolgokat, kicsi a torzítás), de okoz egy másik problémát. Ez jól látszik a [-@fig-hisztogram-szuk]. ábrán, ahol szűk osztályközökkel ábrázoltam a születési tömegeket.
+
+```{r}
+#| label: fig-hisztogram-szuk
+#| fig-cap: "Születési tömegek hisztogramja, szűk osztályközökkel"
+#| echo: false
+
+hist(birthwt$bwt, 30, xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]", main = "")
+```
+
+Mit látunk az ábrán? Nézzük meg a hisztogramot hogyan alakul, ahogy haladunk balról jobbra, hogyan változik az értéke ahogy egyesével ugrálunk az oszlopokon jobbra: felmegy, felmegy, felmegy, lemegy, felmegy, lemegy, felmegy, lemegy, felmegy, lemegy, felmegy... Ennek aligha van biológiai realitása, hogy a *valódi* születési tömeg eloszlása *tényleg* így változik! Akkor mi történik? A magyarázat az, hogy ha szűk osztályközöket választunk, akkor az egy osztályközbe jutó megfigyelések száma (ami alapján ugye meghatározzuk az oszlop magasságát!) nagyon kicsi lesz. Hogy ez miért probléma, azt igazán majd csak a következő statisztikából fogjuk megérteni, most annyit mondok, hogy nagyon ingadozó lesz az oszlop magassága a véletlen szeszélyétől függően is (gondoljunk arra, hogy ha egy osztályközbe 2 pont esik, akkor mindössze egyetlen érték kicsit odébbmozdítása is lehet, hogy megfelezi, vagy épp másfélszeresére növeli az oszlop magasságát!). Voltaképp az történik, hogy van a valódi függvény, a hisztogram ingadozik körülötte -- és minél szűkebbek az osztályközök, annál nagyobb ez az ingadozás. Ezt szép szóval úgy mondják, hogy a variancia a probléma.
+
+Összefoglalva a helyzetet: a széles és a szűk osztályközök mellett is szólnak érvek. Lehet a kettő között egy optimumot találni, de az csak optimum (legkisebb hibájú helyzet), nem ideális (nulla hibájú helyzet). Ez a konkrét eset egy példa arra a statisztikában több helyen is előforduló jelenségre, amit torzítás-variancia dilemmának hívnak; lesz még róla szó.
+
+(Zárójelben: érdemes észrevenni, hogy az egyetlen megoldás, ami nem kompromisszumos, tehát nem valaminek a feláldozása árán javítja az egyik szempontot -- ugye az osztályközök szűkítése vagy bővítése ilyen! -- az a mintanagyság növelése. Ha tudjuk növelni a mintanagyságot, akkor ugyanolyan széles osztályközökbe is több pont jut, tehát a torzítás növelése *nélkül* csökkentjük a varianciát, avagy ugyanannyi osztályközbe jutó pontot megtarthatunk szűkebb osztályközökkel is, tehát a variancia növelése *nélkül* csökkenthetjük a torzítást. Vagy valahol a kettő között, ha kisebb mértékben is, de egyszerre javíthatjuk mindkettőt.)
+
+A probléma tehát kettős: egyrészt még ha meg is találjuk az optimumot, az sem lesz tökéletes, másrészt meg kell találni valahogy ezt az optimumot. A gyakorlatban ez utóbbi a probléma (pláne, hogy az első elkerülhetetlen, így azzal nincs mit tennünk). Hogyan találjuk meg tehát az optimális osztályköz-szélességet? Ez a legnagyobb kihívás a hisztogram használatakor. A kérdés egyáltalán nem mellékes: mint a fenti ábrák is mutatják, az, hogy a gyakorisági sor milyen képest sugall számunkra a vizsgált változóról sajnos nagyban függhet az osztályközök megválasztásától, különösen kis mintanagyságnál.
+
+A gyakorlatban két megközelítése van a problémának. Az egyik lehetőség, ha *szakmai alapon* választjuk meg az osztályközöket: úgy rakjuk le az osztópontokat, hogy az osztályközök valamilyen értelmes, tárgyterületi tartalommal bíró kategóriákat jelöljenek ki. Kis költői szabadsággal élve mondhatjuk, hogy már a [-@fig-hisztogram]. ábra hisztogramján is ez történt -- az osztópontok szép kerek, 500-al osztható számokra kerültek. A valódibb példa természetesen az, ha az osztályközök valamilyen szakmai tartalommal bírnak. Példának okáért, a szülészetben általánosan bevett módon használják azt a [terminológiát](https://real.mtak.hu/86899/1/650.2018.31199.pdf), hogy kis születési súlyról beszélnek 1500 és 2499 gramm között, igen kis születési súlyról 1000 és 1499 gramm között és igen-igen kis (extrém kis) születési súlyról 1000 gramm alatt -- megtehetjük, hogy az osztópontokat is így rakjuk le, így az osztályközök az általánosan használt szülészeti kategóriáknak fognak megfelelni.
+
+A másik lehetőség, hogy *statisztikai alapon* választjuk meg az osztályközöket: nem is törődünk a változó tárgyterületi tartalmával, egyszerűen azt nézzük, hogy pusztán a megfigyelések statisztikai jellemzőit figyelembe véve mi az a választás, ami optimális a torzítás-variancia dilemma tükrében, tehát az össz-hibát minimalizálja. Esetleg reménykedhetünk abban, hogy erre van egyetlen, egyértelmű válasz, tehát, hogy megcsináljuk az optimalizálást, majd a végén kijön, hogy mi "az" optimum, de sajnos ez nem így van. A probléma az, hogy bár lehet ilyen levezetéseket csinálni, de az eredmény függeni fog attól is, hogy pontosan milyen feltételezésekkel élünk, így valójában a válasz nem egyértelmű. Példának okáért, az egyik ilyen ismert analitikus szabály a Sturges-szabály, ami azt javasolja, hogy $\left\lceil \log_2 n+1\right\rceil$ darab azonos szélességű osztályközt vegyünk fel a mintaminimum és -maximum között.
+
+A fentiekben elmondottak természetesen nem csak a hisztogramra érvényesek, hanem az osztályközös gyakorisági sor kontrukciójára is ([-@sec-osztalykozos-gyakorisagi-sor]. pont).
+
+Végezetül beszéljünk kicsit arról, hogy hogyan lehet konkrétan R-ben megadni az osztályközöket. Erre 4 lehetőségünk is van:
+
+1. Explicite megadjuk az osztályközök határait: `hist(birthwt$bwt, breaks = c(500, 1500, 2000, 2500, 2750, 3000, 3250, 3500, 5000))`. Az R ezt feltételezi akkor, ha a `breaks` argumentum értéke egy vektor.
+2. Megadjuk az osztályközök számát: `hist(birthwt$bwt, breaks = 10)`. Az R ezt feltételezi akkor, ha a `breaks` argumentum értéke egy szám (persze, mint tudjuk az R-ben ez azt jelenti, hogy vektor, de 1 hosszúságú).
+3. Megadjuk a szabály nevét, amivel kérjük az osztályközök számának kiszámolását: `hist(birthwt$bwt, breaks = "Sturges")`. Az R ezt feltételezi akkor, ha a `breaks` argumentum értéke egy sztring.
+4. Saját függvényt adunk meg, mely az osztályközök számát adja vissza (bemenetként a megfigyeléseket kapja meg). Lényegében implementálhatunk egy saját szabályt a beépítettek mellett. Az R ezt feltételezi akkor, ha a `breaks` argumentum értéke egy függvény.
+
+Megjegyzendő, hogy az utolsó 3 esetnél a beállítást az R csak ajánlásnak tekinti: a konkrét osztópontokat ilyenkor kicsit odébbmozgathatja, ugyanis ilyenkor arra is törekszik, hogy szép kerek számokra rakjak az osztásokat (a `pretty` függvény használatával).
+
+Most, hogy kiveséztük az oszlopok szélességeit, beszéljünk picit a magasságukról is!
+
+A hisztogramokra adott definíció alapján ("az osztályközös gyakorisági sor oszlopdiagrammal ábrázolva, csak oszlopok közötti rések nélkül") alapján ez egyszerűnek tűnik: az oszlopok magassága $f_i$, tehát az adott intervallumba eső megfigyelések száma. Ez lehet teljesen működőképes, hogy mást ne mondjak, az összes eddigi hisztogram így készült, egy baja azonban van: a görbe alatt terület (emlékezzünk a [-@fig-hisztogram-kontur]. ábrára!) nem 1 lesz. Miért érdekes ez? Az esetek túlnyomó részében semmiért, egy orvosi közleményben tökéletesen értelmesek és értelmezhetőek a fenti hisztogramok (sőt, valószínűleg így értelmezhetőek a legjobban). Ha azonban valamiért komolyan kell vennünk azt a kitételt, hogy a hisztogram a sűrűségfüggvényt igyekszik közelíteni, akkor baj van: a sűrűségfüggvény görbe alatti területe viszont biztosan 1, tehát, ha a hisztogramé nem, akkor itt valami biztosan nem stimmel^[Most már elárulhatom, hogy a [-@fig-hisztogram-valodi]. ábránál csaltam: direkt felnagyítottam a sűrűségfüggvényt, hogy ez a probléma ne jelentkezzen; tehát azon az ábrán igazából nem is valódi sűrűségfüggvény van.]. A problémán azonban könnyen segíthetünk. Mennyi a hisztogram görbe alatti területe, ha nem 1? Nagyon egyszerű: egy téglalap területe $h\cdot f_i$, ha $h$ az osztályközök szélessége, így a teljes görbe alatti terület $\sum_i h\cdot f_i = h \cdot\sum_i f_i = h \cdot n$, ahol a szummázás az egyes oszlopokra (osztályközökre) fut. A megoldás tehát kézenfekvő: normalizáljunk ezzel! Ha minden oszlop magasságát leosztjuk $h \cdot n$-nel, akkor máris 1 lesz a görbe alatti terület. Így készült hisztogramot mutat a [-@fig-hisztogram-density]. ábra.
+
+```{r}
+#| label: fig-hisztogram-density
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására hisztogrammal."
+
+hist(birthwt$bwt, freq = FALSE, xlab = "Születési tömeg [g]",
+     ylab = "Gyakoriság [fő]", main = "")
+```
+
+Amit látunk, az persze előre is megjósolható lett volna: mivel minden oszlopmagasságot pontosan ugyanúgy $h \cdot n$-nel osztottunk le, így végeredményben az ábra változatlan néz ki (nyugodtan mondhattuk volna azt is, hogy csak a függőleges tengelyt skálázzuk át). Ezért is mondhatjuk, hogy a dolognak nincs nagy jelentősége.
+
+Egy kivétel azonban van: ha az osztályközök nem ugyanolyan szélesek. Ekkor ugyanis nem ugyanazzal a számmal kell leosztani az oszlopok magasságát; belátható, hogy ilyenkor az oszlopok
+
+$$\frac{f_i}{n \cdot h_i}$$
+
+magasságúak kellenek legyenek (ellenőrizzük le, $\sum_i h_i \cdot \frac{f_i}{n \cdot h_i} = 1$ valóban). Ez alapvetően változtatja meg a helyzetet: ilyenkor a magasságok *nem* lehetnek a gyakoriságok, hiszen ez így már nem csak a függőleges tengely átskálázása, az egyes oszlopok egymáshoz való viszonya is megváltozik. Ilyenkor tehát csak a fenti, sűrűség-jellegű magasságok használatának van értelme. (Az R beépített működése pontosan ezt tükrözi: ha nem adjuk meg kézzel, hogy mit szeretnénk, akkor megnézi az osztályközöket, ha azonos szélességűek, akkor gyakoriságokat használ magasságként, ha nem, akkor a fenti sűrűséget. Ez utóbbi esetben kézzel ugyan visszaállíthatjuk gyakoriságok használatára, de ilyet ne tegyünk, ez hibás lesz -- az R megengedi, de figyelmeztetést ad.) A különböző szélességű osztályközök használatának lehet értelme, elég kézenfekvő például az ötlet, hogy ahol ritkábban vannak a pontok, ott szélesebb osztályközt vegyünk fel (mondván, hogy bár így torzítottabb lehet, de kevés ponttal úgysem tudunk sokkal jobbat csinálni), ahol meg sűrűn, ott bátran felvehetünk szűkebb intervallumokat is, de a gyakorlatban az ilyen megoldásokat ritkán használják, és a hisztogramokat általában azonos szélességű osztályközökkel készítik.
+
+Hogyan értékelhetjük összességében a hisztogramot, mint adatvizualizációs eszközt? Kezdjük a legfontosabb előnnyel: a hisztogram könnyen értelmezhető, és jól ismert. Nagyon szemléletes, jól mutatja az egész eloszlás alakját, annak minden részletével (különösen, ha a mintanagyság nem nagyon kicsi).
+
+Ezek mellett azonban a hisztogramnak több komoly problémája is van. Az egyik hátránya, hogy a lépcsős függvény jellegű közelítés ugyan matematikáját, konstrukcióját -- pláne kézi konstrukcióját -- tekintve kényelmes, de nem túl természetes: a valódi függvények, amiket közelíteni igyekszünk, nem így néznek ki, így ez a fajta közelítés zavaró lehet. A másik probléma, hogy sok helyet foglal, nem túl kompakt -- ha többet kell egymás mellé rajzolnunk, akkor az hamar nehezen értelmezhető lesz. Márpedig -- és itt jön a másik probléma -- hisztogramokat muszáj egymás mellé plottolni: hisztogramokat nem igazán lehet -- például különböző színnel megkülönböztetve -- egymás*ra* plottolni, mert az ábra szinte azonnal teljesen áttekinthetetlen lesz.
+
+#### Magfüggvényes sűrűségbecslő {#sec-kde}
+
+A **magfüggvényes sűrűségbecslők** más kiindulóponttal épülnek fel, de céljuk hasonló a hisztograméhoz: a sűrűségfüggvény közelítése. A legfontosabb különbség, hogy a hisztogramoknak a megértését, konstrukcióját (pláne kézi konstrukcióját) nagyban segíti a lépcsős függvény jellegük, de a dolognak az az ára, hogy a kapott közelítés igazából elég természetellenes lesz -- a valóságban aligha van bármilyen orvosbiológiai változó, ami lépcsőkben ugrál. A magfüggvényes sűrűségbecslők matematikai felépítése ugyan bonyolultabb, többé nem lehetséges kézi rajzolásuk, viszont cserében elérnek valami nagyon fontosat: a közelítés szép sima, szakadás nélkül, folytonos függvénnyel oldják meg ([-@fig-kde]. ábra).
+
+```{r}
+#| label: fig-kde
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására magfüggvényes sűrűségbecslővel."
+
+plot(density(birthwt$bwt), xlab = "Születési tömeg [g]",
+     ylab = "Sűrűség", main = "")
+```
+
+A további részletekkel itt nem foglalkozunk, de annyit megjegyzek, hogy ezek is igénylik egy, a hisztogramok osztályköz-szélességével analóg paraméter hangolását (sávszélesség), sőt, itt még egy paramétert, a magfüggvényeket is meg kell választani. Szerencsére ezekre elég jól bevált megoldások érhetőek el.
+
+A magfüggvényes sűrűségbecslők legfontosabb előnye, hogy sokkal természetesebben néznek ki, mint a hisztogramok. Az igazság az, hogy emiatt indokolt lenne sokkal gyakrabban használni őket a hisztogramok hátrányára; ennek valószínűleg a bonyolultabb matematikájuk szab gátat. Az azonban megjegyzendő, hogy abban a hátrányban, hogy van paraméterük, amit a felhasználónak kell behangolnia -- ebből fakadóan lehet, hogy hibásan állítja be -- a magfüggvényes sűrűségbecslők is osztoznak a hisztogrammal; itt is igaz, hogy ettől akár nagymértékben is függhet sajnos a végeredmény. Végezetül még egy előnyét megemlítem a magfüggvényes sűrűsébecslőknek a hisztogramokkal szemben: épp a simaság miatt sokkal inkább egymásra lehet belőle többet is (például különböző színnel) plottolni.
+
+#### Boxplot {#sec-boxplot}
+
+Végül egy egész más elven felépülő, de szellemes, és a gyakorlatban is nagyon hasznos vizualizációs módszerrel ismerkedünk meg, a (Tukey-féle) *boxplottal* (vagy ritkán használt magyar nevén: dobozábrával).
+
+A boxplot nem más, mint egy számegyenes fölé rajzolt téglalap, mely egy adott változót reprezentál úgy, hogy a téglalap alsó széle az alsó kvartilisnél ($Q_1$-nél), a felső széle pedig a felső kvartilisnél ($Q_3$-nál) van. A téglalapon belül egy vastagabb függőleges vonal található a mediánnál ([-@fig-boxplot]. ábra).
+
+```{r}
+#| label: fig-boxplot
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására boxplottal."
+
+boxplot(birthwt$bwt)
+```
+
+A boxplotból két "antenna" nyúlik ki felfelé és lefelé. A boxplot alapváltozatában ezek a mintaminimumig és mintamaximumig nyúlnak ki, de a némileg haladóbb megvalósításban (amit a fenti ábra is mutat) az alsó antenna nem a minimumig terjed, hanem a legkisebb elemig, ami nem kisebb, mint $\mathrm{Q1}-\alpha \cdot IQR$; hasonlóképp a felső antenna nem a maximumig terjed, hanem a legnagyobb elemig, ami nem nagyobb mint $\mathrm{Q3}+\alpha \cdot IQR$. $\alpha$ egy előre megadott konstans, tipikusan $\alpha=1,\!5$. Azokat az elemeket melyek ezen kívül helyezkednek el, külön szimbólum, például kis karika jelöli. E mögött az a megfontolás, hogy így a boxplot egyszerű outlier-szűrést is lehetővé tesz: azok az elemek minősülnek outliernek, melyek az antennákon kívül helyezkednek el.
+
+A boxplot jóval nagyobb információtömörítést hajt végre mint akár a hisztogram, akár a magfüggvényes becslő -- ez alapvető hátránya, bár ennek ellenére gyakorlott szem számára így is meglehetősen jó információt hordoz az eloszlás alakjáról. Azonban ugyanez előnye is, hiszen kompakt, ami különösen jól jön akkor, ha például több boxplotot kell ábrázolni -- elég sok egymás mellé rajzolható úgy, hogy összehasonlíthatóak és még áttekinthetőek maradnak. További nagy előnye, hogy -- szemben mind a hisztogrammal, mind a magfüggvényes becslővel -- semmilyen paraméter hangolását nem igényli, kinézete teljesen egyértelműen meghatározott az adatok által, semmilyen felhasználó által beállítandó (és így potenciálisan hibalehetőséget adó) paramétere nincsen.
+
+## Minőségi változók kétváltozós elemzése {#sec-minosegi-ketvaltozos}
+
+Minőségi változók kapcsolatát **asszociációnak** szokás nevezni a statisztikában. Erre jó példa adatbázisunk rassz (`race`) és irritábilis méh (`ui`) változói, mely az alany rassz szerinti hovatartozását és az irritábilis méh szindróma fennállását adja meg.
+
+### Analitikus eszközök {#sec-minosegi-ketvaltozos-analitikus}
+
+Ahogy már megbeszéltük, a kétváltozós vizsgálatok sava-borsa az lesz, hogy a változók *kapcsolatáról* is képesek leszünk nyilatkozni. Ahhoz, hogy precízen definiáljuk, hogy mit értünk kapcsolat alatt, elsőként bemutatjuk az **kontingenciatáblát** (vagy kombinációs táblát vagy kereszttáblát), mely egyúttal az egyik legfontosabb analitikus eszköz is lesz két minőségi változó kapcsolatának vizsgálatában. Ezt követően nagyon röviden beszélünk a kapcsolat jellemzésére használható mutatószámokról is.
+
+#### Kontingenciatábla {#sec-kontingenciatabla}
+
+A **kontingenciatábla** egy olyan táblázat, melynek soraiban és oszlopaiban a két változó lehetséges kimenetelei vannak, az egyes cellákban pedig azon megfigyelési egységek darabszáma (gyakorisága), melyek a cella sora és oszlopa szerinti kimenetűek a sorhoz illetve az oszlophoz rendelt változó szerint. Például, a rassz és az irritábilis méh kontingenciatáblája így néz ki:
+
+```{r}
+table(birthwt$race, birthwt$ui)
+```
+
+Tehát például 83 olyan megfigyelési egység van az adatbázisban, ahol az anya rassza kaukázusi *és* nincs irritábilis méh szindrómája 12 egyéb rasszú, és irritábilis méh szindrómában szenvedő alany van, és így tovább.
+
+A kontingenciatábla szigorúan véve csak a $3 \times 2$ darab gyakoriságot jelenti; de néha összegző sorokat vagy oszlopokat írunk mellé:
+
+```{r}
+tab <- table(birthwt$race, birthwt$ui)
+rbind(cbind(tab, margin.table(tab, 1)),
+      cbind(t(margin.table(tab, 2)), margin.table(tab)))
+```
+
+Ezek neve: **perem- vagy vetületi gyakoriság**. (Mindkét elnevezés logikus: perem, hiszen a kontingenciatábla peremére kell ezeket ráírni, és vetületi, hiszen úgy kaphatjuk, hogy a kontingenciatáblát levetítjük vízszintesen vagy függőlegesen "levetítjük", vetítés alatt most azt értve, hogy az egymásra "vetülő" elemeket összeadjuk.) A 189 természetesen a mintanagyság.
+
+A fenti gyakoriságokon túl természetesen relatív gyakoriságokról is beszélhetünk. A relatív gyakoriság definícióját közvetlenül alkalmazva kapjuk azt a lehetőséget, hogy mindegyik cellát leosztjuk a mintanagysággal, például a bal felső $83/189=43,\!9$\% lesz. Ez az irritábilis méh szindrómában szenvedő kaukázusiak aránya a teljes mintán belül. A relatív gyakoriságokkal kitöltött kontingenciatábla peremei a **relatív peremgyakoriságok** (vagy relatív vetületi gyakoriságok). Szokás ezt peremmegoszlásnak vagy vetületi megoszlásnak is nevezni.
+
+Kontingenciatábla esetén azonban van egy másik -- logikus -- mód arra, hogy relatív gyakoriságot értelmezzünk: a 43,9% megadja, hogy az összes alany mekkora hányada kaukázusi *és* irritábilis méh szindrómában nem szenvedő, de minket érdekelhet az is, hogy az (összes helyett) csak az irritábilis méh szindrómában nem szenvedők mekkora hányada kaukázusi. Azaz: a 83-at nem a 189-cel, hanem a 161-gyel osztjuk le: $83/161=51,\!6$%. Ezt nevezzük **feltételes relatív gyakoriságnak**. Azért feltételes, mert ez egy relatív gyakoriság *azon feltétel mellett*, hogy valaki nem szenved irritábilis méh szindrómában. Más szóval: ha *feltesszük*, hogy az alanyaink nem szenvednek irritábilis méh szindrómában akkor közöttük 51,6% a kaukázusiak aránya. Ez természetesen kiszámolható a rassz változó másik két kimenetére is; az így kapott 51,6% -- 14,3% -- 34,2% egy teljes (csak épp feltételes) relatív gyakorisági sor, összege természetesen 100%. Szokás ezt a sorváltozó (esetünkben a rassz) feltételes megoszlásának is nevezni, az oszlopváltozó (esetünkben az irritábilis méh) *adott értéke* (esetünkben: 'igen') mint feltétel mellett. Természetesen ugyanezek kiszámolhatóak a jobb oldali oszlopra is, ez magyarul azt jelenti, hogy az irritábilis méh 'nem' kimenetére feltételezünk. Az eljárás ugyanez, azzal a különbséggel, hogy a jobb oldali számokat nyilván 28-cal kell leosztani. A feltételes relatív gyakoriság tehát nem más, mint a gyakoriság adott peremgyakorisággal osztva.
+
+Természetesen nem csak az oszlopváltozóra feltételezhetünk! Pontosan ugyanígy van értelme beszélni az oszlopváltozó feltételes eloszlásáról a sorváltozó adott értéke, mint feltétel mellett. Például kijelenthetjük, hogy annak feltételes relatív gyakorisága, hogy egy alany nem szenved irritábilis méh szindrómában $83/96=86,\!5$% *azon feltétel mellett*, hogy kaukázusi a rassza. Hasonlóan továbbmenve azt is mondhatjuk, hogy az irritábilis méh fennállásának feltételes megoszlása azon feltétel mellett, hogy az alany kaukázusi, 86,5% -- 13,5%.
+
+Összefoglalva, egy cellához négyféle számot is rendelhetünk, a bal felső példáján: 83 (gyakoriság), 43,9% (relatív gyakoriság), 51,6% (feltételes relatív gyakoriság azon feltétel mellett, hogy nem áll fenn irritábilis méh szindróma) és 86,5% (feltételes relatív gyakoriság azon feltétel mellett, hogy a rassz kaukázusi). Mindezeket szemléltetik a következő táblázatok.
+
+Relatív gyakoriságok (peremeken a vetületi megoszlásokkal):
+
+```{r}
+tab <- prop.table(table(birthwt$race, birthwt$ui))
+rbind(cbind(tab, margin.table(tab, 1)),
+      cbind(t(margin.table(tab, 2)), margin.table(tab)))
+```
+
+Irritábilis méh feltételes relatív gyakoriságai a rassz különböző kimenetei, mint feltétel esetén:
+
+```{r}
+tab <- prop.table(table(birthwt$race, birthwt$ui), 1)
+rbind(cbind(tab, margin.table(tab, 1)))
+```
+
+Rassz feltételes relatív gyakoriságai az irritábilis méh különböző kimenetei, mint feltétel esetén:
+
+```{r}
+tab <- prop.table(table(birthwt$race, birthwt$ui), 2)
+rbind(tab, t(margin.table(tab, 2)))
+```
+
+Az, hogy a fentiek közül melyiket használjuk, az elemzési céltól függ. Statisztikai értelemben felcserélhető az, hogy "a kaukázusiak mekkora hányada szenved irritábilis méh szindrómában?" és az, hogy "az irritábilis méh szindrómában szenvedők mekkora hányada kaukázusi?", de tartalmilag nem: feltételezni olyan információra van értelme, amit ismerünk. (Ez a feltételes valószínűség fogalmának a lényege: ismert információ beépítése egy valószínűségbe.) Képzeljük magunkat egy orvos helyébe, aki ül a rendelőjében, vele szemben a páciens. Ha azt vesszük, hogy "az irritábilis méh szindrómában szenvedők mekkora hányada kaukázusi?" akkor azt mondjuk, hogy tudjuk, hogy az alany beteg-e, és kérdezzük, hogy ennek figyelembevételével mekkora a valószínűsége, hogy kaukázusi... Tehát hiába is egyenértékű statisztikailag, tartalmilag a "kaukázusiak mekkora hányada szenved irritábilis méh szindrómában?" kérdés -- és az azt megválaszoló feltételes eloszlás -- lesz a releváns: látván, hogy a betegek kaukázusi, kiderül, hogy *így* mennyi annak a valószínűsége, hogy szenved ebben a betegségben.
+
+Továbbhaladva, tökéletesen látható, hogy miért mondtuk, hogy a többváltozós elemzés az egyváltozós elemzések kiterjesztése: a fenti kétdimenziós kontingenciatáblában *minden* információ benne van, amit a két változót külön-külön elemezve látnánk: egyszerűen levetítjük a kontingenciatáblát egy dimenzió mentén és kapott vetületi gyakoriságok nem mások lesznek, mint a megfelelő változó gyakorisági sora! Az tehát egyértelmű, hogy ez tartalmazza mindazt az információt, amit a két változó külön-külön végzett vizsgálata -- csakhogy én azt állítottam, hogy többet is. Ez vezet el minket a változók kapcsolatának kérdéséhez.
+
+Minőségi változók esetében (kontingenciatáblán) akkor mondjuk, hogy két változó kapcsolatban van egymással, ha a sorváltozó feltételes megoszlásai *ugyanazok*, az oszlopváltozó *bármely* értékére is feltételezünk. Vagy, ami ezzel egyenértékű^[Ez bizonyítást igényelne, de belátható, hogy az egyikből következik a másik.]: az oszlopváltozó feltételes megoszlásai *ugyanazok*, a sorváltozó *bármely* értékére is feltételezünk.
+
+Ez a definíció jogos: általánosságban véve is, az, hogy két változó között nincs kapcsolat, azt jelenti statisztikai nyelven, hogy az egyikre vonatkozó információból nem nyerünk információt a másikra vonatkozóan. Így már érthető ez a kontingenciatáblákra alkalmazott definíció: ha nincs kapcsolat, akkor hiába mondjak meg valaki, hogy mi -- például -- a sorváltozó értéke, ebből semmit nem tudunk meg az oszlopváltozó feltételes megoszlásáról (hiszen az minden sorban ugyanaz!). Ha van kapcsolat, akkor nyerünk plusz-információt (hiszen más lesz a feltételes megoszlása).
+
+Látható, hogy ebben az esetben csak nagyon gyenge kapcsolatról beszélhetünk: a sorváltozó feltételes megoszlása mindkét oszlopban (precízen: az oszlopváltozó mindkét kimenetére feltételezve) nagyjából ugyanaz (kb. 50% -- kb. 10% -- kb. 40%), és az oszlopváltozó feltételes megoszlása is nagyjából ugyanaz mindhárom sorban (kb. 85% -- kb. 15%). Ahogy már volt róla szó, az előbbi mondat bármelyik feléből automatikusan következik a másik fele. Itt tehát szemléletesen is látható a kapcsolat hiányának tartalma: a rasszra vonatkozó információ nem adott szinte semmilyen információt a betegség fennállásáról, abban a precíz értelemben, hogy *hiába is* mondja meg valaki, hogy az alany rassza kaukázusi, afroamerikai vagy egyéb, szinte *ugyanúgy* csak azt tudjuk mondani, hogy "akkor 85% -- 15% a megoszlás az irritábilis méh fennállása szerint".
+
+Képzeljünk el ezzel szemben -- másik végletként -- egy olyan esetet, melyben a 189 alany közül 100 kaukázusi irritábilis méh szindróma nélkül, és 89 egyéb rasszú irritábilis méh szindrómával! Ebben az esetben az egyik változóra vonatkozó információ nem egyszerűen "elárul valamit" a másik változóról, hanem egyenesen determinálja azt: ha valaki elárulja, hogy egy alany kaukázusi rasszú, akkor *biztosan tudjuk*, hogy nem szenved irritábilis bél szindrómában, ha pedig azt mondja, hogy egyéb rasszú, akkor *biztosan tudjuk*, hogy szenved ebben. (Itt rögtön jól látszik, hogy a dolog fordítva is működik: ha tudjuk, hogy egy alany nem szenved irritábilis méh szindrómában, akkor azonnal tudjuk, hogy kaukázusi, ha pedig szenved ebben, akkor biztos, hogy egyéb rasszú.) Ez a kapcsolat erősségének másik végpontja.
+
+Zárásként megjegyezzük, hogy a statisztikában valójában nem így szokták bevezetni a kapcsolat fogalmát, hanem úgy, mint azt az esetet, amikor a két változó nem független egymástól; függetlenség alatt pedig azt értik, hogy az együttes megoszlás a vetületi megoszlások szorzataként áll elő. Érdemes végiggondolni, hogy ez valóban egybeesik a hétköznapi "függetlenség" fogalommal. Szintén érdemes végiggondolni, hogy ebből valóban következik a fenti definíció, de ezzel részletesebben nem foglalkozunk most.
+
+#### Mutatószámok {#sec-minosegi-ketvaltozos-mutatoszamok}
+
+A kapcsolat *erősségének* kvalitatív fogalmát fent megadtuk; erre több mutatót is definiáltak, melyekkel az erősség számszerűen is lemérhető. Amennyiben a változók nominálisak, úgy pusztán erre van lehetőség.
+
+Ha azonban a változók ordinálisak, úgy értelmet nyert a kapcsolat *irányának* fogalma is. Ordinális változók esetén ugyanis a sorok és oszlopok sorrendje nem tetszőleges, van értelme mindkét változó szerint "nagyobb" és "kisebb" kimenetről beszélni. Innentől kezdve tehát nem csak azt mondhatjuk, hogy van kapcsolat, ha más oszlopban más a feltételes megoszlás, hanem értelmet nyer az a kijelentés is, hogy nagyobb oszlopban a feltételes megoszlás úgy más, hogy inkább nagyobb sorbeli érték szerepelnek, vagy épp úgy, hogy inkább kisebbek. (Itt is egyenértékű, ha ugyanezt a sorok és oszlopok fordított szerepével mondjuk el.) Ezt ragadja meg a kapcsolat irányának fogalma: ha van kapcsolat (nem 0 az erőssége), akkor az pozitív, amennyiben az oszlopváltozó szerinti nagyobb érték tendenciájában a sorváltozó szerinti nagyobb értékkel jár együtt (és fordítva), negatív, ha az oszlopváltozó szerinti nagyobb érték tendenciájában a sorváltozó szerint kisebb értékkel jár együtt (és fordítva). Ordinális változónál erről is lehet nyilatkozni mutatókkal.
+
+A konkrét mutatószámokkal most nem foglalkozunk (többek között azért sem, mert meglehetősen sok van belőlük, attól függően, hogy pontosan hogyan viselkednek az egyes változók).
+
+### Grafikus eszközök {#sec-minosegi-ketvaltozos-grafikus}
+
+Kontingenciatáblát vizualizálni ún. mozaikábrával és asszociációs ábrával lehet, ezek azonban nem túl látványos, és emiatt nem is túl gyakran használt módszerek, így most mi sem részletezem ezeket.
+
+Ami bevettebb, az a vetületi megoszlások (vagy nevezetes feltételes megoszlások) ábrázolása egyszerűen oszlopdiagramon (vagy kördiagramon), ez azonban ugyanaz a feladat, amit már minőségi változók egyváltozós elemzésénél megbeszéltünk.
+
+## Mennyiségi változók kétváltozós elemzése {#sec-mennyisegi-ketvaltozos}
+
+Mennyiségi változók kapcsolatát **korrelációnak** szokás nevezni a statisztikában. Erre jó példa adatbázisunk anyai testtömeg (`lwt`) és újszülött születési tömege (`bwt`) változói, melyek az anya illetve az újszülött testtömegét tartalmazzák.
+
+### Analitikus eszközök {#sec-mennyisegi-ketvaltozos-analitikus}
+
+A kapcsolat fogalmát mennyiségi változókra is ugyanazon gondolatot követve értelmezzük, mint amit minőségi változóknál már láttunk. Azt mondjuk, hogy két változó kapcsolatban van egymással, ha az egyik változó átlag feletti értékei tendenciájában a másik változó átlag feletti értékeivel járnak együtt (és ekkor persze fordítva is: az egyik változó átlag alatti értékei tendenciájában a másik változó átlag alatti értékeivel járnak együtt). Azaz: ha egy megfigyelési egység értéke az egyik változó szerint átlag feletti, akkor várhatóan a másik változó szerint is átlag feletti^[Az átlag itt természetesen minden esetben a szóban forgó változó átlagát jelenti. A használatára azért van szükség (és azért nem mondhatjuk egyszerűen azt, hogy "a változó nagy értékei"), mert hozzáadva valamilyen nagy konstanst a változóhoz, annak összes értéke nagy lesz, tehát mindenképp valamilyen viszonyításra van szükség.] lesz. Pontosabban szólva ez a *pozitív* kapcsolat definíciója, a negatív esetén az egyik változó átlag feletti értékei tendenciájában a másik átlag alatti értékeivel járnak együtt, és fordítva. Itt természetesen *sztochasztikus* kapcsolatról beszélünk, ezért a "tendenciájában" kifejezés: nem arról van szó, hogy ha a megfigyelési egység egyik változója átlag feletti, akkor *biztos*, hogy a másik is, de az esetek *többségében* érvényesül ez a tendencia.
+
+Érdemes megfigyelni, hogy itt mindenképp van értelme az iránynak (összhangban azzal, hogy a mennyiségi változók bírnak az ordinális tulajdonságaival is).
+
+Két mennyiségi változó fent definiált kapcsolatát klasszikusan a **kovarianciával** szokás lemérni, jele $\mathrm{cov}\left(x,y\right)$. Ennek definíciója:
+
+$$\mathrm{cov}\left(x,y\right)=\frac{\sum_{i=1}^n \left[\left(x_i-\overline{x}\right)\left(y_i-\overline{y}\right)\right]}{n}$$.
+
+A számítás logikája vegytisztán tükrözi a definíciót: az $\left(x_i-\overline{x}\right)$ tükrözi az egyik, az $\left(y_i-\overline{y}\right)$ a másik változó szerint azt, hogy az adott megfigyelési egység átlag alatti vagy átlag feletti. Vegyük észre, hogy a kettő szorzata pedig *pontosan akkor* lesz pozitív, ha vagy mindkét változó szerint átlag feletti a megfigyelési egység, vagy mindkét változó szerint átlag alatti -- azaz ha az adott megfigyelési egység a pozitív kapcsolatot erősíti meg! Ha a szorzat negatív, akkor az adott megfigyelési egység a negatív kapcsolatot erősíti.
+
+Ennél azonban több is igaz: a szorzatnak nem csak az előjele stimmel, de a nagysága is, az ugyanis kifejezi, hogy mennyire erősít meg bennünket az adott megfigyelési egység a kapcsolat fennállásában. Ha a megfigyelési egység egyik (pláne ha mindkét) változó szerint közel van az átlaghoz, akkor az csak gyenge "bizonyíték" a kapcsolat mellett (kis módosulással lehet, hogy az ellenkező irányú kapcsolatot erősítené), viszont ha mindkét változó szerint távol van az átlagtól, az erős érv a kapcsolat mellett.
+
+A szummázás ezeket a hatásokat fogja összeadni megfigyelési egységről megfigyelési egységre, így előjele a kapcsolat irányát mutatja, abszolút értéke pedig annak erősségét. (Az $n$-nel való leosztás nyilván szükséges, különben a kétszer megismételt adatbázison kétszer akkora lenne a kovariancia, holott az információ ugyanaz; tehát ezeket a szorzatokat átlagolni kell.)
+
+Hogy mi a kovariancia problémája, az azonnal kiderül, ha közöljük az anyai és az újszülött testtömeg közti kovarianciát: `r cov(birthwt$bwt, birthwt$lwt)`. Ami kétségtelenül kiolvasható ebből, hogy az anyai és az újszülött testtömeg között van kapcsolat, mégpedig pozitív irányú (nagyobb anyai tömeg -- nagyobb újszülött tömeg, és fordítva), hiszen az előjel pozitív. Amiről viszont lényegében semmit nem tudunk meg, az az erősség! Annál is inkább, mert a kovariancia mértékegység-függő: más értéket kapunk, ha az újszülött testtömegét nem grammban, hanem kilogrammban rögzítjük. Tekintetbe véve, hogy az információ ettől még ugyanaz marad, ez nyilván nem szerencsés. A probléma lényegében az, hogy honnan tudhatnánk, hogy a `r cov(birthwt$bwt, birthwt$lwt)` sok vagy kevés...? Ebben segít minket az a matematikai észrevétel, hogy mindenképp fennáll az $-s_x s_y \leq \mathrm{cov}\left(x,y\right) \leq s_x s_y$ összefüggés, tehát a kovariancia abszolút értéke nem lehet nagyobb mint a két változó szórásának szorzata. Így máris van mihez viszonyítani a kovariancia nagyságát! Ez elvezet minket a következő mutatóhoz, a neve **korreláció**, jelben $\mathrm{corr}\left(x,y\right)$:
+
+$$\mathrm{corr}\left(x,y\right)=\frac{\mathrm{cov}\left(x,y\right)}{s_x s_y}$$.
+
+Ez az előjel értelmezésén semmit nem változtat, hiszen a kovariancia előjelét meghagyja (a nevezőben szórások szerepelnek, így mindkettő szükségképp pozitív), viszont az abszolút értéket értelmezhetővé teszi, hiszen a korrelációra már az teljesül, hogy $-1 \leq \mathrm{corr}\left(x,y\right) \leq 1$. A korreláció tehát minél közelebb van $\pm 1$-hez, annál erősebb a két változó közötti kapcsolat.
+
+Például, az anyai testtömeg és az újszülött születési tömege közti korrelációs együttható értéke `r cor(birthwt$bwt, birthwt$lwt)`. Ez alapján nem csak azt tudjuk mondani, hogy van kapcsolat és az pozitív irányú (a `r cor(birthwt$bwt, birthwt$lwt)` előjele pozitív), de most már azt is, hogy ez a kapcsolat igen gyenge (ha elhelyezzük a `r abs(cor(birthwt$bwt, birthwt$lwt))`-ot a 0--1 között).
+
+A dologban azonban van egy csavar, ami a definícióból egyáltalán nem látható, de bebizonyítható, hogy igaz: az így definiált korreláció nem általában mér bármilyen kapcsolatot a változók között, hanem csak egyféle kapcsolatot mér, azt, hogy van-e *lineáris* kapcsolat a változók között (szokás emiatt lineáris korrelációs együtthatónak is nevezni). Ha a korreláció abszolút érték 1, az épp azt jelenti, hogy $y=ax+b$ függvényszerű kapcsolat van a két változó között. Fordítva, ha a korreláció 0, az nem azt jelenti, hogy nincs kapcsolat, hanem azt, hogy nincs *lineáris* kapcsolat! Másféle kapcsolat lehet, akár még függvényszerű is, úgy, hogy közben ez a korreláció nulla. Általában is, a korreláció "erősségét" úgy kell érteni, hogy mennyire szorosan valósul meg az *egyenesre* illeszkedés.
+
+Erre tekintettel szokás más korrelációs együtthatókat is definiálni, ezek közül megemlítjük a Spearman-$\rho$ és a Kendall-$\tau$ mutatókat, ezek ún. rangkorrelációs mutatók, amik nem konkrétan lineáris, hanem általános *monoton* kapcsolat erősségét mérik. Nem foglalkozunk vele részletesen, de megemlítem, hogy itt is igaz, hogy a kapcsolat erőssége azzal van összefüggésben, hogy az egyik változó ismerete mennyi információt árul el a másik változóról (természetesen sztochasztikus értelemben).
+
+Végül egy figyelmeztetés. Mint általában, természetesen itt is elmondható, hogy a mutatószám használata nagyon nagy információtömörítést jelent. Éppen ezért ne támaszkodjunk önmagában egy korrelációs együtthatóra (és különösen ne önmagában egy lineáris korrelációs együtthatóra) két változó kapcsolatának megítéléséhez, hiszen ez elfedi az esetleges nemlineáris kapcsolatokat, az outlier-eket stb. Erre a következő pontban látni is fogunk egy nevezetes példát.
+
+### Grafikus eszközök {#sec-mennyisegi-ketvaltozos-grafikus}
+
+Két mennyiségi változó kapcsolatának legfontosabb ábrázolási eszköze az **szóródási diagram**. A szóródási diagramot úgy kapjuk, hogy minden megfigyelési egységnek egy pontot feleltetünk meg a síkban úgy, hogy a pont egyik koordinátája a megfigyelési egység egyik, a másik koordinátája a másik változó szerinti értéke. Az anyai és újszülött testtömeg szóródási diagramját a [-@fig-scatterplot]. ábra mutatja.
+
+```{r}
+#| label: fig-scatterplot
+#| fig-cap: "Két mennyiségi változó kapcsolatának ábrázolása szóródási diagrammal."
+
+plot(bwt ~ lwt, data = birthwt,
+     xlab = "Anya testtömege (UM) [font]",
+     ylab = "Születési tömeg [g]" )
+abline( h = mean(birthwt$bwt), v = mean(birthwt$lwt),
+        lty = "dashed")
+abline(lm(bwt ~ lwt, data = birthwt), lty = "dotted")
+```
+
+Az ábrán bejelöltem (szaggatott vonallal, a két tengellyel párhuzamosan) a két változó átlagát is.
+
+Jól látható, immár grafikusan is, hogy mit értünk a két változó közötti (pozitív) kapcsolat fogalmán: a pontok tendenciájukban a szaggatott vonalak által kijelölt koordináta-rendszer jobb felső és bal alsó kvadránsában találhatóak (átlag feletti -- átlag feletti és átlag alatti -- átlag alatti zónák). Természetesen látszik az is, hogy a kapcsolat sztochasztikus, azaz van pont a több kvadránsban is (itt aztán pláne, hiszen a kapcsolat nem is túl erős). Ahogy láttuk, a kovarianciában / korrelációban persze nem csak a pontok darabszáma számít, hanem a konkrét helyzetük is.
+
+Ráerősítve az előbb mondottakra, az ábrán behúztam a pontokra legjobban illeszkedő egyenest is. Ne feledjük, hogy a szokásos korrelációs együttható esetén, a kapcsolat "erőssége" egyúttal azt is jelenti, hogy a pontok mennyire szorosan illeszkednek a rájuk legjobban illeszkedő egyenesre (látható, hogy itt nem túl szorosan).
+
+Mindezeket szemlélteti a [-@fig-corrdemo]. ábra is, mely különböző korrelációs együtthatójú kapcsolatokat (különböző előjelekkel és abszolút értékekkel, azaz különböző irányú és erősségű kapcsolatokat) mutat be példákkal.
+
+```{r}
+#| label: fig-corrdemo
+#| fig-cap: "Különféle korrelációs együtthatók szemléltetése."
+#| echo: false
+
+par(mfrow = c(2, 5))
+for(corr in c(-1, -0.99, -0.7, -0.2, 0, 0.2, 0.7, 0.99, 1)) {
+  SimData <- MASS::mvrnorm(n = 50, mu = c(0, 0),
+                           Sigma = matrix(c(1, corr, corr, 1),
+                                          nc = 2, byrow = TRUE))
+  plot(SimData, xlab = "", ylab = "",
+       main = corr, cex = 2, cex.lab = 3,
+       cex.main = 3,  xaxt = "none", yaxt = "none")
+  abline(lm(SimData[ , 1 ] ~ SimData[ , 2 ]), lty = "dotted")
+}
+```
+
+A grafikus ábrázolás előnye, hogy (szemben a korrelációs együtthatóval) nem okoz gondot semmilyen outlier, nemlineáris kapcsolat stb. -- ezek mind láthatóak lesznek az ábrán. (Itt is hangsúlyosan él tehát Tukey már említett tanácsa!) Erre mutat példát a nevezetes Anscombe-kvartett ([-@fig-anscombe]. ábra). Az ábrák négy kétváltozós adatsor szóródási diagramját mutatják. Mindegyiknek *hajszálpontosan ugyanaz* a korrelációs együtthatója (sőt, az átlaguk és a szórásuk is -- így ugyanaz a rájuk legjobban illeszkedő egyenes is), mégis, a valós helyzet drámaian más. Outlierek, nemlineáris kapcsolatok vannak jelen; ez azonban csak ábrázolás után derül ki, a korrelációs együttható használata mindezt teljesen elfedné!
+
+```{r}
+#| label: fig-anscombe
+#| fig-cap: "Az Anscombe-kvartett."
+#| echo: false
+
+par(mfrow = c(2, 2))
+plot(anscombe$x1, anscombe$y1, xlab = "x1", ylab = "y1",
+     xlim = c(3, 19), ylim = c(3, 13))
+abline(lm(anscombe$y1 ~ anscombe$x1), lty = "dotted")
+plot(anscombe$x2, anscombe$y2, xlab = "x2", ylab = "y2",
+     xlim = c(3, 19), ylim = c(3, 13))
+abline(lm(anscombe$y2 ~ anscombe$x2), lty = "dotted")
+plot(anscombe$x3, anscombe$y3, xlab = "x3", ylab = "y3",
+     xlim = c(3, 19), ylim = c(3, 13))
+abline(lm(anscombe$y3 ~ anscombe$x3), lty = "dotted")
+plot(anscombe$x4, anscombe$y4, xlab = "x4", ylab = "y4",
+     xlim = c(3, 19), ylim = c(3, 13))
+abline(lm(anscombe$y4 ~ anscombe$x4), lty = "dotted")
+```
+
+Zárásként megjegyzem, hogy ebben a grafikus ábrázolásban nincsen semmilyen információtömörítés. Az is igaz, hogy a kétváltozós elemzés tartalmaz minden információt, amit a két egyváltozós elemzés: a pontokat levetítve valamelyik tengelyre, visszakapjuk az adott tengely változójának adatait; azokat csoportosítva (a tengelyt osztályközökre bontva) rögtön készíthető például hisztogram. Szemléletesen látszik azonban az is, hogy *pusztán* a hisztogramokból (tehát az egyváltozós adatokból) *lehetetlen* lenne nyilatkozni a két változó közti kapcsolatról. (Képzeljünk egy egy olyan esetet, melyben a változók között erős kapcsolat van, de úgy, hogy mindkét változó önmagában szimmetrikus. Ekkor nyugodtan tükrözhetnénk a szóródási diagramot bármelyik átlagot jelentő szaggatott vonalra, az egyváltozós adatok ugyanazok maradnának, noha kétváltozósan pont hogy megfordult a kapcsolat iránya.) Ezért több a kétváltozós elemzés mint két egyváltozós elemzés.
+
+## További többváltozós elemzések {#sec-deskriptivtovabbitobbvalt}
+
+A kétváltozós esetek tárgyalásából a fentiekben kimaradt az az eset, amikor egy minőségi és egy mennyiségi változó kapcsolatát kell vizsgálni. Ezt *vegyes kapcsolatnak* szokás nevezni; részletesebben most nem foglalkozunk vele.
+
+A másik kérdés, ami felmerül, hogy mi a helyzet kettőnél több változó esetén. Ha nem lényegesen több változóról van szó, akkor a fenti módszerek -- több-kevesebb módosítással -- de kiterjeszthetőek. Például a szóródási diagram elvileg három változós esetre változatlanul kiterjeszthető (bár a gyakorlatban már ezt sem nagyon szokták használni, hiszen egy három dimenziós pontfelhő csak számítógépen tekinthető meg érdemben, és ott se túl áttekinthető emberi szemnek). Négy és annál több dimenziónál már trükkre van szükség; a tipikus megoldás, hogy minden lehetséges koordináta-párra levetítik a sokdimenziós pontfelhőt, és az így kapott kétdimenziós szóródási diagramokat mutatják meg (mátrix szóródási diagram). Egy-két tucat változó felett azonban már ez sem igazán tekinthető át, illetőleg már nem nevezhető érdemben kettőnél több dimenziós elemzésnek. Hasonló a helyzet a korrelációs együtthatóval, illetve a kontingenciatáblával és elemzési eszközeivel.
+
+<!-- Éppen ezért sokváltozós elemzésekhez már lényegesen eltérő módszerek alkalmazására is szükség lehet. Ilyenek -- csak említés szintjén -- a főkomponens-analízis, illetve a faktoranalízis, a klaszteranalízis vagy épp a többdimenziós skálázás (elsősorban mennyiségi változókhoz), és a korrespondenciaanalízis vagy a loglineáris modellezés (elsősorban minőségi változókhoz). -->
+
+<!-- Bár meglehetősen más logikát követ, de idesorolható a többváltozós regresszió (gyakorlatban roppant fontosságú) eszköze is. -->
