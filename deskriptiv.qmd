@@ -270,7 +270,37 @@ A fenti két jellemzőn túlmenően néha egyéb, még inkább részletekbe men�
 
 ### Grafikus eszközök {#sec-mennyisegi-egyvaltozos-grafikus}
 
-A grafikus eszközök közül először a hisztogramot ([-@sec-hisztogram]. pont), utána a magfüggvényes sűrűségbecslőt ([-@sec-kde]. pont), majd végül a boxplotot ([-@sec-boxplot]. pont) tárgyaljuk meg.
+A grafikus eszközök közül először az egydimenziós szóródási diagramot ([-@sec-stripchart]. pont), aztán a hisztogramot ([-@sec-hisztogram]. pont), utána a magfüggvényes sűrűségbecslőt ([-@sec-kde]. pont), majd végül a boxplotot ([-@sec-boxplot]. pont) tárgyaljuk meg.
+
+#### Egydimenziós szóródási diagram {#sec-stripchart}
+
+A történetet kezdjük ott, hogy van eszköz arra, hogy információveszteség nélkül vizualizáljunk mennyiségi változót is. Ez nem más, mint az egydimenziós szóródási diagram -- az elnevezés oka később világosabb lesz -- vagy angolul stripchart. Az ábrázolás nagyon egyszerű, fogunk egy számegyenest és minden megfigyelés értékéhez egy kis jelzést rakunk:
+
+```{r}
+#| label: fig-stripchart
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására egydimenziós szóródási diagrammal."
+
+plot(birthwt$bwt, rep(0, nrow(birthwt)),
+     xlab = "Születési tömeg [g]", ylab = "")
+```
+
+Ahogy ígértem, ezen valóban veszteség nélkül látszik minden információ, ami az eredeti változóban benne van, ami jól hangzik, de két problémája mégiscsak van ennek az ábrának. Az egyik, hogy a pontok -- különösen az ábra közepe táján -- elkezdenek egymás tetejére kerülni, így nagyon áttekinthetetlen lesz az ábra. Valójában az áttekinthetetlenségnél többről van szó: ha egyszer egy pont fekete lett a jelöléstől, akkor onnantól nem tudhatjuk, hogy ott 2, vagy 200 érték található egybeesve. Erről a problémakörről később, a szokásos szóródási diagramoknál ([-@sec-mennyisegi-ketvaltozos-grafikus]. pont) jóval hosszabban fogunk beszélni.
+
+Szerencsére most van egy nagyon egyszerű megoldási lehetőségünk. A probléma az, hogy valahogy "szét kellene szedni" az egybeeső pontokat, és erre most adja magát egy kézenfekvő lehetőség, van ugyanis egy dimenziónk, amit nem használtunk ki! Jelesül, a függőleges tengely: annak nincsen jelentősége (akárhol található függőlegesen egy pont, az ugyanazt jelenti, csak a vízszintes koordinátája számít), úgyhogy miért nem használjuk ki azt, hogy kicsit szétszedjük a pontokat? Ha már úgysincs jelentősége, akkor nyugodtan választhatunk egy véletlenszámot is függőleges koordinátaként:
+
+```{r}
+#| label: fig-stripchart-jitter
+#| fig-cap: "Példa egy mennyiségi változó ábrázolására jitter-elt egydimenziós szóródási diagrammal."
+
+plot(birthwt$bwt, rnorm(nrow(birthwt)),
+     xlab = "Születési tömeg [g]", ylab = "", , ylim = c(-7, 7))
+```
+
+Ezt a módszert, tehát, amikor egy pici véletlen zajt keverünk a pontokra, hogy megszüntessük az egybeeséséeket, jitter-elésnek szokták nevezni. Később látni fogunk még rá a fentinél jóval nagyobb gyakorlati súlyú példát is.
+
+Ezzel már egy jó ábrát állítottunk elő, bár azt meg kell jegyezni, hogy ha még sokkal több pont van, akkor ez a jitter-elős módszer sem fog működni, valójában tehát az információvesztés nélküliség ez esetben inkább csak elméleti tulajdonság.
+
+Van azonban egy másik probléma, ami még ezt a javított ábrát is sújtja, és emiatt a fontosabb -- és általánosabb -- gond a kettő közül. Jelesül: az ábra ugyan *érzékelteti*, hogy hol vannak sűrűbben a pontok, de nem ábrázolja ezt a sűrűséget közvetlenül. (A "közvetlenül" alatt az értem, hogy a sűrűség nem egy leolvasható érték, nincs egy skála meg egy jelölés, ami mutatja, hogy itt ennyi a sűrűség.) Ami baj: sokkal jobban tudunk értelmezni olyan ábrát, amin a vizsgált jellemző direkte leolvasható, és nem csak érzékelhető valamilyen áttételes vizuális módon. Érdekes módon ez annyira erősen így van, hogy ha egy ábra ezt megvalósítja, akkor azzal még akkor is jobban járunk, ha egyébként közben -- a fentivel szemben -- információvesztéssel jár. A következő pontok erre mutatnak példát.
 
 #### Hisztogram {#sec-hisztogram}
 
