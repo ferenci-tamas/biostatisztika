@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="hu-HU" xml:lang="hu-HU"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -70,14 +70,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./bevezetes.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -120,7 +121,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -172,7 +173,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bevezetés a biostatisztikába</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -324,7 +327,7 @@ window.Quarto = {
 <p>Nyilvánvaló, hogy a bonyolultság csökkentése csak úgy lehetséges, ha információt hagyunk el. Az egész művelet kritikus pontja épp ez: annak megválasztása, hogy mennyi információt hanyagoljunk el (és persze hogyan). A „hogyan” szerepe triviális: ha egy adott, mennyiségi változóra vonatkozó 100 elemű mintából elhagyjuk az első 99 elemet, akkor ugyan egyetlen számmá, azaz teljesen áttekinthetővé alakítjuk az információt – csak épp nyilván semmit nem érünk el vele. Ha viszont kiszámoljuk az átlagot, akkor ugyanúgy egyetlen számot kapunk, de immár úgy, hogy annak van értelme, azaz felhasználhatjuk kérdések megválaszolásához, illetve új megállapítások eléréséhez.</p>
 <p>A meghatározó kulcskérdés az elhanyagolásban (az információtömörítésben) tehát a „mennyit”. Látható, hogy átváltás, trade-off áll fenn az <em>áttekinthetőség</em>, és a <em>reprodukciós hűség</em> között: minél többet hanyagolunk el, annál inkább segítjük az áttekinthetőséget, de annál többet vesztünk az eredeti információ hűséges reprodukciójából. A deskriptív statisztika igazi sava-borsa (végeredményben a legtöbb módszer, így vagy úgy, de ebben foglal el egy álláspontot) a jó kompromisszum megkötése a kettő között. Példának okáért, adatbázisunkban a születési tömeg változó megfigyelései így néznek ki:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birthwt<span class="sc">$</span>bwt</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>birthwt<span class="sc">$</span>bwt</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>  [1] 2523 2551 2557 2594 2600 2622 2637 2637 2663 2665 2722 2733 2751 2750 2769
  [16] 2769 2778 2782 2807 2821 2835 2835 2836 2863 2877 2877 2906 2920 2920 2920
@@ -344,7 +347,7 @@ window.Quarto = {
 <p>Ezt a megadást nevezhetnénk az egyik végpontnak ebben a kompromisszumban: 100% reprodukciós hűség, de – szinte – 0% áttekinthetőség. Ez a legalapvetőbb kérdések megválaszolását, a legalapvetőbb észrevételek elérését is lehetetlenné teszi. (Képzeljük el, hogy mi van, ha tízezer alany lenne az adatbázisban!)</p>
 <p>Másik végpontnak vehetjük azt, amikor a fenti adatoknak csak az átlagát adjuk meg</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(birthwt<span class="sc">$</span>bwt)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(birthwt<span class="sc">$</span>bwt)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 2944.587</code></pre>
 </div>
@@ -383,21 +386,21 @@ window.Quarto = {
 <p>Szokás még beszélni <strong>relatív gyakoriságról</strong> is, ami nem más, mint az előbbi (abszolút) gyakoriság osztva a mintanagysággal (azaz <span class="math inline">\(n\)</span>-nel). A relatív gyakoriság tehát azt mutatja meg, hogy egy kategóriába a megfigyelési egységek mekkora hányada esik. Természetesen <span class="math inline">\(\sum_{i=1}^n g_i = 1\)</span>.</p>
 <p>Példának okáért, a rassz változó gyakorisági sora:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>birthwt<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">factor</span>(birthwt<span class="sc">$</span>race, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>birthwt<span class="sc">$</span>race <span class="ot">&lt;-</span> <span class="fu">factor</span>(birthwt<span class="sc">$</span>race, <span class="at">levels =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>,</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"Kaukázusi"</span>, <span class="st">"Afroamerikai"</span>, <span class="st">"Egyéb"</span>))</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(birthwt<span class="sc">$</span>race)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(birthwt<span class="sc">$</span>race)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    Kaukázusi Afroamerikai        Egyéb 
           96           26           67 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
    Kaukázusi Afroamerikai        Egyéb 
    0.5079365    0.1375661    0.3544974 </code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race), <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race), <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>             [,1]      [,2]
 Kaukázusi      96 0.5079365
@@ -419,8 +422,8 @@ Egyéb          67 0.3544974</code></pre>
 <p>A minőségi változók grafikus elemzése lényegében a gyakorisági sor vizualizálását jelenti. Ennek két, gyakorlatban legtipikusabb eszköze az <strong>oszlopdiagram</strong> és a <strong>kördiagram</strong>. Az előbbi oszlopok magasságával, az utóbbi körcikkek területével szemlélteti a gyakoriságokat. (Bár ez utóbbi, jellegéből adódóan, igazából csak relatív gyakoriságokat tud szemléltetni. Oszlopdiagrammal gyakoriság és relatív gyakoriság is szemléltethető; sőt, a kettő lényegében ekvivalens, csak a függőleges tengely skálázása lesz más.)</p>
 <p>Oszlopdiagramot használtunk a <a href="#fig-oszlopdiagram" class="quarto-xref"><span>2.1</span></a>. ábrán.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race), <span class="at">xlab =</span> <span class="st">"Rassz"</span>,</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">barplot</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race), <span class="at">xlab =</span> <span class="st">"Rassz"</span>,</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>        <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-oszlopdiagram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -448,9 +451,9 @@ Egyéb          67 0.3544974</code></pre>
 <h4 data-number="2.4.1.1" class="anchored" data-anchor-id="sec-osztalykozos-gyakorisagi-sor"><span class="header-section-number">2.4.1.1</span> Osztályközös gyakorisági sor</h4>
 <p>Gyakorisági sor mennyiségi változóra is készíthető, de csak módosításokkal. Annak ugyanis, hogy megszámoljuk, hogy az egyes előforduló kimenetekből mennyi van, nincs sok értelme (az itt tipikus folytonos változóknál könnyen lehet, hogy minden egyes előforduló kimenetből csak egyetlen egy lesz). A problémát a folytonosság jelenti, ami ellen úgy védekezhetünk, hogy nem adott értéket felvevő megfigyelési egységek számát adjuk meg, hanem <em>adott intervallumba esőek</em> számát. Így kapjuk az <strong>osztályközös gyakorisági sort</strong>. (Az elnevezés arra utal, hogy osztályközöket hozunk létre – így fogjuk hívni az előbb említett intervallumokat.) A gyakoriság, relatív gyakoriság, kumulált gyakoriság és kumulált relatív gyakoriság<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> értelmezése változatlan. A születési tömeg változó osztályközös gyakorisági sora (precízebben szólva: egy lehetséges osztályközös gyakorisági sora; hiszen ez már függeni fog az osztályközök megválasztásától is), a következő:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">cut</span>(birthwt<span class="sc">$</span>bwt, <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">5000</span>, <span class="dv">500</span>)))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(<span class="fu">cut</span>(birthwt<span class="sc">$</span>bwt, <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">5000</span>, <span class="dv">500</span>)))</span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cbind</span>(<span class="at">Ci0 =</span> <span class="fu">seq</span>(<span class="dv">500</span>, <span class="dv">4500</span>, <span class="dv">500</span>), <span class="at">Ci1 =</span> <span class="fu">seq</span>(<span class="dv">1000</span>, <span class="dv">5000</span>, <span class="dv">500</span>),</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">fi =</span> tab, <span class="at">gi =</span> <span class="fu">prop.table</span>(tab))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">fi =</span> tab, <span class="at">gi =</span> <span class="fu">prop.table</span>(tab))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                 Ci0  Ci1 fi          gi
 (500,1e+03]      500 1000  1 0.005291005
@@ -555,8 +558,8 @@ Egyéb          67 0.3544974</code></pre>
 <h4 data-number="2.4.2.1" class="anchored" data-anchor-id="sec-hisztogram"><span class="header-section-number">2.4.2.1</span> Hisztogram</h4>
 <p>A hisztogram lényegében nem más, mint az osztályközös gyakorisági sor ábrázolása oszlopdiagramon, annyi specialitással, hogy az oszlopokat közvetlenül egymás mellé rajzoljuk, hely kihagyása nélkül (<a href="#fig-hisztogram" class="quarto-xref"><span>2.3</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(birthwt<span class="sc">$</span>bwt, <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(birthwt<span class="sc">$</span>bwt, <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-hisztogram" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -649,8 +652,8 @@ Egyéb          67 0.3544974</code></pre>
 <p>Most, hogy kiveséztük az oszlopok szélességeit, beszéljünk picit a magasságukról is!</p>
 <p>A hisztogramokra adott definíció alapján („az osztályközös gyakorisági sor oszlopdiagrammal ábrázolva, csak oszlopok közötti rések nélkül”) alapján ez egyszerűnek tűnik: az oszlopok magassága <span class="math inline">\(f_i\)</span>, tehát az adott intervallumba eső megfigyelések száma. Ez lehet teljesen működőképes, hogy mást ne mondjak, az összes eddigi hisztogram így készült, egy baja azonban van: a görbe alatt terület (emlékezzünk a <a href="#fig-hisztogram-kontur" class="quarto-xref"><span>2.4</span></a>. ábrára!) nem 1 lesz. Miért érdekes ez? Az esetek túlnyomó részében semmiért, egy orvosi közleményben tökéletesen értelmesek és értelmezhetőek a fenti hisztogramok (sőt, valószínűleg így értelmezhetőek a legjobban). Ha azonban valamiért komolyan kell vennünk azt a kitételt, hogy a hisztogram a sűrűségfüggvényt igyekszik közelíteni, akkor baj van: a sűrűségfüggvény görbe alatti területe viszont biztosan 1, tehát, ha a hisztogramé nem, akkor itt valami biztosan nem stimmel<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>. A problémán azonban könnyen segíthetünk. Mennyi a hisztogram görbe alatti területe, ha nem 1? Nagyon egyszerű: egy téglalap területe <span class="math inline">\(h\cdot f_i\)</span>, ha <span class="math inline">\(h\)</span> az osztályközök szélessége, így a teljes görbe alatti terület <span class="math inline">\(\sum_i h\cdot f_i = h \cdot\sum_i f_i = h \cdot n\)</span>, ahol a szummázás az egyes oszlopokra (osztályközökre) fut. A megoldás tehát kézenfekvő: normalizáljunk ezzel! Ha minden oszlop magasságát leosztjuk <span class="math inline">\(h \cdot n\)</span>-nel, akkor máris 1 lesz a görbe alatti terület. Így készült hisztogramot mutat a <a href="#fig-hisztogram-density" class="quarto-xref"><span>2.8</span></a>. ábra.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(birthwt<span class="sc">$</span>bwt, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(birthwt<span class="sc">$</span>bwt, <span class="at">freq =</span> <span class="cn">FALSE</span>, <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Gyakoriság [fő]"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-hisztogram-density" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -675,8 +678,8 @@ Egyéb          67 0.3544974</code></pre>
 <h4 data-number="2.4.2.2" class="anchored" data-anchor-id="sec-kde"><span class="header-section-number">2.4.2.2</span> Magfüggvényes sűrűségbecslő</h4>
 <p>A <strong>magfüggvényes sűrűségbecslők</strong> más kiindulóponttal épülnek fel, de céljuk hasonló a hisztograméhoz: a sűrűségfüggvény közelítése. A legfontosabb különbség, hogy a hisztogramoknak a megértését, konstrukcióját (pláne kézi konstrukcióját) nagyban segíti a lépcsős függvény jellegük, de a dolognak az az ára, hogy a kapott közelítés igazából elég természetellenes lesz – a valóságban aligha van bármilyen orvosbiológiai változó, ami lépcsőkben ugrál. A magfüggvényes sűrűségbecslők matematikai felépítése ugyan bonyolultabb, többé nem lehetséges kézi rajzolásuk, viszont cserében elérnek valami nagyon fontosat: a közelítés szép sima, szakadás nélkül, folytonos függvénnyel oldják meg (<a href="#fig-kde" class="quarto-xref"><span>2.9</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(birthwt<span class="sc">$</span>bwt), <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Sűrűség"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(birthwt<span class="sc">$</span>bwt), <span class="at">xlab =</span> <span class="st">"Születési tömeg [g]"</span>,</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Sűrűség"</span>, <span class="at">main =</span> <span class="st">""</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-kde" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -698,7 +701,7 @@ Egyéb          67 0.3544974</code></pre>
 <p>Végül egy egész más elven felépülő, de szellemes, és a gyakorlatban is nagyon hasznos vizualizációs módszerrel ismerkedünk meg, a (Tukey-féle) <em>boxplottal</em> (vagy ritkán használt magyar nevén: dobozábrával).</p>
 <p>A boxplot nem más, mint egy számegyenes fölé rajzolt téglalap, mely egy adott változót reprezentál úgy, hogy a téglalap alsó széle az alsó kvartilisnél (<span class="math inline">\(Q_1\)</span>-nél), a felső széle pedig a felső kvartilisnél (<span class="math inline">\(Q_3\)</span>-nál) van. A téglalapon belül egy vastagabb függőleges vonal található a mediánnál (<a href="#fig-boxplot" class="quarto-xref"><span>2.10</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(birthwt<span class="sc">$</span>bwt)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">boxplot</span>(birthwt<span class="sc">$</span>bwt)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-boxplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -727,7 +730,7 @@ Egyéb          67 0.3544974</code></pre>
 <h4 data-number="2.5.1.1" class="anchored" data-anchor-id="sec-kontingenciatabla"><span class="header-section-number">2.5.1.1</span> Kontingenciatábla</h4>
 <p>A <strong>kontingenciatábla</strong> egy olyan táblázat, melynek soraiban és oszlopaiban a két változó lehetséges kimenetelei vannak, az egyes cellákban pedig azon megfigyelési egységek darabszáma (gyakorisága), melyek a cella sora és oszlopa szerinti kimenetűek a sorhoz illetve az oszlophoz rendelt változó szerint. Például, a rassz és az irritábilis méh kontingenciatáblája így néz ki:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>              
                 0  1
@@ -739,9 +742,9 @@ Egyéb          67 0.3544974</code></pre>
 <p>Tehát például 83 olyan megfigyelési egység van az adatbázisban, ahol az anya rassza kaukázusi <em>és</em> nincs irritábilis méh szindrómája 12 egyéb rasszú, és irritábilis méh szindrómában szenvedő alany van, és így tovább.</p>
 <p>A kontingenciatábla szigorúan véve csak a <span class="math inline">\(3 \times 2\)</span> darab gyakoriságot jelenti; de néha összegző sorokat vagy oszlopokat írunk mellé:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">cbind</span>(tab, <span class="fu">margin.table</span>(tab, <span class="dv">1</span>)),</span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)), <span class="fu">margin.table</span>(tab)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)), <span class="fu">margin.table</span>(tab)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>               0  1    
 Kaukázusi     83 13  96
@@ -757,9 +760,9 @@ Egyéb         55 12  67
 <p>Összefoglalva, egy cellához négyféle számot is rendelhetünk, a bal felső példáján: 83 (gyakoriság), 43,9% (relatív gyakoriság), 51,6% (feltételes relatív gyakoriság azon feltétel mellett, hogy nem áll fenn irritábilis méh szindróma) és 86,5% (feltételes relatív gyakoriság azon feltétel mellett, hogy a rassz kaukázusi). Mindezeket szemléltetik a következő táblázatok.</p>
 <p>Relatív gyakoriságok (peremeken a vetületi megoszlásokkal):</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui))</span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">cbind</span>(tab, <span class="fu">margin.table</span>(tab, <span class="dv">1</span>)),</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)), <span class="fu">margin.table</span>(tab)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>      <span class="fu">cbind</span>(<span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)), <span class="fu">margin.table</span>(tab)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     0          1          
 Kaukázusi    0.4391534 0.06878307 0.5079365
@@ -770,8 +773,8 @@ Egyéb        0.2910053 0.06349206 0.3544974
 </div>
 <p>Irritábilis méh feltételes relatív gyakoriságai a rassz különböző kimenetei, mint feltétel esetén:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui), <span class="dv">1</span>)</span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">cbind</span>(tab, <span class="fu">margin.table</span>(tab, <span class="dv">1</span>)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui), <span class="dv">1</span>)</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(<span class="fu">cbind</span>(tab, <span class="fu">margin.table</span>(tab, <span class="dv">1</span>)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     0         1  
 Kaukázusi    0.8645833 0.1354167 1
@@ -781,8 +784,8 @@ Egyéb        0.8208955 0.1791045 1</code></pre>
 </div>
 <p>Rassz feltételes relatív gyakoriságai az irritábilis méh különböző kimenetei, mint feltétel esetén:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui), <span class="dv">2</span>)</span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(tab, <span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tab <span class="ot">&lt;-</span> <span class="fu">prop.table</span>(<span class="fu">table</span>(birthwt<span class="sc">$</span>race, birthwt<span class="sc">$</span>ui), <span class="dv">2</span>)</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">rbind</span>(tab, <span class="fu">t</span>(<span class="fu">margin.table</span>(tab, <span class="dv">2</span>)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>                     0         1
 Kaukázusi    0.5155280 0.4642857
@@ -836,12 +839,12 @@ Egyéb        0.3416149 0.4285714
 <h3 data-number="2.6.2" class="anchored" data-anchor-id="sec-mennyisegi-ketvaltozos-grafikus"><span class="header-section-number">2.6.2</span> Grafikus eszközök</h3>
 <p>Két mennyiségi változó kapcsolatának legfontosabb ábrázolási eszköze az <strong>szóródási diagram</strong>. A szóródási diagramot úgy kapjuk, hogy minden megfigyelési egységnek egy pontot feleltetünk meg a síkban úgy, hogy a pont egyik koordinátája a megfigyelési egység egyik, a másik koordinátája a másik változó szerinti értéke. Az anyai és újszülött testtömeg szóródási diagramját a <a href="#fig-scatterplot" class="quarto-xref"><span>2.11</span></a>. ábra mutatja.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bwt <span class="sc">~</span> lwt, <span class="at">data =</span> birthwt,</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(bwt <span class="sc">~</span> lwt, <span class="at">data =</span> birthwt,</span>
 <span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Anya testtömege (UM) [font]"</span>,</span>
 <span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">ylab =</span> <span class="st">"Születési tömeg [g]"</span> )</span>
 <span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>( <span class="at">h =</span> <span class="fu">mean</span>(birthwt<span class="sc">$</span>bwt), <span class="at">v =</span> <span class="fu">mean</span>(birthwt<span class="sc">$</span>lwt),</span>
 <span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>        <span class="at">lty =</span> <span class="st">"dashed"</span>)</span>
-<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(bwt <span class="sc">~</span> lwt, <span class="at">data =</span> birthwt), <span class="at">lty =</span> <span class="st">"dotted"</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="fu">lm</span>(bwt <span class="sc">~</span> lwt, <span class="at">data =</span> birthwt), <span class="at">lty =</span> <span class="st">"dotted"</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-scatterplot" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -982,13 +985,14 @@ Egyéb        0.3416149 0.4285714
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

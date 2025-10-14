@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="hu-HU" xml:lang="hu-HU"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.31">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./deskriptiv.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-364982630eef5352dd1537128a8ed5cb.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-70a47bd5681a7291082a5b9f83d58762.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -119,7 +120,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -171,7 +172,9 @@ window.Quarto = {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
-    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header sidebar-header-stacked">
+      <a href="./index.html" class="sidebar-logo-link">
+      </a>
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Bevezetés a biostatisztikába</a> 
         <div class="sidebar-tools-main tools-wide">
@@ -338,7 +341,7 @@ window.Quarto = {
 <p>Ha mármost a fenti eljárást sokszor megcsináljuk, és a végén megnézzük a felírt – ingadozó – mintaátlagokat, akkor azoknak lesz egy eloszlása<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. Ezt hívjuk <strong>mintavételi eloszlásnak</strong>.</p>
 <p>Érdemes ezt egy szimulációval is megnézni! Vegyünk egy adott, rögzített a sokaságból, melyet itt eloszlásával adtunk meg (<span class="math inline">\(\mathcal{N}\left(30,70\right)\)</span>), teljesen véletlenszerű módon 10 darab 30 elemű mintát, majd mindegyiknek számoljuk ki az átlagát:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">replicate</span>(<span class="dv">10</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1] 70.82458 71.32775 71.10278 71.13333 66.69972 72.37003 70.66829 67.62002
  [9] 70.24407 71.36787</code></pre>
@@ -347,13 +350,13 @@ window.Quarto = {
 <p>Látszik, hogy – noha a sokaság állandó, és így a várható értéke, tehát a becsülendő jellemző is állandó, fixen 10 – a minták átlaga, tehát a sokaság várható értékének mintából <em>becsült</em> értéke ingadozik.</p>
 <p>Elég sok ilyen szimulációt végezve, ez az ingadozás jól feltérképezhető, ez lesz az emlegetett mintavételi eloszlás (<a href="#fig-sampsim" class="quarto-xref"><span>3.1</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(res)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">mean</span>(res)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 69.99897</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res, <span class="at">main =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Mintaátlag"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(res, <span class="at">main =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>, <span class="at">xlab =</span> <span class="st">"Mintaátlag"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-sampsim" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -369,14 +372,14 @@ window.Quarto = {
 </div>
 <p>Ilyen módon további fontos kérdések is vizsgálhatóak, például megnézhetjük, hogy a becsült érték ingadozása hogyan függ a mintanagyságtól (<a href="#fig-sampsimn" class="quarto-xref"><span>3.2</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>res <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(<span class="fu">density</span>(res), <span class="at">ylim =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="fl">0.7</span>), <span class="at">main =</span> <span class="st">""</span>, <span class="at">ylab =</span> <span class="st">""</span>,</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>     <span class="at">xlab =</span> <span class="st">"Mintaátlag"</span>)</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>res50 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">50</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(res50), <span class="at">col =</span> <span class="st">"blue"</span>)</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>res300 <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">100000</span>, <span class="fu">mean</span>(<span class="fu">rnorm</span>(<span class="dv">300</span>, <span class="dv">70</span>, <span class="dv">10</span>)))</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="fu">lines</span>(<span class="fu">density</span>(res300), <span class="at">col =</span> <span class="st">"orange"</span>)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">abline</span>(<span class="at">v =</span> <span class="dv">70</span>, <span class="at">col =</span> <span class="st">"red"</span>, <span class="at">lwd =</span> <span class="dv">2</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-sampsimn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -436,7 +439,7 @@ window.Quarto = {
 <p>A születési tömegek 95%-os konfidenciaintervalluma [2840,0–3049,2] gramm. (Megjegyezzük, hogy ez a fentitől kissé eltérő módszerrel készült, ami tekintettel van arra is, hogy itt most – szemben a fenti példával – nem ismerjük <em>a priori</em> a sokaság szórását.) Ez azt jelenti, hogy a <em>legjobb</em> tippünk a születési tömeg sokasági várható értékére a 2944.5873016 gramm, de azt is tudjuk ezen felül mondani, hogy bár ez csak bizonytalan tipp (hiszen a becsült érték mintáról-mintára ingadozik), de 95%-os <em>megbízhatósággal</em> azért kijelenthető, hogy nem kisebb a keresett, ismeretlen sokasági várható érték mint 2840,0 gramm és nem nagyobb mint 3049,2 gramm. (Amit úgy értünk, hogy azt becsüljük, hogy ha a sokaságból 100 mintát vennénk, és mindegyikből ugyanígy megkonstruálnánk a konfidenciaintervallumokat, akkor várhatóan 95 esetben tartalmazná a CI a valódi, sokasági értéket.) Érdemes megfigyelni, hogy a konfidenciaintervallum két végpontja szimmetrikus a pontbecslésre; ez a várható érték becslésére jellemző, de más paramétereknél nem feltétlenül van így.</p>
 <p>Itt is hasznos mindezeket egy szimulációval szemléltetni (<a href="#fig-cisim" class="quarto-xref"><span>3.3</span></a>. ábra).</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SimData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>SimData <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">idx =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">100</span>,</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">CI =</span> <span class="fu">t</span>(<span class="fu">replicate</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="dv">100</span>, TeachingDemos<span class="sc">::</span><span class="fu">z.test</span>(<span class="fu">rnorm</span>(<span class="dv">30</span>, <span class="dv">70</span>, <span class="dv">10</span>),</span>
@@ -444,7 +447,7 @@ window.Quarto = {
 <span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(SimData, <span class="fu">aes</span>(<span class="at">xmin =</span> CI<span class="fl">.1</span>, <span class="at">xmax =</span> CI<span class="fl">.2</span>, <span class="at">y =</span> idx)) <span class="sc">+</span></span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_linerange</span>() <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">70</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="dv">70</span>, <span class="at">color =</span> <span class="st">"red"</span>) <span class="sc">+</span> <span class="fu">labs</span>(<span class="at">y =</span> <span class="st">""</span>)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output-display">
 <div id="fig-cisim" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -536,7 +539,7 @@ window.Quarto = {
 <p>A kérdésről tehát <em>biztosat</em> nem lehet mondani – de statisztikai próbával <em>valószínűségi kijelentést</em> tehetünk. Elsőként döntenünk kell arról, hogy milyen próbát alkalmazzunk. Ennek a részletei számunkra most nem fontosak, a lényeg csak a végeredmény: a körülmények (két független csoport, aránylag nagy mintanagyság mindkét csoportban, <em>a priori</em> nem ismert sokasági szórás) a választásunk az ún. Welch-próbára esik. Ennek nullhipotézise, hogy a két csoport várható értéke között nincs különbség, ellenhipotézise, hogy van, a két várható érték nem egyezik.</p>
 <p>Végezzük el a próbát:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt)</span></code><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(bwt <span class="sc">~</span> smoke, <span class="at">data =</span> birthwt)</span></code></pre></div><button title="Vágólapra másolás" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>
     Welch Two Sample t-test
@@ -628,13 +631,14 @@ mean in group 0 mean in group 1
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
