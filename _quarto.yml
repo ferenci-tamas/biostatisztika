@@ -38,6 +38,7 @@ book:
     - bevezetes.qmd
     - deskriptiv.qmd
     - induktiv.qmd
+    - vizualizacio.qmd
 
 format:
   html:
